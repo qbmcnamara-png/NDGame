@@ -1974,31 +1974,6 @@ ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(this.ball.x,this.ball.y);ctx.lineTo(p
 // Particles & fireworks
 this.particles.forEach(p=>p.draw(ctx));
 this.fireworks.forEach(f=>f.draw(ctx));
-
-// Tutorial hint on first hole
-if(this.level===0&&this.holeLocked&&this.state!=='intro'){
-const pulse=0.7+Math.sin(this.tick*0.1)*0.3;
-// Dark overlay at top
-ctx.fillStyle="rgba(12,35,64,0.85)";
-ctx.fillRect(0,95,GW,55);
-// Tutorial text
-ctx.fillStyle=`rgba(255,215,0,${pulse})`;
-ctx.font="bold 9px 'Press Start 2P'";
-ctx.textAlign="center";
-ctx.fillText("⬇ HIT THE TARGET FIRST! ⬇",GW/2,115);
-ctx.fillStyle="#fff";
-ctx.font="7px 'Press Start 2P'";
-ctx.fillText("Unlock the hole, then sink the putt",GW/2,135);
-ctx.textAlign="left";
-// Arrow pointing to target
-if(this.target){
-const ax=this.target.x,ay=this.target.y-35;
-ctx.fillStyle=`rgba(255,215,0,${pulse})`;
-ctx.beginPath();
-ctx.moveTo(ax,ay);ctx.lineTo(ax-8,ay-15);ctx.lineTo(ax+8,ay-15);
-ctx.closePath();ctx.fill();
-}
-}
 }
 
 // DRAW: Warren Golf Course - Championship Links Style
