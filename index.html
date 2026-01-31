@@ -1,25 +1,61 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Notre Dame Golf: Journey Through Campus</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><style>body{background-color:#0C2340;color:#eee;font-family:'Press Start 2P',cursive;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;overflow:hidden;user-select:none;touch-action:none}#game-frame{position:relative;width:370px;height:700px;box-shadow:0 0 80px rgba(0,0,0,1),inset 0 0 40px rgba(0,0,0,0.5);border:12px solid #C99700;border-radius:20px;background:#000;overflow:hidden}canvas{display:block;image-rendering:pixelated}.scanlines{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.1) 50%);background-size:100% 4px;pointer-events:none;z-index:10;opacity:0.12}.vignette{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(0,0,0,0) 50%,rgba(0,0,0,0.6) 100%);pointer-events:none;z-index:15}#ui-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:flex;flex-direction:column;padding:0;box-sizing:border-box;text-shadow:2px 2px 0 #000;z-index:20}.hud-panel{position:absolute;bottom:0;left:0;display:flex;justify-content:space-between;align-items:flex-start;width:100%;height:90px;background:linear-gradient(0deg,rgba(12,35,64,0.98) 0%,rgba(12,35,64,0.8) 70%,rgba(12,35,64,0) 100%);padding:12px 12px 0 12px;box-sizing:border-box}.hud-logo-container{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25}.hud-logo{color:#C99700;font-size:20px;text-shadow:2px 2px #0C2340;letter-spacing:1px;margin-bottom:4px}.hud-tourney-label{font-size:7px;color:#fff;text-transform:uppercase;letter-spacing:1px;background:rgba(0,132,61,0.9);padding:3px 6px;border-radius:3px;border:1px solid #00843D}.hud-side{display:flex;flex-direction:column;width:100px}.hud-left{align-items:flex-start}.hud-right{align-items:flex-end}.hud-main{font-size:12px;color:#fff;margin-bottom:6px;font-weight:bold}.hud-sub{font-size:10px;color:#C99700}.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(12,35,64,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;pointer-events:auto;text-align:center}.hidden{opacity:0!important;pointer-events:none!important;z-index:-1!important}#msg-box,#score-popup,#dist-box{position:absolute;left:50%;transform:translateX(-50%);padding:12px;text-align:center;display:none;z-index:110;box-shadow:4px 4px 0 rgba(0,0,0,0.5);font-size:10px;border:2px solid white;pointer-events:none;width:75%}#msg-box{top:30%;background:rgba(180,30,30,0.95);color:white}#dist-box{top:72%;background:rgba(12,35,64,0.95);color:white;border-color:#C99700;font-size:9px}#score-popup{top:32%;background:rgba(12,35,64,0.95);font-size:24px;border:3px solid #C99700;padding:25px;border-radius:10px}#putt-alert{position:absolute;top:95px;width:100%;text-align:center;color:#00843D;font-size:9px;display:none;z-index:30;pointer-events:none;animation:pulse 1.5s infinite}#wind-box{position:absolute;top:95px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:5px 7px;border:1px solid #C99700;border-radius:4px;font-size:6px}#wind-box .label{color:#C99700;margin-bottom:3px}#wind-box .val{color:#fff;font-size:8px}#wind-arrow{color:#00843D;font-size:16px}#club-box{position:absolute;bottom:100px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:6px 8px;border:1px solid #C99700;border-radius:4px}#club-box .label{color:#C99700;font-size:6px;margin-bottom:2px}#club-box .name{color:#fff;font-size:8px}#club-box .icon{font-size:14px;margin-top:2px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}h1{color:#C99700;font-size:14px;line-height:1.5;margin-bottom:20px;text-shadow:2px 2px #0C2340}p{font-size:8px;line-height:1.8;color:#ccc;margin:6px 0}.btn{margin-top:25px;padding:14px 28px;background:#00843D;color:#fff;border:2px solid #C99700;font-family:inherit;cursor:pointer;font-size:10px;text-transform:uppercase;box-shadow:4px 4px 0 #000}.btn:hover{background:#006633}table{width:88%;margin-top:15px;border-collapse:collapse;background:rgba(0,0,0,0.5);border:2px solid #C99700}td,th{padding:10px;border-bottom:1px solid #444;text-align:left;font-size:9px}th{color:#C99700}.highlight{color:#C99700;background:rgba(201,151,0,0.1)}</style></head><body><div id="game-frame"><canvas id="gameCanvas" width="370" height="700"></canvas><div class="scanlines"></div><div class="vignette"></div><div id="ui-layer"><div class="hud-panel"><div class="hud-side hud-left"><div id="hud-hole" class="hud-main">HOLE 1</div><div id="hud-yards" class="hud-sub">340 YDS</div></div><div class="hud-logo-container"><div class="hud-logo">ND GOLF</div><div id="hud-tourney-label" class="hud-tourney-label">WARREN COURSE</div></div><div class="hud-side hud-right"><div id="hud-par" class="hud-main">PAR 4</div><div id="hud-score" class="hud-sub">E</div></div></div></div><div id="putt-alert">☘ PUTTING MODE ☘</div><div id="music-btn" onclick="toggleMusicBtn()" style="position:absolute;top:10px;right:10px;z-index:100;background:rgba(12,35,64,0.9);border:2px solid #C99700;border-radius:5px;padding:8px;cursor:pointer;font-size:16px;pointer-events:auto">🎵</div><div id="wind-box"><div class="label">WIND</div><div id="wind-arrow">➤</div><div class="val" id="wind-val">5 MPH</div></div><div id="club-box"><div class="label">CLUB</div><div class="name" id="club-name">DRIVER</div><div class="icon" id="club-icon">🏌️</div></div><div id="msg-box">OUT OF BOUNDS!<br>+1 Stroke</div><div id="dist-box">150 YDS TO PIN</div><div id="score-popup">BIRDIE!</div><div id="welcome-screen" class="screen"><canvas id="titleCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5;margin-top:350px"><button class="btn" onclick="showTutorial()" style="margin-bottom:15px">HOW TO PLAY</button><br><button class="btn" style="background:#444;font-size:8px;padding:10px 20px" onclick="game.init()">SKIP TUTORIAL</button></div></div><div id="tutorial-screen" class="screen hidden"><h1 style="color:#C99700;font-size:12px;margin:10px 0">HOW TO PLAY</h1><canvas id="tutorialCanvas" width="370" height="480" style="border-radius:8px;border:3px solid #C99700"></canvas><button class="btn" onclick="game.init()" style="margin-top:12px">START GAME</button></div><div id="level-screen" class="screen hidden"><div id="lvl-tag" style="color:#00843D;font-size:9px;margin-bottom:10px"></div><h1 id="lvl-title"></h1><p id="lvl-desc"></p><button class="btn" onclick="game.startHole()">TEE OFF</button></div><div id="results-screen" class="screen hidden"><h1 id="res-title">RESULTS</h1><table id="leaderboard"></table><p id="status-msg" style="margin-top:15px;font-size:10px"></p><button id="next-btn" class="btn" onclick="game.nextLevel()">NEXT</button><button id="retry-btn" class="btn hidden" onclick="location.reload()">RETRY</button></div><div id="victory-screen" class="screen hidden"><canvas id="victoryCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5"><h1 style="color:#C99700;text-shadow:0 0 20px #C99700,0 0 40px #FFD700">☘ IRISH CHAMPION ☘</h1><div id="diploma" style="margin:15px auto;width:280px;padding:20px;background:linear-gradient(135deg,#FFFEF5 0%,#F5E6C8 50%,#FFFEF5 100%);border:8px double #C99700;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,0.5)"><p style="color:#0C2340;font-size:6px;margin:0;letter-spacing:2px">THE UNIVERSITY OF</p><p style="color:#0C2340;font-size:12px;margin:5px 0;font-weight:bold">NOTRE DAME</p><p style="color:#0C2340;font-size:5px;margin:8px 0">HEREBY CONFERS UPON</p><p style="color:#00843D;font-size:8px;margin:5px 0">IRISH GOLF CHAMPION</p><p style="color:#0C2340;font-size:5px;margin:8px 0">THE DEGREE OF</p><p style="color:#C99700;font-size:9px;margin:5px 0;font-weight:bold">MASTER OF LINKS</p><p style="color:#0C2340;font-size:4px;margin:10px 0 5px 0">with all rights and privileges thereunto appertaining</p><div style="display:flex;justify-content:space-around;margin-top:10px"><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Rev. Robert A. Dowd</p></div><div style="font-size:20px">🏆</div><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Campus Golf Champion</p></div></div></div><p style="color:#00843D;font-size:7px;margin-top:12px">"Play Like A Champion Today"</p><button class="btn" onclick="location.reload()">PLAY AGAIN</button></div></div></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Notre Dame Golf: Journey Through Campus</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><style>body{background-color:#0C2340;color:#eee;font-family:'Press Start 2P',cursive;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;overflow:hidden;user-select:none;touch-action:none}#game-frame{position:relative;width:370px;height:700px;box-shadow:0 0 80px rgba(0,0,0,1),inset 0 0 40px rgba(0,0,0,0.5);border:12px solid #C99700;border-radius:20px;background:#000;overflow:hidden}canvas{display:block;image-rendering:pixelated}.scanlines{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.1) 50%);background-size:100% 4px;pointer-events:none;z-index:10;opacity:0.12}.vignette{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(0,0,0,0) 50%,rgba(0,0,0,0.6) 100%);pointer-events:none;z-index:15}#ui-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:flex;flex-direction:column;padding:0;box-sizing:border-box;text-shadow:2px 2px 0 #000;z-index:20}.hud-panel{position:absolute;bottom:0;left:0;display:flex;justify-content:space-between;align-items:flex-start;width:100%;height:90px;background:linear-gradient(0deg,rgba(12,35,64,0.98) 0%,rgba(12,35,64,0.8) 70%,rgba(12,35,64,0) 100%);padding:12px 12px 0 12px;box-sizing:border-box}.hud-logo-container{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25}.hud-logo{color:#C99700;font-size:20px;text-shadow:2px 2px #0C2340;letter-spacing:1px;margin-bottom:4px}.hud-tourney-label{font-size:7px;color:#fff;text-transform:uppercase;letter-spacing:1px;background:rgba(0,132,61,0.9);padding:3px 6px;border-radius:3px;border:1px solid #00843D}.hud-side{display:flex;flex-direction:column;width:100px}.hud-left{align-items:flex-start}.hud-right{align-items:flex-end}.hud-main{font-size:12px;color:#fff;margin-bottom:6px;font-weight:bold}.hud-sub{font-size:10px;color:#C99700}.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(12,35,64,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;pointer-events:auto;text-align:center}.hidden{opacity:0!important;pointer-events:none!important;z-index:-1!important}#msg-box,#score-popup,#dist-box{position:absolute;left:50%;transform:translateX(-50%);padding:12px;text-align:center;display:none;z-index:110;box-shadow:4px 4px 0 rgba(0,0,0,0.5);font-size:10px;border:2px solid white;pointer-events:none;width:75%}#msg-box{top:30%;background:rgba(180,30,30,0.95);color:white}#dist-box{top:72%;background:rgba(12,35,64,0.95);color:white;border-color:#C99700;font-size:9px}#score-popup{top:32%;background:rgba(12,35,64,0.95);font-size:24px;border:3px solid #C99700;padding:25px;border-radius:10px}#putt-alert{position:absolute;top:95px;width:100%;text-align:center;color:#00843D;font-size:9px;display:none;z-index:30;pointer-events:none;animation:pulse 1.5s infinite}#wind-box{position:absolute;top:95px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:5px 7px;border:1px solid #C99700;border-radius:4px;font-size:6px}#wind-box .label{color:#C99700;margin-bottom:3px}#wind-box .val{color:#fff;font-size:8px}#wind-arrow{color:#00843D;font-size:16px}#club-box{position:absolute;bottom:100px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:6px 8px;border:1px solid #C99700;border-radius:4px}#club-box .label{color:#C99700;font-size:6px;margin-bottom:2px}#club-box .name{color:#fff;font-size:8px}#club-box .icon{font-size:14px;margin-top:2px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}h1{color:#C99700;font-size:14px;line-height:1.5;margin-bottom:20px;text-shadow:2px 2px #0C2340}p{font-size:8px;line-height:1.8;color:#ccc;margin:6px 0}.btn{margin-top:25px;padding:14px 28px;background:#00843D;color:#fff;border:2px solid #C99700;font-family:inherit;cursor:pointer;font-size:10px;text-transform:uppercase;box-shadow:4px 4px 0 #000}.btn:hover{background:#006633}table{width:88%;margin-top:15px;border-collapse:collapse;background:rgba(0,0,0,0.5);border:2px solid #C99700}td,th{padding:10px;border-bottom:1px solid #444;text-align:left;font-size:9px}th{color:#C99700}.highlight{color:#C99700;background:rgba(201,151,0,0.1)}</style></head><body><div id="game-frame"><canvas id="gameCanvas" width="370" height="700"></canvas><div class="scanlines"></div><div class="vignette"></div><div id="ui-layer"><div class="hud-panel"><div class="hud-side hud-left"><div id="hud-hole" class="hud-main">HOLE 1</div><div id="hud-yards" class="hud-sub">340 YDS</div></div><div class="hud-logo-container"><div class="hud-logo">ND GOLF</div><div id="hud-tourney-label" class="hud-tourney-label">WARREN COURSE</div></div><div class="hud-side hud-right"><div id="hud-par" class="hud-main">PAR 4</div><div id="hud-score" class="hud-sub">E</div></div></div></div><div id="putt-alert">☘ PUTTING MODE ☘</div><div id="music-btn" onclick="toggleMusicBtn()" style="position:absolute;top:10px;right:10px;z-index:100;background:rgba(12,35,64,0.9);border:2px solid #C99700;border-radius:5px;padding:8px;cursor:pointer;font-size:16px;pointer-events:auto">🎵</div><div id="wind-box"><div class="label">WIND</div><div id="wind-arrow">➤</div><div class="val" id="wind-val">5 MPH</div></div><div id="club-box"><div class="label">CLUB</div><div class="name" id="club-name">DRIVER</div><div class="icon" id="club-icon">🏌️</div></div><div id="msg-box">OUT OF BOUNDS!<br>+1 Stroke</div><div id="dist-box">150 YDS TO PIN</div><div id="score-popup">BIRDIE!</div><div id="welcome-screen" class="screen"><canvas id="titleCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5;margin-top:350px"><button class="btn" onclick="showTutorial()" style="margin-bottom:15px">HOW TO PLAY</button><br><button class="btn" style="background:#444;font-size:8px;padding:10px 20px" onclick="game.init()">SKIP TUTORIAL</button></div></div><div id="tutorial-screen" class="screen hidden"><h1 style="color:#C99700;font-size:18px;margin:5px 0;text-shadow:3px 3px #000">☘ HOW TO PLAY ☘</h1><div style="background:rgba(0,0,0,0.7);padding:12px 18px;border-radius:10px;margin-bottom:10px;text-align:left;max-width:340px;border:2px solid #C99700"><p style="color:#FFD700;font-size:12px;margin:0 0 10px 0;text-align:center">THREE SIMPLE STEPS:</p><p style="color:#fff;font-size:11px;margin:6px 0"><span style="color:#FFD700;font-size:14px">①</span> TAP the golf ball</p><p style="color:#fff;font-size:11px;margin:6px 0"><span style="color:#FFD700;font-size:14px">②</span> DRAG back to aim & set power</p><p style="color:#fff;font-size:11px;margin:6px 0"><span style="color:#FFD700;font-size:14px">③</span> RELEASE to shoot!</p><p style="color:#00843D;font-size:10px;margin:12px 0 0 0;text-align:center;padding:8px;background:rgba(0,132,61,0.2);border-radius:5px">⚠ HIT THE TARGET TO UNLOCK THE HOLE!</p></div><canvas id="tutorialCanvas" width="370" height="380" style="border-radius:8px;border:3px solid #C99700"></canvas><button class="btn" onclick="game.init()" style="margin-top:8px;font-size:12px">START GAME</button></div><div id="level-screen" class="screen hidden"><div id="lvl-tag" style="color:#00843D;font-size:9px;margin-bottom:10px"></div><h1 id="lvl-title"></h1><p id="lvl-desc"></p><button class="btn" onclick="game.startHole()">TEE OFF</button></div><div id="results-screen" class="screen hidden"><h1 id="res-title">RESULTS</h1><table id="leaderboard"></table><p id="status-msg" style="margin-top:15px;font-size:10px"></p><button id="next-btn" class="btn" onclick="game.nextLevel()">NEXT</button><button id="retry-btn" class="btn hidden" onclick="location.reload()">RETRY</button></div><div id="victory-screen" class="screen hidden"><canvas id="victoryCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5"><h1 style="color:#C99700;text-shadow:0 0 20px #C99700,0 0 40px #FFD700">☘ IRISH CHAMPION ☘</h1><div id="diploma" style="margin:15px auto;width:280px;padding:20px;background:linear-gradient(135deg,#FFFEF5 0%,#F5E6C8 50%,#FFFEF5 100%);border:8px double #C99700;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,0.5)"><p style="color:#0C2340;font-size:6px;margin:0;letter-spacing:2px">THE UNIVERSITY OF</p><p style="color:#0C2340;font-size:12px;margin:5px 0;font-weight:bold">NOTRE DAME</p><p style="color:#0C2340;font-size:5px;margin:8px 0">HEREBY CONFERS UPON</p><p style="color:#00843D;font-size:8px;margin:5px 0">IRISH GOLF CHAMPION</p><p style="color:#0C2340;font-size:5px;margin:8px 0">THE DEGREE OF</p><p style="color:#C99700;font-size:9px;margin:5px 0;font-weight:bold">MASTER OF LINKS</p><p style="color:#0C2340;font-size:4px;margin:10px 0 5px 0">with all rights and privileges thereunto appertaining</p><div style="display:flex;justify-content:space-around;margin-top:10px"><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Rev. Robert A. Dowd</p></div><div style="font-size:20px">🏆</div><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Campus Golf Champion</p></div></div></div><p style="color:#00843D;font-size:7px;margin-top:12px">"Play Like A Champion Today"</p><button class="btn" onclick="location.reload()">PLAY AGAIN</button></div></div></div>
 <script>
-const GW=370,GH=700,HOLE_R=7,YARDS_PX=0.75;
-const rand=(a,b)=>Math.random()*(b-a)+a;
-const dist=(x1,y1,x2,y2)=>Math.hypot(x1-x2,y1-y2);
-const lerp=(a,b,t)=>a+(b-a)*t;
+// ===========================================
+// CONSTANTS
+// ===========================================
+const GW = 370, GH = 700, HOLE_R = 7, YARDS_PX = 0.75;
 
-// Audio - Basic sound effects using Web Audio API
-const Audio={
-ctx:null,
-bgMusic:null,
-musicPlaying:false,
-init(){
-if(!this.ctx)this.ctx=new(window.AudioContext||window.webkitAudioContext)();
-this.ctx.resume();
-// Initialize background music
-if(!this.bgMusic){
-this.bgMusic=new window.Audio('victory-march.mp3');
-this.bgMusic.loop=true;
-this.bgMusic.volume=0.3;
-}
-},
+const FRICTION = {
+    FAIRWAY: 0.98,
+    ROUGH: 0.94,
+    GREEN: 0.96,
+    SAND: 0.85
+};
+
+const CLUB_RANGES = {
+    DRIVER: 200,
+    WOOD: 170,
+    IRON5: 140,
+    IRON7: 100,
+    IRON9: 60
+};
+
+// ===========================================
+// UTILITY FUNCTIONS
+// ===========================================
+const rand = (a, b) => Math.random() * (b - a) + a;
+const dist = (x1, y1, x2, y2) => Math.hypot(x1 - x2, y1 - y2);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// ===========================================
+// AUDIO MANAGER
+// ===========================================
+const Audio = {
+    ctx: null,
+    bgMusic: null,
+    musicPlaying: false,
+
+    init() {
+        try {
+            if (!this.ctx) {
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            this.ctx.resume();
+        } catch (e) {
+            console.warn('AudioContext not supported:', e);
+            this.ctx = null;
+        }
+
+        if (!this.bgMusic) {
+            this.bgMusic = new window.Audio('victory-march.mp3');
+            this.bgMusic.loop = true;
+            this.bgMusic.volume = 0.3;
+            this.bgMusic.addEventListener('error', () => {
+                console.warn('Background music failed to load');
+                this.bgMusic = null;
+            });
+        }
+    },
 playMusic(){
 if(this.bgMusic&&!this.musicPlaying){
 this.bgMusic.play().catch(e=>console.log('Music autoplay blocked'));
@@ -61,19 +97,19 @@ startTutorialDemo();
 function startTutorialDemo(){
 const canvas=document.getElementById('tutorialCanvas');
 const ctx=canvas.getContext('2d');
-const W=370,H=480;
+const W=370,H=380;
 canvas.height=H;
 canvas.style.touchAction='none';
 
 let tick=0,userMode=false,userDragging=false;
-let ballX=185,ballY=400,ballVX=0,ballVY=0,ballMoving=false;
+let ballX=185,ballY=320,ballVX=0,ballVY=0,ballMoving=false;
 let dragStartX=0,dragStartY=0,dragX=0,dragY=0;
 let targetHit=false,holeUnlocked=false,holed=false;
-const teeX=100,teeY=400;
-const targetX=280,targetY=250;// Off to the right - requires angled shot
-const holeX=185,holeY=90;
+const teeX=100,teeY=320;
+const targetX=280,targetY=200;// Off to the right - requires angled shot
+const holeX=185,holeY=80;
 let particles=[];
-let autoPhase='show';// show, drag, shoot, hit, putt, done
+let autoPhase='show';// show, drag1, shoot1, wait1, drag2, shoot2, done
 let autoTick=0;
 let message='';
 let messageTimer=0;
@@ -213,8 +249,8 @@ fairwayGrad.addColorStop(0,'#5CAD4A');fairwayGrad.addColorStop(0.5,'#4CAF50');fa
 ctx.lineWidth=50;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=fairwayGrad;
 ctx.beginPath();
 ctx.moveTo(teeX,teeY);
-ctx.quadraticCurveTo(170,320,targetX,targetY);
-ctx.quadraticCurveTo(230,195,holeX,holeY+10);
+ctx.quadraticCurveTo(170,260,targetX,targetY);
+ctx.quadraticCurveTo(230,150,holeX,holeY+10);
 ctx.stroke();
 // Mow stripes
 for(let i=-1;i<=1;i++){
@@ -222,13 +258,13 @@ ctx.strokeStyle=i%2?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.05)';
 ctx.lineWidth=10;
 ctx.beginPath();
 ctx.moveTo(teeX+i*8,teeY);
-ctx.quadraticCurveTo(170+i*5,320,targetX+i*4,targetY);
-ctx.quadraticCurveTo(230+i*3,195,holeX+i*2,holeY+10);
+ctx.quadraticCurveTo(170+i*5,260,targetX+i*4,targetY);
+ctx.quadraticCurveTo(230+i*3,150,holeX+i*2,holeY+10);
 ctx.stroke();
 }
 // Cart path
 ctx.strokeStyle='#C9B896';ctx.lineWidth=8;ctx.lineCap='round';
-ctx.beginPath();ctx.moveTo(5,H-30);ctx.quadraticCurveTo(30,350,50,280);ctx.quadraticCurveTo(80,200,W-20,180);ctx.stroke();
+ctx.beginPath();ctx.moveTo(5,H-30);ctx.quadraticCurveTo(30,280,50,220);ctx.quadraticCurveTo(80,160,W-20,140);ctx.stroke();
 // Green around hole
 ctx.fillStyle='#5CAD4A';ctx.beginPath();ctx.ellipse(holeX,holeY,48,35,0,0,Math.PI*2);ctx.fill();
 ctx.fillStyle='#66BB6A';ctx.beginPath();ctx.ellipse(holeX,holeY,38,28,0,0,Math.PI*2);ctx.fill();
@@ -301,22 +337,22 @@ ctx.strokeStyle='#ccc';ctx.lineWidth=1;ctx.stroke();
 }
 
 function drawDragLine(){
-if(!userDragging&&autoPhase!=='drag'&&autoPhase!=='putt')return;
+if(!userDragging&&autoPhase!=='drag1'&&autoPhase!=='drag2')return;
 let sx,sy,ex,ey;
 if(userDragging){
 sx=dragStartX;sy=dragStartY;ex=dragX;ey=dragY;
-}else if(autoPhase==='drag'){
+}else if(autoPhase==='drag1'){
 sx=ballX;sy=ballY;
 const toTargetX=targetX-ballX,toTargetY=targetY-ballY;
 const toTargetDist=Math.hypot(toTargetX,toTargetY);
-const dragLen=autoTick*6;
+const dragLen=autoTick*4;// Slower drag
 ex=ballX-(toTargetX/toTargetDist)*dragLen;
 ey=ballY-(toTargetY/toTargetDist)*dragLen;
-}else if(autoPhase==='putt'){
+}else if(autoPhase==='drag2'){
 sx=ballX;sy=ballY;
 const toHoleX=holeX-ballX,toHoleY=holeY-ballY;
 const toHoleDist=Math.hypot(toHoleX,toHoleY);
-const dragLen=Math.min(autoTick/8,1)*60;
+const dragLen=Math.min(autoTick/10,1)*50;// Slower drag
 ex=ballX-(toHoleX/toHoleDist)*dragLen;
 ey=ballY-(toHoleY/toHoleDist)*dragLen;
 }else return;
@@ -342,51 +378,45 @@ ctx.stroke();
 }
 
 function drawUI(){
-// Top bar
-ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,0,W,50);
-ctx.strokeStyle='#C99700';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,50);ctx.lineTo(W,50);ctx.stroke();
+// Top status bar
+ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,0,W,45);
+ctx.strokeStyle='#C99700';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,45);ctx.lineTo(W,45);ctx.stroke();
 ctx.textAlign='center';
 if(holed){
-ctx.fillStyle='#C99700';ctx.font='10px "Press Start 2P"';ctx.fillText('HOLE COMPLETE!',W/2,22);
-ctx.fillStyle='#fff';ctx.font='7px "Press Start 2P"';ctx.fillText('Tap to replay',W/2,40);
+ctx.fillStyle='#C99700';ctx.font='14px "Press Start 2P"';ctx.fillText('COMPLETE!',W/2,20);
+ctx.fillStyle='#fff';ctx.font='10px "Press Start 2P"';ctx.fillText('Tap to replay demo',W/2,38);
 }else if(holeUnlocked){
 // Flashing "shoot again" after unlock
 const flash=Math.sin(tick*0.2)>0;
-ctx.fillStyle='#00843D';ctx.font='9px "Press Start 2P"';ctx.fillText('UNLOCKED!',W/2,16);
-ctx.fillStyle=flash?'#FFD700':'#fff';ctx.font='8px "Press Start 2P"';
-ctx.fillText('SHOOT AGAIN!',W/2,32);
-ctx.fillStyle='#aaa';ctx.font='6px "Press Start 2P"';
-ctx.fillText('Sink the ball in the hole',W/2,45);
+ctx.fillStyle='#00843D';ctx.font='12px "Press Start 2P"';ctx.fillText('UNLOCKED!',W/2,18);
+ctx.fillStyle=flash?'#FFD700':'#fff';ctx.font='10px "Press Start 2P"';
+ctx.fillText('Now sink the putt!',W/2,36);
 }else{
 // Flashing instruction
 const flash=Math.sin(tick*0.15)>0;
-ctx.fillStyle=flash?'#FFD700':'#C99700';ctx.font='9px "Press Start 2P"';
-ctx.fillText('HIT TARGET TO UNLOCK',W/2,18);
-ctx.fillStyle='#ff6666';ctx.font='7px "Press Start 2P"';
-ctx.fillText('Hole is LOCKED!',W/2,32);
-ctx.fillStyle='#aaa';ctx.font='6px "Press Start 2P"';
-ctx.fillText(userMode?'Drag back & release':'Tap the ball to try!',W/2,44);
+ctx.fillStyle=flash?'#FFD700':'#C99700';ctx.font='11px "Press Start 2P"';
+ctx.fillText('HIT THE TARGET!',W/2,18);
+ctx.fillStyle='#ff6666';ctx.font='9px "Press Start 2P"';
+ctx.fillText('Hole is LOCKED',W/2,35);
 }
 ctx.textAlign='left';
-// Bottom info bar - explain different targets per level (BIG & FLASHING)
-const infoFlash=Math.sin(tick*0.12)>0;
-ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,H-58,W,58);
-ctx.strokeStyle=infoFlash?'#FFD700':'#C99700';ctx.lineWidth=3;
-ctx.beginPath();ctx.moveTo(0,H-58);ctx.lineTo(W,H-58);ctx.stroke();
+// Bottom info bar
+ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,H-45,W,45);
+ctx.strokeStyle='#C99700';ctx.lineWidth=3;
+ctx.beginPath();ctx.moveTo(0,H-45);ctx.lineTo(W,H-45);ctx.stroke();
 ctx.textAlign='center';
+const infoFlash=Math.sin(tick*0.12)>0;
 ctx.fillStyle=infoFlash?'#FFD700':'#C99700';
-ctx.font='8px "Press Start 2P"';
-ctx.fillText('EVERY LEVEL HAS A',W/2,H-42);
 ctx.font='10px "Press Start 2P"';
-ctx.fillStyle=infoFlash?'#fff':'#FFD700';
-ctx.fillText('DIFFERENT TARGET',W/2,H-26);
-ctx.fillText('TO UNLOCK!',W/2,H-10);
+ctx.fillText('TRY IT YOURSELF!',W/2,H-28);
+ctx.fillStyle='#fff';ctx.font='9px "Press Start 2P"';
+ctx.fillText('Tap ball below to play',W/2,H-12);
 ctx.textAlign='left';
-// Message
+// Message popup
 if(messageTimer>0){
 messageTimer--;
 ctx.fillStyle=`rgba(0,132,61,${Math.min(messageTimer/20,1)})`;
-ctx.font='12px "Press Start 2P"';ctx.textAlign='center';
+ctx.font='16px "Press Start 2P"';ctx.textAlign='center';
 ctx.fillText(message,W/2,H/2);ctx.textAlign='left';
 }
 }
@@ -401,7 +431,8 @@ ctx.globalAlpha=1;
 function updateBall(){
 if(!ballMoving)return;
 ballX+=ballVX;ballY+=ballVY;
-ballVX*=0.98;ballVY*=0.98;
+// More realistic friction - slower deceleration like real game
+ballVX*=0.97;ballVY*=0.97;
 // Target check - STOP at target when hit
 if(!targetHit&&Math.hypot(ballX-targetX,ballY-targetY)<25){
 targetHit=true;holeUnlocked=true;
@@ -409,50 +440,60 @@ ballX=targetX;ballY=targetY+15;// Stop near target
 ballVX=0;ballVY=0;ballMoving=false;// Stop immediately
 addParticles(targetX,targetY,'#C99700',12);
 addParticles(targetX,targetY,'#00843D',8);
-showMsg('UNLOCKED!',25);
+showMsg('UNLOCKED!',50);
 }
 // Hole check - easier to sink
-if(holeUnlocked&&!holed&&Math.hypot(ballX-holeX,ballY-holeY)<12&&Math.hypot(ballVX,ballVY)<5){
+if(holeUnlocked&&!holed&&Math.hypot(ballX-holeX,ballY-holeY)<12&&Math.hypot(ballVX,ballVY)<4){
 holed=true;ballMoving=false;
 addParticles(holeX,holeY,'#C99700',15);
-showMsg('NICE!',40);
-setTimeout(()=>{if(!userMode)fullReset();},800);// Faster reset
+showMsg('NICE!',60);
 }
 // Bounds
-if(ballX<10||ballX>W-10||ballY<55||ballY>H-10){resetBall();showMsg('OUT!',20);}
-// Stop
-if(Math.hypot(ballVX,ballVY)<0.4){ballMoving=false;}// Stop faster
+if(ballX<10||ballX>W-10||ballY<50||ballY>H-50){resetBall();showMsg('OUT!',30);}
+// Stop when ball slows down enough
+if(Math.hypot(ballVX,ballVY)<0.25){ballMoving=false;}
 }
 
 function autoDemo(){
 if(userMode)return;
 autoTick++;
 if(autoPhase==='show'){
-if(autoTick>12){autoPhase='drag';autoTick=0;}
-}else if(autoPhase==='drag'){
-if(autoTick>15){
-autoPhase='shoot';autoTick=0;
+// Pause to let player read instructions - SHOT 1
+if(autoTick>60){autoPhase='drag1';autoTick=0;}
+}else if(autoPhase==='drag1'){
+// Slow drag animation toward target
+if(autoTick>50){
+autoPhase='shoot1';autoTick=0;
 const dx=targetX-ballX,dy=targetY-ballY;
-const dist=Math.hypot(dx,dy);
-ballVX=(dx/dist)*8;ballVY=(dy/dist)*8;
+const d=Math.hypot(dx,dy);
+// Shot toward target - speed 8 to cover ~216px with 0.97 friction
+ballVX=(dx/d)*8;ballVY=(dy/d)*8;
 ballMoving=true;
 }
-}else if(autoPhase==='shoot'){
-// Ball stopped at target - immediately start putt
-if(!ballMoving&&targetHit&&!holed){
-autoPhase='putt';autoTick=0;
+}else if(autoPhase==='shoot1'){
+// Wait for ball to stop at target
+if(!ballMoving&&targetHit){
+autoPhase='wait1';autoTick=0;
 }
-}else if(autoPhase==='putt'){
-if(autoTick>12&&!ballMoving){
-// Shoot at hole
+}else if(autoPhase==='wait1'){
+// Pause after hitting target - show UNLOCKED message
+if(autoTick>90){autoPhase='drag2';autoTick=0;}
+}else if(autoPhase==='drag2'){
+// Slow drag animation toward hole - SHOT 2
+if(autoTick>50&&!ballMoving){
+autoPhase='shoot2';autoTick=0;
 const dx=holeX-ballX,dy=holeY-ballY;
-const dist=Math.hypot(dx,dy);
-ballVX=(dx/dist)*5;ballVY=(dy/dist)*5;
+const d=Math.hypot(dx,dy);
+// Putt toward hole - speed 6 to cover ~165px distance
+ballVX=(dx/d)*6;ballVY=(dy/d)*6;
 ballMoving=true;
-autoPhase='done';
 }
+}else if(autoPhase==='shoot2'){
+// Wait for ball to hole
+if(holed){autoPhase='done';autoTick=0;}
 }else if(autoPhase==='done'){
-if(holed&&autoTick>25){fullReset();}
+// Longer pause after holing out before restart
+if(autoTick>100){fullReset();}
 }
 }
 
@@ -483,11 +524,16 @@ drawBall();
 drawDragLine();
 drawParticles();
 drawUI();
-// Finger hint for auto demo - initial shot
-if(!userMode&&!ballMoving&&autoPhase==='show'){
+// SHOT 1 indicator and hints
+if(!userMode&&(autoPhase==='show'||autoPhase==='drag1'||autoPhase==='shoot1')){
+// Show "SHOT 1" label
+ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(W/2-50,8,100,22);
+ctx.fillStyle='#FFD700';ctx.font='bold 10px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('SHOT 1',W/2,24);ctx.textAlign='left';
+// Finger hint pointing at target
+if(!ballMoving&&autoPhase==='show'){
 const fy=ballY+35+Math.sin(tick*0.12)*8;
 ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
-// Arrow pointing TOWARD the target
 const toTargetX=targetX-ballX,toTargetY=targetY-ballY;
 const toTargetDist=Math.hypot(toTargetX,toTargetY);
 const arrowBob=Math.sin(tick*0.15)*3;
@@ -502,13 +548,19 @@ ctx.lineTo(arrowX+Math.cos(ang+2.5)*8,arrowY+Math.sin(ang+2.5)*8);
 ctx.lineTo(arrowX+Math.cos(ang-2.5)*8,arrowY+Math.sin(ang-2.5)*8);
 ctx.closePath();ctx.fill();
 ctx.fillStyle='#fff';ctx.font='6px "Press Start 2P"';ctx.textAlign='center';
-ctx.fillText('AIM HERE',arrowX,arrowY-10);ctx.textAlign='left';
+ctx.fillText('HIT MARKER',arrowX,arrowY-10);ctx.textAlign='left';
 }
-// Finger hint after unlock - prompt for second shot
-if(holeUnlocked&&!holed&&!ballMoving&&!userDragging){
+}
+// SHOT 2 indicator and hints
+if(!userMode&&(autoPhase==='wait1'||autoPhase==='drag2'||autoPhase==='shoot2')){
+// Show "SHOT 2" label
+ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(W/2-50,8,100,22);
+ctx.fillStyle='#00843D';ctx.font='bold 10px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('SHOT 2',W/2,24);ctx.textAlign='left';
+// Finger hint pointing at hole
+if(!ballMoving&&(autoPhase==='wait1'||autoPhase==='drag2')){
 const fy=ballY+35+Math.sin(tick*0.12)*8;
 ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
-// Arrow pointing TOWARD the hole from ball position
 const toHoleX=holeX-ballX,toHoleY=holeY-ballY;
 const toHoleDist=Math.hypot(toHoleX,toHoleY);
 const arrowBob=Math.sin(tick*0.15)*3;
@@ -522,9 +574,18 @@ ctx.moveTo(arrowX+Math.cos(ang)*10,arrowY+Math.sin(ang)*10);
 ctx.lineTo(arrowX+Math.cos(ang+2.5)*8,arrowY+Math.sin(ang+2.5)*8);
 ctx.lineTo(arrowX+Math.cos(ang-2.5)*8,arrowY+Math.sin(ang-2.5)*8);
 ctx.closePath();ctx.fill();
-// "TO HOLE" label near arrow
 ctx.fillStyle='#fff';ctx.font='6px "Press Start 2P"';ctx.textAlign='center';
-ctx.fillText('TO HOLE',arrowX,arrowY-12);ctx.textAlign='left';
+ctx.fillText('PUTT IN',arrowX,arrowY-12);ctx.textAlign='left';
+}
+}
+// User mode hints (when user takes over)
+if(userMode&&!holeUnlocked&&!ballMoving&&!userDragging){
+const fy=ballY+35+Math.sin(tick*0.12)*8;
+ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
+}
+if(userMode&&holeUnlocked&&!holed&&!ballMoving&&!userDragging){
+const fy=ballY+35+Math.sin(tick*0.12)*8;
+ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
 }
 tutorialAnim=requestAnimationFrame(draw);
 }
@@ -540,7 +601,15 @@ draw();
 
 // Clubs
 const CLUBS={DRIVER:{n:"DRIVER",i:"🏌️"},WOOD:{n:"3 WOOD",i:"🪵"},IRON5:{n:"5 IRON",i:"🔩"},IRON7:{n:"7 IRON",i:"⛳"},IRON9:{n:"9 IRON",i:"🎯"},WEDGE:{n:"WEDGE",i:"⬆️"},PUTTER:{n:"PUTTER",i:"🏒"}};
-function getClub(d,putt){if(putt)return CLUBS.PUTTER;if(d>200)return CLUBS.DRIVER;if(d>170)return CLUBS.WOOD;if(d>140)return CLUBS.IRON5;if(d>100)return CLUBS.IRON7;if(d>60)return CLUBS.IRON9;return CLUBS.WEDGE}
+function getClub(d, putt) {
+    if (putt) return CLUBS.PUTTER;
+    if (d > CLUB_RANGES.DRIVER) return CLUBS.DRIVER;
+    if (d > CLUB_RANGES.WOOD) return CLUBS.WOOD;
+    if (d > CLUB_RANGES.IRON5) return CLUBS.IRON5;
+    if (d > CLUB_RANGES.IRON7) return CLUBS.IRON7;
+    if (d > CLUB_RANGES.IRON9) return CLUBS.IRON9;
+    return CLUBS.WEDGE;
+}
 
 // Vector helper
 class V{constructor(x,y){this.x=x;this.y=y}add(v){return new V(this.x+v.x,this.y+v.y)}sub(v){return new V(this.x-v.x,this.y-v.y)}mul(n){return new V(this.x*n,this.y*n)}mag(){return Math.hypot(this.x,this.y)}norm(){const m=this.mag();return m?new V(this.x/m,this.y/m):new V(0,0)}}
@@ -607,6 +676,24 @@ this.input();
 this.loop();
 }
 
+// Cleanup method to prevent memory leaks between levels
+cleanup() {
+    this.particles = [];
+    this.fireworks = [];
+    this.players = [];
+    this.hazards = [];
+    this.trees = [];
+    this.clouds = [];
+    this.students = [];
+    this.candles = [];
+    this.birds = [];
+    this.squirrels = [];
+    this.barPatrons = [];
+    this.tailgaters = [];
+    this.bandMembers = [];
+    this.diners = [];
+}
+
 init(){
 // Stop tutorial if running
 if(tutorialAnim){cancelAnimationFrame(tutorialAnim);tutorialAnim=null;}
@@ -621,6 +708,7 @@ this.startLevel();
 }
 
 startLevel(){
+this.cleanup(); // Clean up previous level's objects
 this.holeIdx=0;
 this.levelScore=0;
 this.rivals=[{n:"Rockne",s:0},{n:"Rudy",s:1},{n:"Holtz",s:1},{n:"Parseghian",s:2}];
@@ -721,7 +809,7 @@ const targetConfigs=[
 {x:50,y:375,type:'freeman',label:'HIT COACH FREEMAN'},// Stadium - Marcus Freeman on sideline
 {x:GW-80,y:450,type:'beermug',label:'HIT THE MUG'},// Legends
 {x:GW/2-80,y:380,type:'bell',label:'RING THE BELL'},// Dome
-{x:GW/2,y:320,type:'pool',label:'TOUCH POOL'},// Library
+{x:GW/2,y:290,type:'pool',label:'TOUCH POOL EDGE'},// Library - just outside pool near TD Jesus
 {x:GW/2,y:400,type:'candle',label:'LIGHT CANDLE'},// Grotto
 {x:200,y:400,type:'tray',label:'HIT THE TRAY'},// Dining Hall
 {x:GW-100,y:450,type:'cornhole',label:'HIT CORNHOLE'},// Tailgate
@@ -1027,16 +1115,67 @@ this.tee=cfg.tee;
 this.hole=cfg.hole;
 // Reset all arrays from other levels
 this.hazards=[];
-// Benches along each side of the vertical reflecting pool with seated people
+// Benches along sides of level facing the reflecting pool with gameday fans
 this.libraryBenches=[];
-// Left side benches (facing pool)
-this.libraryBenches.push({x:GW/2-70,y:330,w:40,h:12,people:[{seated:true,reading:true},{seated:true,reading:false}]});
-this.libraryBenches.push({x:GW/2-70,y:400,w:40,h:12,people:[{seated:true,reading:false}]});
-this.libraryBenches.push({x:GW/2-70,y:470,w:40,h:12,people:[{seated:true,reading:true}]});
-// Right side benches (facing pool)
-this.libraryBenches.push({x:GW/2+70,y:330,w:40,h:12,people:[{seated:true,reading:true},{seated:true,reading:true}]});
-this.libraryBenches.push({x:GW/2+70,y:400,w:40,h:12,people:[{seated:true,reading:false},{seated:true,reading:true}]});
-this.libraryBenches.push({x:GW/2+70,y:470,w:40,h:12,people:[{seated:true,reading:false}]});
+// Gameday outfit options: shirt colors, has hat, has foam finger, has face paint, hair style
+const gamedayFan = () => ({
+    seated: true,
+    shirt: ['#0C2340','#C99700','#00843D','#fff'][Math.floor(rand(0,4))],
+    hasHat: rand(0,1) > 0.5,
+    hatColor: rand(0,1) > 0.5 ? '#0C2340' : '#C99700',
+    hasFoamFinger: rand(0,1) > 0.7,
+    hasFacePaint: rand(0,1) > 0.6,
+    hairStyle: ['short','long','bald','ponytail'][Math.floor(rand(0,4))],
+    skinTone: ['#FFCCBC','#DEB887','#8D5524','#C68642','#F1C27D'][Math.floor(rand(0,5))],
+    hasPhone: rand(0,1) > 0.6,
+    isWaving: rand(0,1) > 0.7
+});
+// Left side benches (facing right toward pool)
+this.libraryBenches.push({x:50,y:330,w:12,h:40,facing:'right',people:[gamedayFan(),gamedayFan()]});
+this.libraryBenches.push({x:50,y:420,w:12,h:40,facing:'right',people:[gamedayFan()]});
+this.libraryBenches.push({x:50,y:510,w:12,h:40,facing:'right',people:[gamedayFan(),gamedayFan()]});
+// Right side benches (facing left toward pool)
+this.libraryBenches.push({x:GW-50,y:330,w:12,h:40,facing:'left',people:[gamedayFan(),gamedayFan()]});
+this.libraryBenches.push({x:GW-50,y:420,w:12,h:40,facing:'left',people:[gamedayFan(),gamedayFan()]});
+this.libraryBenches.push({x:GW-50,y:510,w:12,h:40,facing:'left',people:[gamedayFan()]});
+
+// Trees around the benches
+this.libraryTrees=[];
+// Left side trees (behind benches)
+this.libraryTrees.push({x:25,y:300,size:1.2,type:'oak'});
+this.libraryTrees.push({x:30,y:380,size:1.0,type:'maple'});
+this.libraryTrees.push({x:20,y:470,size:1.1,type:'oak'});
+this.libraryTrees.push({x:28,y:550,size:0.9,type:'maple'});
+// Right side trees (behind benches)
+this.libraryTrees.push({x:GW-25,y:310,size:1.1,type:'oak'});
+this.libraryTrees.push({x:GW-30,y:390,size:1.0,type:'maple'});
+this.libraryTrees.push({x:GW-22,y:480,size:1.2,type:'oak'});
+this.libraryTrees.push({x:GW-28,y:560,size:0.95,type:'maple'});
+
+// Flower beds around benches
+this.libraryFlowers=[];
+// Left side flower beds
+this.libraryFlowers.push({x:50,y:295,w:30,h:15,colors:['#FFD700','#C99700','#fff']});
+this.libraryFlowers.push({x:50,y:385,w:25,h:12,colors:['#0C2340','#C99700','#fff']});
+this.libraryFlowers.push({x:50,y:545,w:28,h:14,colors:['#00843D','#C99700','#fff']});
+// Right side flower beds
+this.libraryFlowers.push({x:GW-50,y:295,w:30,h:15,colors:['#C99700','#00843D','#fff']});
+this.libraryFlowers.push({x:GW-50,y:455,w:25,h:12,colors:['#FFD700','#0C2340','#fff']});
+this.libraryFlowers.push({x:GW-50,y:545,w:28,h:14,colors:['#C99700','#fff','#00843D']});
+// Generate individual flowers in each bed
+this.libraryFlowers.forEach(bed => {
+    bed.flowers = [];
+    for(let i = 0; i < 12; i++) {
+        bed.flowers.push({
+            dx: rand(-bed.w/2, bed.w/2),
+            dy: rand(-bed.h/2, bed.h/2),
+            color: bed.colors[Math.floor(rand(0, bed.colors.length))],
+            size: rand(2, 4),
+            phase: rand(0, Math.PI * 2)
+        });
+    }
+});
+
 this.students=[];
 for(let i=0;i<5;i++){this.students.push({x:rand(60,GW-60),y:rand(480,620),vx:rand(-0.3,0.3),vy:0})}
 // Player Walk - Coach Freeman and team walk near the library (top of screen)
@@ -3643,30 +3782,133 @@ ctx.stroke();
 }
 }
 
-// Benches along reflecting pool with seated people
+// Trees behind the benches
+this.libraryTrees?.forEach(t=>{
+const s=t.size||1;
+if(t.type==='oak'){
+// Oak tree - round canopy
+ctx.fillStyle="#3E2723";ctx.fillRect(t.x-3*s,t.y,6*s,25*s);
+ctx.fillStyle="#2E7D32";ctx.beginPath();ctx.arc(t.x,t.y-5*s,22*s,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#388E3C";ctx.beginPath();ctx.arc(t.x-8*s,t.y-2*s,14*s,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#43A047";ctx.beginPath();ctx.arc(t.x+10*s,t.y-8*s,12*s,0,Math.PI*2);ctx.fill();
+}else{
+// Maple tree - more spread out
+ctx.fillStyle="#4E342E";ctx.fillRect(t.x-2*s,t.y+5,4*s,22*s);
+ctx.fillStyle="#8BC34A";ctx.beginPath();ctx.arc(t.x,t.y-8*s,18*s,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#9CCC65";ctx.beginPath();ctx.arc(t.x-12*s,t.y,10*s,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#AED581";ctx.beginPath();ctx.arc(t.x+12*s,t.y-4*s,11*s,0,Math.PI*2);ctx.fill();
+}
+});
+
+// Flower beds around benches
+this.libraryFlowers?.forEach(bed=>{
+// Mulch/soil base
+ctx.fillStyle="#5D4037";
+ctx.fillRect(bed.x-bed.w/2-2,bed.y-bed.h/2-2,bed.w+4,bed.h+4);
+ctx.fillStyle="#3E2723";
+ctx.fillRect(bed.x-bed.w/2,bed.y-bed.h/2,bed.w,bed.h);
+// Individual flowers
+bed.flowers?.forEach(f=>{
+const sway=Math.sin(this.tick*0.03+f.phase)*1.5;
+// Stem
+ctx.strokeStyle="#2E7D32";ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(bed.x+f.dx,bed.y+f.dy+f.size);
+ctx.lineTo(bed.x+f.dx+sway,bed.y+f.dy-f.size);ctx.stroke();
+// Flower head
+ctx.fillStyle=f.color;ctx.beginPath();
+ctx.arc(bed.x+f.dx+sway,bed.y+f.dy-f.size,f.size,0,Math.PI*2);ctx.fill();
+// Flower center
+ctx.fillStyle="#FFD700";ctx.beginPath();
+ctx.arc(bed.x+f.dx+sway,bed.y+f.dy-f.size,f.size*0.4,0,Math.PI*2);ctx.fill();
+});
+});
+
+// Benches on sides facing the reflecting pool
 this.libraryBenches?.forEach(b=>{
-// Bench body (brown wood)
+// Bench body (brown wood) - vertical orientation
 ctx.fillStyle="#5D4037";
 ctx.fillRect(b.x-b.w/2,b.y-b.h/2,b.w,b.h);
 // Bench legs
 ctx.fillStyle="#4E342E";
-ctx.fillRect(b.x-b.w/2+3,b.y+b.h/2-2,4,8);
-ctx.fillRect(b.x+b.w/2-7,b.y+b.h/2-2,4,8);
-// Bench back
+ctx.fillRect(b.x-b.w/2,b.y-b.h/2+3,4,4);
+ctx.fillRect(b.x-b.w/2,b.y+b.h/2-7,4,4);
+// Bench back (on outer edge, away from pool)
 ctx.fillStyle="#6D4C41";
-ctx.fillRect(b.x-b.w/2,b.y-b.h/2-8,b.w,6);
-// Seated people
+if(b.facing==='right'){
+ctx.fillRect(b.x-b.w/2-6,b.y-b.h/2,6,b.h);
+}else{
+ctx.fillRect(b.x+b.w/2,b.y-b.h/2,6,b.h);
+}
+// Seated gameday fans facing the pool
 b.people?.forEach((p,i)=>{
-const px=b.x-b.w/2+12+i*18;
-const py=b.y-b.h/2;
-// Body (seated)
-ctx.fillStyle="#0C2340";ctx.fillRect(px-3,py-12,6,10);
-// Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(px,py-16,4,0,Math.PI*2);ctx.fill();
-// Book if reading
-if(p.reading){
-ctx.fillStyle="#fff";ctx.fillRect(px+3,py-8,5,4);
-ctx.fillStyle="#C99700";ctx.fillRect(px+3,py-8,5,1);
+const py=b.y-b.h/2+12+i*16;
+const px=b.x;
+const dir=b.facing==='right'?1:-1;
+const waveOffset=p.isWaving?Math.sin(this.tick*0.15)*3:0;
+
+// Legs
+ctx.fillStyle="#1A237E";ctx.fillRect(px-4,py+3,8,6);
+
+// Body/Shirt (gameday colors)
+ctx.fillStyle=p.shirt||"#0C2340";ctx.fillRect(px-4,py-6,8,10);
+
+// Arms
+ctx.fillStyle=p.shirt||"#0C2340";
+if(p.isWaving){
+// Waving arm
+ctx.save();ctx.translate(px+dir*4,py-4);ctx.rotate(dir*(-0.5+waveOffset*0.1));
+ctx.fillRect(0,-2,10*dir,4);ctx.restore();
+}else if(p.hasFoamFinger){
+// Arm holding foam finger
+ctx.fillRect(px+dir*4,py-4,8*dir,4);
+}else{
+ctx.fillRect(px+dir*3,py-2,5*dir,3);
+}
+
+// Head with skin tone
+ctx.fillStyle=p.skinTone||"#FFCCBC";
+ctx.beginPath();ctx.arc(px+dir*6,py-9,5,0,Math.PI*2);ctx.fill();
+
+// Hair based on style
+ctx.fillStyle="#3E2723";
+if(p.hairStyle==='long'){
+ctx.fillRect(px+dir*3,py-14,6,4);
+ctx.fillRect(px+dir*2,py-12,8,6);
+}else if(p.hairStyle==='short'){
+ctx.beginPath();ctx.arc(px+dir*6,py-11,4,Math.PI,0);ctx.fill();
+}else if(p.hairStyle==='ponytail'){
+ctx.beginPath();ctx.arc(px+dir*6,py-11,4,Math.PI,0);ctx.fill();
+ctx.fillRect(px+dir*2,py-13,3,8);
+}
+// bald = no hair drawn
+
+// Face paint (ND shamrock or stripes)
+if(p.hasFacePaint){
+ctx.fillStyle="#00843D";
+ctx.beginPath();ctx.arc(px+dir*8,py-9,2,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#C99700";
+ctx.fillRect(px+dir*5,py-7,2,1);
+}
+
+// Hat
+if(p.hasHat){
+ctx.fillStyle=p.hatColor||"#0C2340";
+ctx.fillRect(px+dir*3,py-15,8,4);
+ctx.fillRect(px+dir*1,py-12,12,2);
+}
+
+// Foam finger (gold #1)
+if(p.hasFoamFinger){
+ctx.fillStyle="#C99700";
+ctx.fillRect(px+dir*14,py-10,8*dir,12);
+ctx.fillStyle="#fff";ctx.font="6px 'Press Start 2P'";
+ctx.fillText("#1",px+dir*15,py-2);
+}
+
+// Phone (taking photo)
+if(p.hasPhone&&!p.hasFoamFinger&&!p.isWaving){
+ctx.fillStyle="#333";ctx.fillRect(px+dir*12,py-6,4,6);
+ctx.fillStyle="#4FC3F7";ctx.fillRect(px+dir*12+1,py-5,2,4);
 }
 });
 });
