@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Notre Dame Golf: Journey Through Campus</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><style>body{background-color:#0C2340;color:#eee;font-family:'Press Start 2P',cursive;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;overflow:hidden;user-select:none;touch-action:none}#game-frame{position:relative;width:370px;height:700px;box-shadow:0 0 80px rgba(0,0,0,1),inset 0 0 40px rgba(0,0,0,0.5);border:12px solid #C99700;border-radius:20px;background:#000;overflow:hidden}canvas{display:block;image-rendering:pixelated}.scanlines{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.1) 50%);background-size:100% 4px;pointer-events:none;z-index:10;opacity:0.12}.vignette{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(0,0,0,0) 50%,rgba(0,0,0,0.6) 100%);pointer-events:none;z-index:15}#ui-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:flex;flex-direction:column;padding:0;box-sizing:border-box;text-shadow:2px 2px 0 #000;z-index:20}.hud-panel{position:absolute;bottom:0;left:0;display:flex;justify-content:space-between;align-items:flex-start;width:100%;height:90px;background:linear-gradient(0deg,rgba(12,35,64,0.98) 0%,rgba(12,35,64,0.8) 70%,rgba(12,35,64,0) 100%);padding:12px 12px 0 12px;box-sizing:border-box}.hud-logo-container{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25}.hud-logo{color:#C99700;font-size:20px;text-shadow:2px 2px #0C2340;letter-spacing:1px;margin-bottom:4px}.hud-tourney-label{font-size:7px;color:#fff;text-transform:uppercase;letter-spacing:1px;background:rgba(0,132,61,0.9);padding:3px 6px;border-radius:3px;border:1px solid #00843D}.hud-side{display:flex;flex-direction:column;width:100px}.hud-left{align-items:flex-start}.hud-right{align-items:flex-end}.hud-main{font-size:12px;color:#fff;margin-bottom:6px;font-weight:bold}.hud-sub{font-size:10px;color:#C99700}.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(12,35,64,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;pointer-events:auto;text-align:center}.hidden{opacity:0!important;pointer-events:none!important;z-index:-1!important}#msg-box,#score-popup,#dist-box{position:absolute;left:50%;transform:translateX(-50%);padding:12px;text-align:center;display:none;z-index:110;box-shadow:4px 4px 0 rgba(0,0,0,0.5);font-size:10px;border:2px solid white;pointer-events:none;width:75%}#msg-box{top:30%;background:rgba(180,30,30,0.95);color:white}#dist-box{top:72%;background:rgba(12,35,64,0.95);color:white;border-color:#C99700;font-size:9px}#score-popup{top:32%;background:rgba(12,35,64,0.95);font-size:24px;border:3px solid #C99700;padding:25px;border-radius:10px}#putt-alert{position:absolute;top:95px;width:100%;text-align:center;color:#00843D;font-size:9px;display:none;z-index:30;pointer-events:none;animation:pulse 1.5s infinite}#wind-box{position:absolute;top:95px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:5px 7px;border:1px solid #C99700;border-radius:4px;font-size:6px}#wind-box .label{color:#C99700;margin-bottom:3px}#wind-box .val{color:#fff;font-size:8px}#wind-arrow{color:#00843D;font-size:16px}#club-box{position:absolute;bottom:100px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:6px 8px;border:1px solid #C99700;border-radius:4px}#club-box .label{color:#C99700;font-size:6px;margin-bottom:2px}#club-box .name{color:#fff;font-size:8px}#club-box .icon{font-size:14px;margin-top:2px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}h1{color:#C99700;font-size:14px;line-height:1.5;margin-bottom:20px;text-shadow:2px 2px #0C2340}p{font-size:8px;line-height:1.8;color:#ccc;margin:6px 0}.btn{margin-top:25px;padding:14px 28px;background:#00843D;color:#fff;border:2px solid #C99700;font-family:inherit;cursor:pointer;font-size:10px;text-transform:uppercase;box-shadow:4px 4px 0 #000}.btn:hover{background:#006633}table{width:88%;margin-top:15px;border-collapse:collapse;background:rgba(0,0,0,0.5);border:2px solid #C99700}td,th{padding:10px;border-bottom:1px solid #444;text-align:left;font-size:9px}th{color:#C99700}.highlight{color:#C99700;background:rgba(201,151,0,0.1)}</style></head><body><div id="game-frame"><canvas id="gameCanvas" width="370" height="700"></canvas><div class="scanlines"></div><div class="vignette"></div><div id="ui-layer"><div class="hud-panel"><div class="hud-side hud-left"><div id="hud-hole" class="hud-main">HOLE 1</div><div id="hud-yards" class="hud-sub">340 YDS</div></div><div class="hud-logo-container"><div class="hud-logo">ND GOLF</div><div id="hud-tourney-label" class="hud-tourney-label">WARREN COURSE</div></div><div class="hud-side hud-right"><div id="hud-par" class="hud-main">PAR 4</div><div id="hud-score" class="hud-sub">E</div></div></div></div><div id="putt-alert">☘ PUTTING MODE ☘</div><div id="music-btn" onclick="toggleMusicBtn()" style="position:absolute;top:10px;right:10px;z-index:100;background:rgba(12,35,64,0.9);border:2px solid #C99700;border-radius:5px;padding:8px;cursor:pointer;font-size:16px;pointer-events:auto">🎵</div><div id="wind-box"><div class="label">WIND</div><div id="wind-arrow">➤</div><div class="val" id="wind-val">5 MPH</div></div><div id="club-box"><div class="label">CLUB</div><div class="name" id="club-name">DRIVER</div><div class="icon" id="club-icon">🏌️</div></div><div id="msg-box">OUT OF BOUNDS!<br>+1 Stroke</div><div id="dist-box">150 YDS TO PIN</div><div id="score-popup">BIRDIE!</div><div id="welcome-screen" class="screen"><canvas id="titleCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5;margin-top:350px"><button class="btn" onclick="game.init()">GO IRISH</button></div></div><div id="level-screen" class="screen hidden"><div id="lvl-tag" style="color:#00843D;font-size:9px;margin-bottom:10px"></div><h1 id="lvl-title"></h1><p id="lvl-desc"></p><button class="btn" onclick="game.startHole()">TEE OFF</button></div><div id="results-screen" class="screen hidden"><h1 id="res-title">RESULTS</h1><table id="leaderboard"></table><p id="status-msg" style="margin-top:15px;font-size:10px"></p><button id="next-btn" class="btn" onclick="game.nextLevel()">NEXT</button><button id="retry-btn" class="btn hidden" onclick="location.reload()">RETRY</button></div><div id="victory-screen" class="screen hidden"><canvas id="victoryCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5"><h1 style="color:#C99700;text-shadow:0 0 20px #C99700,0 0 40px #FFD700">☘ IRISH CHAMPION ☘</h1><div id="diploma" style="margin:15px auto;width:280px;padding:20px;background:linear-gradient(135deg,#FFFEF5 0%,#F5E6C8 50%,#FFFEF5 100%);border:8px double #C99700;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,0.5)"><p style="color:#0C2340;font-size:6px;margin:0;letter-spacing:2px">THE UNIVERSITY OF</p><p style="color:#0C2340;font-size:12px;margin:5px 0;font-weight:bold">NOTRE DAME</p><p style="color:#0C2340;font-size:5px;margin:8px 0">HEREBY CONFERS UPON</p><p style="color:#00843D;font-size:8px;margin:5px 0">IRISH GOLF CHAMPION</p><p style="color:#0C2340;font-size:5px;margin:8px 0">THE DEGREE OF</p><p style="color:#C99700;font-size:9px;margin:5px 0;font-weight:bold">MASTER OF LINKS</p><p style="color:#0C2340;font-size:4px;margin:10px 0 5px 0">with all rights and privileges thereunto appertaining</p><div style="display:flex;justify-content:space-around;margin-top:10px"><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Rev. Robert A. Dowd</p></div><div style="font-size:20px">🏆</div><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Campus Golf Champion</p></div></div></div><p style="color:#00843D;font-size:7px;margin-top:12px">"Play Like A Champion Today"</p><button class="btn" onclick="location.reload()">PLAY AGAIN</button></div></div></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Notre Dame Golf: Journey Through Campus</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><style>body{background-color:#0C2340;color:#eee;font-family:'Press Start 2P',cursive;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;overflow:hidden;user-select:none;touch-action:none}#game-frame{position:relative;width:370px;height:700px;box-shadow:0 0 80px rgba(0,0,0,1),inset 0 0 40px rgba(0,0,0,0.5);border:12px solid #C99700;border-radius:20px;background:#000;overflow:hidden}canvas{display:block;image-rendering:pixelated}.scanlines{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.1) 50%);background-size:100% 4px;pointer-events:none;z-index:10;opacity:0.12}.vignette{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(0,0,0,0) 50%,rgba(0,0,0,0.6) 100%);pointer-events:none;z-index:15}#ui-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;display:flex;flex-direction:column;padding:0;box-sizing:border-box;text-shadow:2px 2px 0 #000;z-index:20}.hud-panel{position:absolute;bottom:0;left:0;display:flex;justify-content:space-between;align-items:flex-start;width:100%;height:90px;background:linear-gradient(0deg,rgba(12,35,64,0.98) 0%,rgba(12,35,64,0.8) 70%,rgba(12,35,64,0) 100%);padding:12px 12px 0 12px;box-sizing:border-box}.hud-logo-container{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25}.hud-logo{color:#C99700;font-size:20px;text-shadow:2px 2px #0C2340;letter-spacing:1px;margin-bottom:4px}.hud-tourney-label{font-size:7px;color:#fff;text-transform:uppercase;letter-spacing:1px;background:rgba(0,132,61,0.9);padding:3px 6px;border-radius:3px;border:1px solid #00843D}.hud-side{display:flex;flex-direction:column;width:100px}.hud-left{align-items:flex-start}.hud-right{align-items:flex-end}.hud-main{font-size:12px;color:#fff;margin-bottom:6px;font-weight:bold}.hud-sub{font-size:10px;color:#C99700}.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(12,35,64,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;pointer-events:auto;text-align:center}.hidden{opacity:0!important;pointer-events:none!important;z-index:-1!important}#msg-box,#score-popup,#dist-box{position:absolute;left:50%;transform:translateX(-50%);padding:12px;text-align:center;display:none;z-index:110;box-shadow:4px 4px 0 rgba(0,0,0,0.5);font-size:10px;border:2px solid white;pointer-events:none;width:75%}#msg-box{top:30%;background:rgba(180,30,30,0.95);color:white}#dist-box{top:72%;background:rgba(12,35,64,0.95);color:white;border-color:#C99700;font-size:9px}#score-popup{top:32%;background:rgba(12,35,64,0.95);font-size:24px;border:3px solid #C99700;padding:25px;border-radius:10px}#putt-alert{position:absolute;top:95px;width:100%;text-align:center;color:#00843D;font-size:9px;display:none;z-index:30;pointer-events:none;animation:pulse 1.5s infinite}#wind-box{position:absolute;top:95px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:5px 7px;border:1px solid #C99700;border-radius:4px;font-size:6px}#wind-box .label{color:#C99700;margin-bottom:3px}#wind-box .val{color:#fff;font-size:8px}#wind-arrow{color:#00843D;font-size:16px}#club-box{position:absolute;bottom:100px;left:8px;display:none;flex-direction:column;align-items:center;z-index:30;pointer-events:none;background:rgba(12,35,64,0.9);padding:6px 8px;border:1px solid #C99700;border-radius:4px}#club-box .label{color:#C99700;font-size:6px;margin-bottom:2px}#club-box .name{color:#fff;font-size:8px}#club-box .icon{font-size:14px;margin-top:2px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}h1{color:#C99700;font-size:14px;line-height:1.5;margin-bottom:20px;text-shadow:2px 2px #0C2340}p{font-size:8px;line-height:1.8;color:#ccc;margin:6px 0}.btn{margin-top:25px;padding:14px 28px;background:#00843D;color:#fff;border:2px solid #C99700;font-family:inherit;cursor:pointer;font-size:10px;text-transform:uppercase;box-shadow:4px 4px 0 #000}.btn:hover{background:#006633}table{width:88%;margin-top:15px;border-collapse:collapse;background:rgba(0,0,0,0.5);border:2px solid #C99700}td,th{padding:10px;border-bottom:1px solid #444;text-align:left;font-size:9px}th{color:#C99700}.highlight{color:#C99700;background:rgba(201,151,0,0.1)}</style></head><body><div id="game-frame"><canvas id="gameCanvas" width="370" height="700"></canvas><div class="scanlines"></div><div class="vignette"></div><div id="ui-layer"><div class="hud-panel"><div class="hud-side hud-left"><div id="hud-hole" class="hud-main">HOLE 1</div><div id="hud-yards" class="hud-sub">340 YDS</div></div><div class="hud-logo-container"><div class="hud-logo">ND GOLF</div><div id="hud-tourney-label" class="hud-tourney-label">WARREN COURSE</div></div><div class="hud-side hud-right"><div id="hud-par" class="hud-main">PAR 4</div><div id="hud-score" class="hud-sub">E</div></div></div></div><div id="putt-alert">☘ PUTTING MODE ☘</div><div id="music-btn" onclick="toggleMusicBtn()" style="position:absolute;top:10px;right:10px;z-index:100;background:rgba(12,35,64,0.9);border:2px solid #C99700;border-radius:5px;padding:8px;cursor:pointer;font-size:16px;pointer-events:auto">🎵</div><div id="wind-box"><div class="label">WIND</div><div id="wind-arrow">➤</div><div class="val" id="wind-val">5 MPH</div></div><div id="club-box"><div class="label">CLUB</div><div class="name" id="club-name">DRIVER</div><div class="icon" id="club-icon">🏌️</div></div><div id="msg-box">OUT OF BOUNDS!<br>+1 Stroke</div><div id="dist-box">150 YDS TO PIN</div><div id="score-popup">BIRDIE!</div><div id="welcome-screen" class="screen"><canvas id="titleCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5;margin-top:350px"><button class="btn" onclick="showTutorial()" style="margin-bottom:15px">HOW TO PLAY</button><br><button class="btn" style="background:#444;font-size:8px;padding:10px 20px" onclick="game.init()">SKIP TUTORIAL</button></div></div><div id="tutorial-screen" class="screen hidden"><h1 style="color:#C99700;font-size:12px;margin:10px 0">HOW TO PLAY</h1><canvas id="tutorialCanvas" width="370" height="480" style="border-radius:8px;border:3px solid #C99700"></canvas><button class="btn" onclick="game.init()" style="margin-top:12px">START GAME</button></div><div id="level-screen" class="screen hidden"><div id="lvl-tag" style="color:#00843D;font-size:9px;margin-bottom:10px"></div><h1 id="lvl-title"></h1><p id="lvl-desc"></p><button class="btn" onclick="game.startHole()">TEE OFF</button></div><div id="results-screen" class="screen hidden"><h1 id="res-title">RESULTS</h1><table id="leaderboard"></table><p id="status-msg" style="margin-top:15px;font-size:10px"></p><button id="next-btn" class="btn" onclick="game.nextLevel()">NEXT</button><button id="retry-btn" class="btn hidden" onclick="location.reload()">RETRY</button></div><div id="victory-screen" class="screen hidden"><canvas id="victoryCanvas" width="370" height="700" style="position:absolute;top:0;left:0;pointer-events:none"></canvas><div style="position:relative;z-index:5"><h1 style="color:#C99700;text-shadow:0 0 20px #C99700,0 0 40px #FFD700">☘ IRISH CHAMPION ☘</h1><div id="diploma" style="margin:15px auto;width:280px;padding:20px;background:linear-gradient(135deg,#FFFEF5 0%,#F5E6C8 50%,#FFFEF5 100%);border:8px double #C99700;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,0.5)"><p style="color:#0C2340;font-size:6px;margin:0;letter-spacing:2px">THE UNIVERSITY OF</p><p style="color:#0C2340;font-size:12px;margin:5px 0;font-weight:bold">NOTRE DAME</p><p style="color:#0C2340;font-size:5px;margin:8px 0">HEREBY CONFERS UPON</p><p style="color:#00843D;font-size:8px;margin:5px 0">IRISH GOLF CHAMPION</p><p style="color:#0C2340;font-size:5px;margin:8px 0">THE DEGREE OF</p><p style="color:#C99700;font-size:9px;margin:5px 0;font-weight:bold">MASTER OF LINKS</p><p style="color:#0C2340;font-size:4px;margin:10px 0 5px 0">with all rights and privileges thereunto appertaining</p><div style="display:flex;justify-content:space-around;margin-top:10px"><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Rev. Robert A. Dowd</p></div><div style="font-size:20px">🏆</div><div style="text-align:center"><div style="width:40px;height:1px;background:#0C2340;margin:0 auto"></div><p style="color:#0C2340;font-size:4px;margin:2px 0">Campus Golf Champion</p></div></div></div><p style="color:#00843D;font-size:7px;margin-top:12px">"Play Like A Champion Today"</p><button class="btn" onclick="location.reload()">PLAY AGAIN</button></div></div></div>
 <script>
 const GW=370,GH=700,HOLE_R=7,YARDS_PX=0.75;
 const rand=(a,b)=>Math.random()*(b-a)+a;
@@ -50,8 +50,493 @@ const playing=Audio.toggleMusic();
 document.getElementById('music-btn').textContent=playing?'🎵':'🔇';
 }
 
+// Tutorial screen - Interactive demo
+let tutorialAnim=null;
+let tutorialCleanup=null;
+function showTutorial(){
+document.getElementById('welcome-screen').classList.add('hidden');
+document.getElementById('tutorial-screen').classList.remove('hidden');
+startTutorialDemo();
+}
+function startTutorialDemo(){
+const canvas=document.getElementById('tutorialCanvas');
+const ctx=canvas.getContext('2d');
+const W=370,H=480;
+canvas.height=H;
+canvas.style.touchAction='none';
 
+let tick=0,userMode=false,userDragging=false;
+let ballX=185,ballY=400,ballVX=0,ballVY=0,ballMoving=false;
+let dragStartX=0,dragStartY=0,dragX=0,dragY=0;
+let targetHit=false,holeUnlocked=false,holed=false;
+const teeX=100,teeY=400;
+const targetX=280,targetY=250;// Off to the right - requires angled shot
+const holeX=185,holeY=90;
+let particles=[];
+let autoPhase='show';// show, drag, shoot, hit, putt, done
+let autoTick=0;
+let message='';
+let messageTimer=0;
 
+function resetBall(){
+ballX=teeX;ballY=teeY;ballVX=0;ballVY=0;ballMoving=false;
+if(!userMode){targetHit=false;holeUnlocked=false;holed=false;}
+}
+
+function fullReset(){
+tick=0;autoPhase='show';autoTick=0;userMode=false;
+targetHit=false;holeUnlocked=false;holed=false;particles=[];
+resetBall();
+}
+
+function showMsg(m,t=60){message=m;messageTimer=t;}
+
+function getPos(e){
+const r=canvas.getBoundingClientRect();
+const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
+return{x,y};
+}
+
+function onStart(e){
+e.preventDefault();
+if(ballMoving||holed)return;
+const p=getPos(e);
+// Check if near ball
+if(Math.hypot(p.x-ballX,p.y-ballY)<40){
+userMode=true;userDragging=true;
+dragStartX=ballX;dragStartY=ballY;dragX=p.x;dragY=p.y;
+autoPhase='user';
+}
+}
+
+function onMove(e){
+e.preventDefault();
+if(!userDragging)return;
+const p=getPos(e);
+dragX=p.x;dragY=p.y;
+}
+
+function onEnd(e){
+e.preventDefault();
+if(!userDragging)return;
+userDragging=false;
+// Calculate shot
+const dx=dragStartX-dragX,dy=dragStartY-dragY;
+const power=Math.min(Math.hypot(dx,dy)/100,1);
+if(power>0.1){
+const angle=Math.atan2(dy,dx);
+const speed=power*8;
+ballVX=Math.cos(angle)*speed;
+ballVY=Math.sin(angle)*speed;
+ballMoving=true;
+}
+}
+
+canvas.addEventListener('mousedown',onStart);
+canvas.addEventListener('mousemove',onMove);
+canvas.addEventListener('mouseup',onEnd);
+canvas.addEventListener('mouseleave',onEnd);
+canvas.addEventListener('touchstart',onStart,{passive:false});
+canvas.addEventListener('touchmove',onMove,{passive:false});
+canvas.addEventListener('touchend',onEnd,{passive:false});
+
+tutorialCleanup=()=>{
+canvas.removeEventListener('mousedown',onStart);
+canvas.removeEventListener('mousemove',onMove);
+canvas.removeEventListener('mouseup',onEnd);
+canvas.removeEventListener('mouseleave',onEnd);
+canvas.removeEventListener('touchstart',onStart);
+canvas.removeEventListener('touchmove',onMove);
+canvas.removeEventListener('touchend',onEnd);
+};
+
+function addParticles(x,y,c,n){
+for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-0.5)*8,vy:(Math.random()-0.5)*8,life:1,c,s:2+Math.random()*4});
+}
+
+function drawCourse(){
+// Warren Golf Course style - Beautiful morning sky
+const sky=ctx.createLinearGradient(0,0,0,140);
+sky.addColorStop(0,'#3A7BD5');sky.addColorStop(0.4,'#6FB1E3');sky.addColorStop(0.7,'#A8D4F0');sky.addColorStop(1,'#C5E3F6');
+ctx.fillStyle=sky;ctx.fillRect(0,0,W,140);
+// Sun with rays
+ctx.fillStyle='rgba(255,250,220,0.3)';ctx.beginPath();ctx.arc(320,45,50,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='rgba(255,245,180,0.5)';ctx.beginPath();ctx.arc(320,45,32,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='rgba(255,240,150,0.7)';ctx.beginPath();ctx.arc(320,45,20,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#FFF8DC';ctx.beginPath();ctx.arc(320,45,12,0,Math.PI*2);ctx.fill();
+// Sun rays
+ctx.strokeStyle='rgba(255,250,200,0.12)';ctx.lineWidth=2;
+for(let r=0;r<8;r++){const ang=r*Math.PI/4+tick*0.003;
+ctx.beginPath();ctx.moveTo(320+Math.cos(ang)*22,45+Math.sin(ang)*22);
+ctx.lineTo(320+Math.cos(ang)*60,45+Math.sin(ang)*60);ctx.stroke();}
+// Clouds
+ctx.fillStyle='rgba(255,255,255,0.9)';
+ctx.beginPath();ctx.arc(60,35,18,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(75,30,14,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(50,40,12,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(180,45,15,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(195,40,12,0,Math.PI*2);ctx.fill();
+// Distant trees
+ctx.fillStyle='#2D5016';
+for(let i=0;i<18;i++){ctx.beginPath();ctx.arc(i*22,125,12+Math.sin(i*1.5)*3,0,Math.PI*2);ctx.fill();}
+// Clubhouse
+ctx.fillStyle='#8B7355';ctx.fillRect(12,100,45,28);
+ctx.fillStyle='#5D4037';ctx.beginPath();ctx.moveTo(8,100);ctx.lineTo(35,80);ctx.lineTo(62,100);ctx.fill();
+ctx.fillStyle='#4A3728';ctx.fillRect(28,112,12,16);
+ctx.fillStyle='#87CEEB';ctx.fillRect(16,106,8,6);ctx.fillRect(44,106,8,6);
+ctx.fillStyle='#C99700';ctx.font='3px "Press Start 2P"';ctx.fillText('WARREN',14,98);
+// Golden Dome
+ctx.fillStyle='#F5F5DC';ctx.fillRect(280,95,40,33);
+const domeGrad=ctx.createLinearGradient(280,70,320,70);
+domeGrad.addColorStop(0,'#8B6914');domeGrad.addColorStop(0.3,'#C99700');domeGrad.addColorStop(0.5,'#FFD700');
+domeGrad.addColorStop(0.7,'#C99700');domeGrad.addColorStop(1,'#8B6914');
+ctx.fillStyle=domeGrad;ctx.beginPath();ctx.arc(300,95,22,Math.PI,0);ctx.fill();
+const shimmer=0.3+Math.sin(tick*0.05)*0.2;
+ctx.fillStyle=`rgba(255,255,200,${shimmer})`;ctx.beginPath();ctx.arc(294,87,8,Math.PI,0);ctx.fill();
+ctx.fillStyle='#F5F5DC';ctx.fillRect(298,68,4,9);
+// Basilica spires
+ctx.fillStyle='#6D4C41';ctx.fillRect(160,93,9,35);
+ctx.fillStyle='#8D6E63';ctx.beginPath();ctx.moveTo(155,93);ctx.lineTo(165,65);ctx.lineTo(175,93);ctx.fill();
+ctx.fillStyle='#C99700';ctx.fillRect(163,68,4,8);
+// Front trees
+const treeColors=['#1B5E20','#2E7D32','#1B5E20','#33691E','#2E7D32'];
+for(let i=0;i<15;i++){ctx.fillStyle=treeColors[i%5];ctx.beginPath();ctx.arc(10+i*25,135,13+Math.sin(i*2)*4,0,Math.PI*2);ctx.fill();}
+// Course ground
+const roughGrad=ctx.createLinearGradient(0,145,0,H);
+roughGrad.addColorStop(0,'#3D6B24');roughGrad.addColorStop(0.3,'#2E5A1C');roughGrad.addColorStop(1,'#254B16');
+ctx.fillStyle=roughGrad;ctx.fillRect(0,145,W,H-145);
+// Fairway - clean dogleg: tee(left) -> target(right) -> hole(top)
+const fairwayGrad=ctx.createLinearGradient(0,160,0,H);
+fairwayGrad.addColorStop(0,'#5CAD4A');fairwayGrad.addColorStop(0.5,'#4CAF50');fairwayGrad.addColorStop(1,'#45A049');
+// Draw as narrower curved path to fit on screen
+ctx.lineWidth=50;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=fairwayGrad;
+ctx.beginPath();
+ctx.moveTo(teeX,teeY);
+ctx.quadraticCurveTo(170,320,targetX,targetY);
+ctx.quadraticCurveTo(230,195,holeX,holeY+10);
+ctx.stroke();
+// Mow stripes
+for(let i=-1;i<=1;i++){
+ctx.strokeStyle=i%2?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.05)';
+ctx.lineWidth=10;
+ctx.beginPath();
+ctx.moveTo(teeX+i*8,teeY);
+ctx.quadraticCurveTo(170+i*5,320,targetX+i*4,targetY);
+ctx.quadraticCurveTo(230+i*3,195,holeX+i*2,holeY+10);
+ctx.stroke();
+}
+// Cart path
+ctx.strokeStyle='#C9B896';ctx.lineWidth=8;ctx.lineCap='round';
+ctx.beginPath();ctx.moveTo(5,H-30);ctx.quadraticCurveTo(30,350,50,280);ctx.quadraticCurveTo(80,200,W-20,180);ctx.stroke();
+// Green around hole
+ctx.fillStyle='#5CAD4A';ctx.beginPath();ctx.ellipse(holeX,holeY,48,35,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#66BB6A';ctx.beginPath();ctx.ellipse(holeX,holeY,38,28,0,0,Math.PI*2);ctx.fill();
+// Tee box
+ctx.fillStyle='#5CAD4A';ctx.fillRect(teeX-25,teeY-15,50,35);
+ctx.fillStyle='#66BB6A';ctx.fillRect(teeX-20,teeY-10,40,25);
+// Tee markers
+ctx.fillStyle='#C99700';ctx.beginPath();ctx.arc(teeX-12,teeY,3,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(teeX+12,teeY,3,0,Math.PI*2);ctx.fill();
+}
+
+function drawTarget(){
+if(targetHit)return;
+const p=0.5+Math.sin(tick*0.12)*0.5;// Strong pulse like game
+const flash=Math.sin(tick*0.2)>0;// Flashing effect
+// Outer glow - large pulsing ring
+ctx.fillStyle=`rgba(255,215,0,${p*0.7})`;ctx.beginPath();ctx.arc(targetX,targetY,32+p*8,0,Math.PI*2);ctx.fill();
+// Middle glow
+ctx.fillStyle=`rgba(0,132,61,${p*0.8})`;ctx.beginPath();ctx.arc(targetX,targetY,22,0,Math.PI*2);ctx.fill();
+// Inner glow
+ctx.fillStyle=`rgba(255,255,255,${p*0.3})`;ctx.beginPath();ctx.arc(targetX,targetY,15,0,Math.PI*2);ctx.fill();
+// Flag pole
+ctx.fillStyle=flash?'#FFD700':'#C99700';ctx.fillRect(targetX-2,targetY-25,4,30);
+// Flag
+ctx.fillStyle=flash?'#00A86B':'#00843D';
+ctx.beginPath();ctx.moveTo(targetX+2,targetY-25);ctx.lineTo(targetX+22,targetY-15);ctx.lineTo(targetX+2,targetY-5);ctx.closePath();ctx.fill();
+// "HIT ME" text with flash
+ctx.fillStyle=flash?'#FFD700':'#fff';ctx.font='bold 7px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('HIT THIS!',targetX,targetY+22);
+ctx.font='5px "Press Start 2P"';ctx.fillStyle='#fff';
+ctx.fillText('TO UNLOCK',targetX,targetY+32);
+ctx.textAlign='left';
+// Arrow pointing at target
+const arrowBob=Math.sin(tick*0.1)*5;
+ctx.fillStyle='#FFD700';
+ctx.beginPath();ctx.moveTo(targetX-50,targetY+arrowBob);ctx.lineTo(targetX-35,targetY-8+arrowBob);ctx.lineTo(targetX-35,targetY+8+arrowBob);ctx.closePath();ctx.fill();
+ctx.beginPath();ctx.moveTo(targetX+50,targetY+arrowBob);ctx.lineTo(targetX+35,targetY-8+arrowBob);ctx.lineTo(targetX+35,targetY+8+arrowBob);ctx.closePath();ctx.fill();
+}
+
+function drawHole(){
+const p=0.5+Math.sin(tick*0.15)*0.5;
+ctx.fillStyle=holeUnlocked?'#111':'#444';
+ctx.beginPath();ctx.arc(holeX,holeY,7,0,Math.PI*2);ctx.fill();
+if(!holeUnlocked){
+// Flashing locked indicator
+const lockFlash=Math.sin(tick*0.12)>0;
+// Red glow around locked hole
+ctx.fillStyle=`rgba(200,50,50,${p*0.5})`;ctx.beginPath();ctx.arc(holeX,holeY,18+p*5,0,Math.PI*2);ctx.fill();
+// X mark
+ctx.strokeStyle=lockFlash?'#ff6666':'#C99700';ctx.lineWidth=3;
+ctx.beginPath();ctx.moveTo(holeX-10,holeY-10);ctx.lineTo(holeX+10,holeY+10);ctx.stroke();
+ctx.beginPath();ctx.moveTo(holeX+10,holeY-10);ctx.lineTo(holeX-10,holeY+10);ctx.stroke();
+// LOCKED text
+ctx.fillStyle=lockFlash?'#ff6666':'#C99700';ctx.font='bold 6px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('LOCKED',holeX,holeY+28);
+ctx.textAlign='left';
+}else if(!holed){
+// Unlocked - show flag
+ctx.fillStyle='#8B4513';ctx.fillRect(holeX+5,holeY-28,2,28);
+ctx.fillStyle='#C99700';ctx.beginPath();ctx.moveTo(holeX+7,holeY-28);ctx.lineTo(holeX+20,holeY-22);ctx.lineTo(holeX+7,holeY-16);ctx.closePath();ctx.fill();
+// Green glow to show it's unlocked
+ctx.fillStyle=`rgba(0,200,100,${p*0.4})`;ctx.beginPath();ctx.arc(holeX,holeY,15,0,Math.PI*2);ctx.fill();
+}
+}
+
+function drawBall(){
+if(holed)return;
+ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ballX,ballY,6,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#ccc';ctx.lineWidth=1;ctx.stroke();
+}
+
+function drawDragLine(){
+if(!userDragging&&autoPhase!=='drag'&&autoPhase!=='putt')return;
+let sx,sy,ex,ey;
+if(userDragging){
+sx=dragStartX;sy=dragStartY;ex=dragX;ey=dragY;
+}else if(autoPhase==='drag'){
+sx=ballX;sy=ballY;
+const toTargetX=targetX-ballX,toTargetY=targetY-ballY;
+const toTargetDist=Math.hypot(toTargetX,toTargetY);
+const dragLen=autoTick*6;
+ex=ballX-(toTargetX/toTargetDist)*dragLen;
+ey=ballY-(toTargetY/toTargetDist)*dragLen;
+}else if(autoPhase==='putt'){
+sx=ballX;sy=ballY;
+const toHoleX=holeX-ballX,toHoleY=holeY-ballY;
+const toHoleDist=Math.hypot(toHoleX,toHoleY);
+const dragLen=Math.min(autoTick/8,1)*60;
+ex=ballX-(toHoleX/toHoleDist)*dragLen;
+ey=ballY-(toHoleY/toHoleDist)*dragLen;
+}else return;
+// Pull vector (from ball toward drag point)
+const pullX=ex-sx,pullY=ey-sy;
+const pullLen=Math.hypot(pullX,pullY);
+const pullNormX=pullX/pullLen,pullNormY=pullY/pullLen;
+// Dashed trajectory line (shows direction ball will go - opposite of pull)
+ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=2;ctx.setLineDash([5,5]);
+ctx.beginPath();ctx.moveTo(sx,sy);
+const trajLen=80;
+ctx.lineTo(sx-pullNormX*trajLen,sy-pullNormY*trajLen);
+ctx.stroke();ctx.setLineDash([]);
+// Power line (solid colored line from ball toward drag point)
+const maxPull=90;
+const cappedLen=Math.min(pullLen,maxPull);
+const pwr=cappedLen/maxPull;
+ctx.strokeStyle=pwr>0.75?'#C99700':(pwr>0.4?'#00843D':'#81C784');
+ctx.lineWidth=4;
+ctx.beginPath();ctx.moveTo(sx,sy);
+ctx.lineTo(sx+pullNormX*cappedLen,sy+pullNormY*cappedLen);
+ctx.stroke();
+}
+
+function drawUI(){
+// Top bar
+ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,0,W,50);
+ctx.strokeStyle='#C99700';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,50);ctx.lineTo(W,50);ctx.stroke();
+ctx.textAlign='center';
+if(holed){
+ctx.fillStyle='#C99700';ctx.font='10px "Press Start 2P"';ctx.fillText('HOLE COMPLETE!',W/2,22);
+ctx.fillStyle='#fff';ctx.font='7px "Press Start 2P"';ctx.fillText('Tap to replay',W/2,40);
+}else if(holeUnlocked){
+// Flashing "shoot again" after unlock
+const flash=Math.sin(tick*0.2)>0;
+ctx.fillStyle='#00843D';ctx.font='9px "Press Start 2P"';ctx.fillText('UNLOCKED!',W/2,16);
+ctx.fillStyle=flash?'#FFD700':'#fff';ctx.font='8px "Press Start 2P"';
+ctx.fillText('SHOOT AGAIN!',W/2,32);
+ctx.fillStyle='#aaa';ctx.font='6px "Press Start 2P"';
+ctx.fillText('Sink the ball in the hole',W/2,45);
+}else{
+// Flashing instruction
+const flash=Math.sin(tick*0.15)>0;
+ctx.fillStyle=flash?'#FFD700':'#C99700';ctx.font='9px "Press Start 2P"';
+ctx.fillText('HIT TARGET TO UNLOCK',W/2,18);
+ctx.fillStyle='#ff6666';ctx.font='7px "Press Start 2P"';
+ctx.fillText('Hole is LOCKED!',W/2,32);
+ctx.fillStyle='#aaa';ctx.font='6px "Press Start 2P"';
+ctx.fillText(userMode?'Drag back & release':'Tap the ball to try!',W/2,44);
+}
+ctx.textAlign='left';
+// Bottom info bar - explain different targets per level (BIG & FLASHING)
+const infoFlash=Math.sin(tick*0.12)>0;
+ctx.fillStyle='rgba(12,35,64,0.95)';ctx.fillRect(0,H-58,W,58);
+ctx.strokeStyle=infoFlash?'#FFD700':'#C99700';ctx.lineWidth=3;
+ctx.beginPath();ctx.moveTo(0,H-58);ctx.lineTo(W,H-58);ctx.stroke();
+ctx.textAlign='center';
+ctx.fillStyle=infoFlash?'#FFD700':'#C99700';
+ctx.font='8px "Press Start 2P"';
+ctx.fillText('EVERY LEVEL HAS A',W/2,H-42);
+ctx.font='10px "Press Start 2P"';
+ctx.fillStyle=infoFlash?'#fff':'#FFD700';
+ctx.fillText('DIFFERENT TARGET',W/2,H-26);
+ctx.fillText('TO UNLOCK!',W/2,H-10);
+ctx.textAlign='left';
+// Message
+if(messageTimer>0){
+messageTimer--;
+ctx.fillStyle=`rgba(0,132,61,${Math.min(messageTimer/20,1)})`;
+ctx.font='12px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText(message,W/2,H/2);ctx.textAlign='left';
+}
+}
+
+function drawParticles(){
+particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.025;p.s*=0.97;});
+particles=particles.filter(p=>p.life>0);
+particles.forEach(p=>{ctx.globalAlpha=p.life;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s);});
+ctx.globalAlpha=1;
+}
+
+function updateBall(){
+if(!ballMoving)return;
+ballX+=ballVX;ballY+=ballVY;
+ballVX*=0.98;ballVY*=0.98;
+// Target check - STOP at target when hit
+if(!targetHit&&Math.hypot(ballX-targetX,ballY-targetY)<25){
+targetHit=true;holeUnlocked=true;
+ballX=targetX;ballY=targetY+15;// Stop near target
+ballVX=0;ballVY=0;ballMoving=false;// Stop immediately
+addParticles(targetX,targetY,'#C99700',12);
+addParticles(targetX,targetY,'#00843D',8);
+showMsg('UNLOCKED!',25);
+}
+// Hole check - easier to sink
+if(holeUnlocked&&!holed&&Math.hypot(ballX-holeX,ballY-holeY)<12&&Math.hypot(ballVX,ballVY)<5){
+holed=true;ballMoving=false;
+addParticles(holeX,holeY,'#C99700',15);
+showMsg('NICE!',40);
+setTimeout(()=>{if(!userMode)fullReset();},800);// Faster reset
+}
+// Bounds
+if(ballX<10||ballX>W-10||ballY<55||ballY>H-10){resetBall();showMsg('OUT!',20);}
+// Stop
+if(Math.hypot(ballVX,ballVY)<0.4){ballMoving=false;}// Stop faster
+}
+
+function autoDemo(){
+if(userMode)return;
+autoTick++;
+if(autoPhase==='show'){
+if(autoTick>12){autoPhase='drag';autoTick=0;}
+}else if(autoPhase==='drag'){
+if(autoTick>15){
+autoPhase='shoot';autoTick=0;
+const dx=targetX-ballX,dy=targetY-ballY;
+const dist=Math.hypot(dx,dy);
+ballVX=(dx/dist)*8;ballVY=(dy/dist)*8;
+ballMoving=true;
+}
+}else if(autoPhase==='shoot'){
+// Ball stopped at target - immediately start putt
+if(!ballMoving&&targetHit&&!holed){
+autoPhase='putt';autoTick=0;
+}
+}else if(autoPhase==='putt'){
+if(autoTick>12&&!ballMoving){
+// Shoot at hole
+const dx=holeX-ballX,dy=holeY-ballY;
+const dist=Math.hypot(dx,dy);
+ballVX=(dx/dist)*5;ballVY=(dy/dist)*5;
+ballMoving=true;
+autoPhase='done';
+}
+}else if(autoPhase==='done'){
+if(holed&&autoTick>25){fullReset();}
+}
+}
+
+function draw(){
+tick++;
+ctx.clearRect(0,0,W,H);
+drawCourse();
+// Draw connection line between target and hole when locked
+if(!holeUnlocked){
+const p=0.3+Math.sin(tick*0.1)*0.2;
+ctx.strokeStyle=`rgba(255,215,0,${p})`;
+ctx.lineWidth=3;ctx.setLineDash([8,8]);
+ctx.beginPath();ctx.moveTo(targetX,targetY+35);ctx.lineTo(holeX,holeY+20);ctx.stroke();
+ctx.setLineDash([]);
+// Animated dots along the line
+for(let i=0;i<3;i++){
+const t=((tick*0.02+i*0.33)%1);
+const dx=holeX-targetX,dy=(holeY+20)-(targetY+35);
+const dotX=targetX+dx*t,dotY=targetY+35+dy*t;
+ctx.fillStyle='#FFD700';ctx.beginPath();ctx.arc(dotX,dotY,4,0,Math.PI*2);ctx.fill();
+}
+}
+drawTarget();
+drawHole();
+updateBall();
+autoDemo();
+drawBall();
+drawDragLine();
+drawParticles();
+drawUI();
+// Finger hint for auto demo - initial shot
+if(!userMode&&!ballMoving&&autoPhase==='show'){
+const fy=ballY+35+Math.sin(tick*0.12)*8;
+ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
+// Arrow pointing TOWARD the target
+const toTargetX=targetX-ballX,toTargetY=targetY-ballY;
+const toTargetDist=Math.hypot(toTargetX,toTargetY);
+const arrowBob=Math.sin(tick*0.15)*3;
+const arrowDist=35+arrowBob;
+const arrowX=ballX+(toTargetX/toTargetDist)*arrowDist;
+const arrowY=ballY+(toTargetY/toTargetDist)*arrowDist;
+const ang=Math.atan2(toTargetY,toTargetX);
+ctx.fillStyle='#FFD700';
+ctx.beginPath();
+ctx.moveTo(arrowX+Math.cos(ang)*10,arrowY+Math.sin(ang)*10);
+ctx.lineTo(arrowX+Math.cos(ang+2.5)*8,arrowY+Math.sin(ang+2.5)*8);
+ctx.lineTo(arrowX+Math.cos(ang-2.5)*8,arrowY+Math.sin(ang-2.5)*8);
+ctx.closePath();ctx.fill();
+ctx.fillStyle='#fff';ctx.font='6px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('AIM HERE',arrowX,arrowY-10);ctx.textAlign='left';
+}
+// Finger hint after unlock - prompt for second shot
+if(holeUnlocked&&!holed&&!ballMoving&&!userDragging){
+const fy=ballY+35+Math.sin(tick*0.12)*8;
+ctx.font='24px Arial';ctx.textAlign='center';ctx.fillText('👆',ballX,fy);ctx.textAlign='left';
+// Arrow pointing TOWARD the hole from ball position
+const toHoleX=holeX-ballX,toHoleY=holeY-ballY;
+const toHoleDist=Math.hypot(toHoleX,toHoleY);
+const arrowBob=Math.sin(tick*0.15)*3;
+const arrowDist=30+arrowBob;
+const arrowX=ballX+(toHoleX/toHoleDist)*arrowDist;
+const arrowY=ballY+(toHoleY/toHoleDist)*arrowDist;
+const ang=Math.atan2(toHoleY,toHoleX);
+ctx.fillStyle='#00843D';
+ctx.beginPath();
+ctx.moveTo(arrowX+Math.cos(ang)*10,arrowY+Math.sin(ang)*10);
+ctx.lineTo(arrowX+Math.cos(ang+2.5)*8,arrowY+Math.sin(ang+2.5)*8);
+ctx.lineTo(arrowX+Math.cos(ang-2.5)*8,arrowY+Math.sin(ang-2.5)*8);
+ctx.closePath();ctx.fill();
+// "TO HOLE" label near arrow
+ctx.fillStyle='#fff';ctx.font='6px "Press Start 2P"';ctx.textAlign='center';
+ctx.fillText('TO HOLE',arrowX,arrowY-12);ctx.textAlign='left';
+}
+tutorialAnim=requestAnimationFrame(draw);
+}
+
+// Click to reset after holed
+canvas.addEventListener('click',()=>{if(holed){fullReset();userMode=false;}});
+
+if(tutorialAnim)cancelAnimationFrame(tutorialAnim);
+if(tutorialCleanup)tutorialCleanup();
+fullReset();
+draw();
+}
 
 // Clubs
 const CLUBS={DRIVER:{n:"DRIVER",i:"🏌️"},WOOD:{n:"3 WOOD",i:"🪵"},IRON5:{n:"5 IRON",i:"🔩"},IRON7:{n:"7 IRON",i:"⛳"},IRON9:{n:"9 IRON",i:"🎯"},WEDGE:{n:"WEDGE",i:"⬆️"},PUTTER:{n:"PUTTER",i:"🏒"}};
@@ -123,6 +608,10 @@ this.loop();
 }
 
 init(){
+// Stop tutorial if running
+if(tutorialAnim){cancelAnimationFrame(tutorialAnim);tutorialAnim=null;}
+if(tutorialCleanup){tutorialCleanup();tutorialCleanup=null;}
+document.getElementById('tutorial-screen').classList.add('hidden');
 Audio.init();
 Audio.playMusic();
 this.level=0;
@@ -135,12 +624,12 @@ startLevel(){
 this.holeIdx=0;
 this.levelScore=0;
 this.rivals=[{n:"Rockne",s:0},{n:"Rudy",s:1},{n:"Holtz",s:1},{n:"Parseghian",s:2}];
-const names=["WARREN GOLF COURSE","NOTRE DAME STADIUM","THE LAKES","GOLDEN DOME","TOUCHDOWN JESUS","THE GROTTO","SOUTH DINING HALL","GAME DAY TAILGATE","BAND PRACTICE FIELD","BASILICA","DRUMMER'S CIRCLE","CEDAR GROVE","MENDOZA BUSINESS","COMPTON ICE ARENA","JOYCE CENTER","JORDAN HALL","HAMMES BOOKSTORE","WINTER CAMPUS"];
-const titles=["Warren Golf Course","The Stadium","St. Mary's Lake","The Golden Dome","Hesburgh Library","The Grotto","South Dining Hall","Game Day Tailgate","Band Practice Field","Basilica of the Sacred Heart","Midnight Drummer's Circle","Cedar Grove Cemetery","Mendoza College of Business","Compton Ice Arena","Joyce Center","Jordan Hall of Science","Hammes Bookstore","Winter Campus"];
+const names=["WARREN GOLF COURSE","NOTRE DAME STADIUM","LEGENDS RESTAURANT","GOLDEN DOME","TOUCHDOWN JESUS","THE GROTTO","SOUTH DINING HALL","GAME DAY TAILGATE","BAND PRACTICE FIELD","BASILICA","DRUMMER'S CIRCLE","CEDAR GROVE","MENDOZA BUSINESS","COMPTON ICE ARENA","JOYCE CENTER","JORDAN HALL","HAMMES BOOKSTORE","WINTER CAMPUS"];
+const titles=["Warren Golf Course","The Stadium","Legends Restaurant","The Golden Dome","Hesburgh Library","The Grotto","South Dining Hall","Game Day Tailgate","Band Practice Field","Basilica of the Sacred Heart","Midnight Drummer's Circle","Cedar Grove Cemetery","Mendoza College of Business","Compton Ice Arena","Joyce Center","Jordan Hall of Science","Hammes Bookstore","Winter Campus"];
 const descs=[
 "Championship links golf. Campus skyline in view.",
 "Night game! Dodge the football players!",
-"Navigate the shoreline. Avoid the geese!",
+"Party with the tailgaters! Dodge the rowdy fans!",
 "Golf through the main quad.",
 "The Word of Life watches over you.",
 "A sacred, candlelit challenge.",
@@ -158,9 +647,9 @@ const descs=[
 "Brave the snow and ice! Bundle up!"
 ];
 const targetHints=[
-"Hit the yardage flag to unlock the hole!",
+"Hit the 150 yard marker to unlock the hole!",
 "Hit Coach Freeman to unlock the hole!",
-"Scare the goose to unlock the hole!",
+"Hit the beer mug to unlock the hole!",
 "Ring the bell to unlock the hole!",
 "Touch the reflecting pool to unlock!",
 "Light a candle to unlock the hole!",
@@ -210,7 +699,7 @@ this.playTimer=0;
 this.playPhase='huddle';
 if(this.level===0)this.genWarren();
 else if(this.level===1)this.genStadium();
-else if(this.level===2)this.genLakes();
+else if(this.level===2)this.genLegends();
 else if(this.level===3)this.genDome();
 else if(this.level===4)this.genLibrary();
 else if(this.level===5)this.genGrotto();
@@ -228,9 +717,9 @@ else if(this.level===16)this.genBookstore();
 else this.genWinterCampus();
 // Set up unlock targets for each level
 const targetConfigs=[
-{x:GW/2,y:350,type:'flag',label:'HIT THE FLAG'},// Warren - yardage marker
+{x:GW/2,y:480,type:'yardmarker',label:'150 YARD MARKER'},// Warren - 150 yard marker
 {x:50,y:375,type:'freeman',label:'HIT COACH FREEMAN'},// Stadium - Marcus Freeman on sideline
-{x:GW-60,y:400,type:'goose',label:'SCARE GOOSE'},// Lakes
+{x:GW-80,y:450,type:'beermug',label:'HIT THE MUG'},// Legends
 {x:GW/2-80,y:380,type:'bell',label:'RING THE BELL'},// Dome
 {x:GW/2,y:320,type:'pool',label:'TOUCH POOL'},// Library
 {x:GW/2,y:400,type:'candle',label:'LIGHT CANDLE'},// Grotto
@@ -249,6 +738,18 @@ const targetConfigs=[
 ];
 this.target=targetConfigs[this.level];
 this.target.hit=false;
+// For Warren (level 0), position the 150 yard marker 150 yards from the hole on the fairway
+if(this.level===0){
+// 150 yards = 200 pixels (150/0.75)
+const yardsToPx=150/YARDS_PX;
+// Position between tee and hole, closer to tee (150 yards from hole means further from hole)
+const dx=this.tee.x-this.hole.x;
+const dy=this.tee.y-this.hole.y;
+const totalDist=Math.hypot(dx,dy);
+const ratio=Math.min(yardsToPx/totalDist,0.7);// Cap at 70% of the way to prevent going past tee
+this.target.x=this.hole.x+dx*ratio;
+this.target.y=this.hole.y+dy*ratio;
+}
 const d=dist(this.tee.x,this.tee.y,this.hole.x,this.hole.y);
 this.yards=Math.floor(d*YARDS_PX);
 this.par=this.yards>350?5:(this.yards>200?4:3);
@@ -300,11 +801,8 @@ this.cartPath=[
 ];
 // Golf cart position (moves slowly)
 this.golfCart={x:30,y:GH-120,pathIdx:0};
-// Yardage markers
-this.yardageMarkers=[
-{x:this.fairway[1].x-60,y:this.fairway[1].y,dist:150},
-{x:this.fairway[1].x+60,y:this.fairway[1].y-40,dist:100}
-];
+// 150 yard marker position (center of fairway, 150 yards from hole)
+// Target position will be set dynamically based on hole position
 // Tee box amenities
 this.teeAmenities={ballWasher:{x:this.tee.x-40,y:this.tee.y+10},bench:{x:this.tee.x+45,y:this.tee.y+5}};
 // Pre-generate grass texture - multiple shades for depth (below skyline)
@@ -401,66 +899,82 @@ if(t>30){this.playPhase='huddle';this.playTimer=0}
 }
 }
 
-// LEVEL 2: The Lakes - Figure 8 with two lakes and floating greens
-genLakes(){
-// Two lakes: upper (St. Mary's) and lower (St. Joseph's)
-this.lake1={x:GW/2,y:220,rx:110,ry:70};// Upper lake
-this.lake2={x:GW/2,y:480,rx:120,ry:90};// Lower lake
-// Floating greens on each lake - positioned for one-shot holes
-this.floatingGreens=[
-{x:GW/2-40,y:220,r:28},// Green on upper lake
-{x:GW/2+30,y:480,r:28}// Green on lower lake
-];
-// Tee positions for 3 holes - all close enough for one shot
+// LEVEL 2: Legends Restaurant & Bar - Fun pub atmosphere
+genLegends(){
+// Multiple tee and hole positions
 const configs=[
-{tee:{x:GW/2+80,y:320},holeIdx:0},// Shoot to upper lake green
-{tee:{x:GW/2-70,y:370},holeIdx:1},// Shoot to lower lake green
-{tee:{x:GW/2+90,y:560},holeIdx:0}// Another angle to upper lake
+{tee:{x:80,y:GH-80},hole:{x:GW-80,y:280}},
+{tee:{x:GW-80,y:GH-100},hole:{x:100,y:300}},
+{tee:{x:GW/2,y:GH-80},hole:{x:GW/2,y:250}}
 ];
 const cfg=configs[this.holeIdx%3];
 this.tee=cfg.tee;
-this.hole={x:this.floatingGreens[cfg.holeIdx].x,y:this.floatingGreens[cfg.holeIdx].y};
-this.currentFloatingGreen=cfg.holeIdx;
+this.hole=cfg.hole;
 this.hazards=[];
 this.fairway=null;
-// Figure-8 path points around both lakes
-this.figurePath=[
-// Start at bottom right, go around lower lake
-{x:GW-40,y:GH-60},{x:GW-30,y:580},{x:GW-35,y:520},
-{x:GW-50,y:420},{x:GW-60,y:380},// Right side lower lake
-// Cross in the middle (figure 8 center)
-{x:GW/2+30,y:350},{x:GW/2,y:340},{x:GW/2-30,y:350},
-// Left side upper lake
-{x:50,y:320},{x:35,y:260},{x:40,y:200},{x:60,y:160},
-// Top of upper lake
-{x:120,y:140},{x:GW/2,y:130},{x:GW-100,y:140},
-// Right side upper lake back to center
-{x:GW-50,y:180},{x:GW-40,y:240},{x:GW-50,y:300},
-{x:GW/2+30,y:350},// Back to center
-// Left side lower lake
-{x:GW/2-30,y:350},{x:50,y:400},{x:35,y:480},{x:50,y:560},
-// Bottom
-{x:100,y:620},{x:GW/2,y:640},{x:GW-100,y:620},{x:GW-40,y:GH-60}
-];
-// Geese
-this.geese=[];
+// Bar at top with bartender
+this.legendsBar={x:GW/2,y:140,w:280,h:50};
+this.bartender={x:GW/2,y:120};
+// Bar stools
+this.barStools=[];
 for(let i=0;i<6;i++){
-const lake=i<3?this.lake1:this.lake2;
-this.geese.push({x:lake.x+rand(-40,40),y:lake.y+rand(-30,30),vx:rand(-0.3,0.3),vy:rand(-0.2,0.2)});
+this.barStools.push({x:GW/2-100+i*40,y:175,occupied:Math.random()>0.4});
 }
-// Willow trees around lakes
-this.trees=[];
-this.trees.push({x:25,y:200,type:'willow'});
-this.trees.push({x:GW-25,y:250,type:'willow'});
-this.trees.push({x:25,y:520,type:'willow'});
-this.trees.push({x:GW-25,y:450,type:'willow'});
-// Pine trees
-this.trees.push({x:40,y:350,type:'pine'});
-this.trees.push({x:GW-40,y:350,type:'pine'});
-this.grassTexture=[];
-this.nativeGrass=[];
-this.clouds=[];
-for(let i=0;i<4;i++)this.clouds.push({x:rand(0,GW),y:rand(20,70),r:rand(18,30)});
+// TV screens showing the game
+this.legendsTVs=[
+{x:50,y:130,w:45,h:35},
+{x:GW-50,y:130,w:45,h:35},
+{x:GW/2,y:100,w:60,h:45}
+];
+// String lights everywhere for party atmosphere
+this.stringLights=[];
+for(let i=0;i<4;i++){
+this.stringLights.push({y:200+i*100,lights:[]});
+for(let j=0;j<14;j++){
+this.stringLights[i].lights.push({x:20+j*26,phase:rand(0,Math.PI*2)});
+}}
+// Pool table
+this.poolTable={x:GW-80,y:450,w:70,h:45};
+// Jukebox
+this.jukebox={x:40,y:350};
+this.musicNotes=[];
+for(let i=0;i<5;i++){this.musicNotes.push({x:50,y:320,phase:rand(0,Math.PI*2),note:['♪','♫','♬'][Math.floor(rand(0,3))]});}
+// Pub tables scattered around
+this.legendsTables=[];
+this.legendsTables.push({x:100,y:320,r:22});
+this.legendsTables.push({x:GW-110,y:340,r:22});
+this.legendsTables.push({x:150,y:480,r:20});
+this.legendsTables.push({x:GW-150,y:500,r:20});
+this.legendsTables.push({x:GW/2,y:400,r:25});
+// Dartboard
+this.dartboard={x:GW-30,y:280};
+// People walking around with beers
+this.barPatrons=[];
+for(let i=0;i<12;i++){
+this.barPatrons.push({
+x:rand(60,GW-60),
+y:rand(250,600),
+vx:rand(-0.4,0.4),
+vy:rand(-0.3,0.3),
+hasBeer:true,
+phase:rand(0,Math.PI*2),
+color:['#0C2340','#C99700','#fff','#00843D'][Math.floor(rand(0,4))]
+});
+}
+// ND memorabilia on walls
+this.memorabilia=[
+{x:30,y:250,type:'helmet'},
+{x:30,y:420,type:'pennant'},
+{x:GW-30,y:380,type:'jersey'}
+];
+// Neon signs
+this.neonSigns=[
+{x:GW/2-90,y:85,text:"COLD",color:"#00BFFF"},
+{x:GW/2+90,y:85,text:"BEER",color:"#FFD700"}
+];
+this.trees=[];this.clouds=[];this.grassTexture=[];
+this.tents=[];this.coolers=[];this.grills=[];this.cornholeBoards=[];
+this.vehicles=[];this.flags=[];this.tailgaters=[];
 }
 
 genDome(){
@@ -504,9 +1018,9 @@ genLibrary(){
 this.pool={x:GW/2,y:400,w:70,h:200};
 // Multiple tee positions
 const configs=[
-{tee:{x:GW/2,y:GH-80},hole:{x:GW/2-80,y:350}},
-{tee:{x:100,y:GH-100},hole:{x:GW-100,y:350}},
-{tee:{x:GW-80,y:550},hole:{x:120,y:320}}
+{tee:{x:GW/2,y:GH-80},hole:{x:GW/2-80,y:520}},
+{tee:{x:100,y:GH-100},hole:{x:GW-100,y:520}},
+{tee:{x:GW-80,y:550},hole:{x:120,y:540}}
 ];
 const cfg=configs[this.holeIdx%3];
 this.tee=cfg.tee;
@@ -739,6 +1253,25 @@ this.musicNotes=[];
 for(let i=0;i<6;i++){this.musicNotes.push({x:rand(50,GW-50),y:rand(200,400),phase:rand(0,Math.PI*2),note:['♪','♫','♬'][Math.floor(rand(0,3))]});}
 // Signs
 this.signs=[{x:50,y:180,text:"GO IRISH!"},{x:GW-80,y:190,text:"BEAT EM!"}];
+// RV/Camper with awning
+this.rv={x:30,y:350,w:70,h:45};
+// Portable speaker/boombox
+this.speaker={x:95,y:440};
+// Cheerleaders
+this.cheerleaders=[];
+this.cheerleaders.push({x:GW/2-40,y:550,phase:0},{x:GW/2-20,y:555,phase:0.5},{x:GW/2,y:550,phase:1},{x:GW/2+20,y:555,phase:1.5});
+// Football tossers
+this.footballTossers={thrower:{x:GW-50,y:280},catcher:{x:GW-120,y:260},ballX:0,ballY:0,throwing:false,phase:0};
+// Dog on leash
+this.dog={x:160,y:420,ownerX:140,ownerY:410,tailWag:0};
+// Portable toilets
+this.portaPotties=[{x:15,y:480},{x:15,y:520}];
+this.pottyLine=[];
+for(let i=0;i<3;i++){this.pottyLine.push({x:35+i*12,y:500,waiting:true});}
+// Beverage pong table
+this.pongTable={x:GW-60,y:520,cups:[[0,0],[10,0],[20,0],[5,8],[15,8],[10,16]]};
+// Update tailgaters with foam fingers and face paint
+this.tailgaters.forEach((tg,i)=>{tg.hasFoamFinger=i%4===0;tg.hasFacePaint=i%3===0;tg.wavePhase=rand(0,Math.PI*2);});
 this.tables=[];this.trees=[];this.rocks=[];this.candles=[];this.students=[];
 this.fairway=null;this.floatingGreens=null;this.lake1=null;this.lake2=null;this.pool=null;
 }
@@ -1163,28 +1696,12 @@ if(dist(x,y,this.hole.x,this.hole.y)<50)return 'green';
 return 'fairway';
 }
 if(this.level===2){
-// Lakes - check floating greens first
-if(this.floatingGreens){
-for(const fg of this.floatingGreens){
-if(dist(x,y,fg.x,fg.y)<fg.r)return 'green';
-}}
-// Check if on figure-8 path (safe)
-if(this.figurePath){
-for(const p of this.figurePath){
-if(dist(x,y,p.x,p.y)<22)return 'path';
-}}
-// Check if in lake 1 (ellipse)
-if(this.lake1){
-const dx=(x-this.lake1.x)/this.lake1.rx;
-const dy=(y-this.lake1.y)/this.lake1.ry;
-if(dx*dx+dy*dy<1)return 'water';
-}
-// Check if in lake 2 (ellipse)
-if(this.lake2){
-const dx=(x-this.lake2.x)/this.lake2.rx;
-const dy=(y-this.lake2.y)/this.lake2.ry;
-if(dx*dx+dy*dy<1)return 'water';
-}
+// Legends Restaurant - indoor bar
+// Check if near hole (green area)
+if(dist(x,y,this.hole.x,this.hole.y)<35)return 'green';
+// Out of bounds behind bar
+if(this.legendsBar&&y<this.legendsBar.y+30)return 'oob';
+// Rest is playable floor
 return 'path';
 }
 if(this.level===3){
@@ -1323,21 +1840,7 @@ this.runFootballPlay();
 this.players.forEach(p=>p.update());
 }
 
-// Update geese (lakes level) - keep them in the lakes
-if(this.level===2&&this.geese&&this.lake1&&this.lake2){
-this.geese.forEach((g,i)=>{
-g.x+=g.vx;g.y+=g.vy;
-// Keep geese within their assigned lake
-const lake=i<3?this.lake1:this.lake2;
-const dx=(g.x-lake.x)/lake.rx;
-const dy=(g.y-lake.y)/lake.ry;
-if(dx*dx+dy*dy>0.7){// Getting close to edge, turn back
-g.vx+=(lake.x-g.x)*0.01;
-g.vy+=(lake.y-g.y)*0.01;
-}
-if(Math.random()<0.02){g.vx=rand(-0.4,0.4);g.vy=rand(-0.3,0.3)}
-});
-}
+// Update bar patrons (Legends level) - handled in draw function
 
 // Update students
 if((this.level===3||this.level===4)&&this.students){
@@ -1348,8 +1851,8 @@ if(s.y<220||s.y>GH-100)s.vy*=-1;
 });
 }
 
-// Animate clouds (Warren, Lakes, Dome, Library levels)
-if((this.level===0||this.level===2||this.level===3||this.level===4)&&this.clouds){
+// Animate clouds (Warren, Dome, Library levels)
+if((this.level===0||this.level===3||this.level===4)&&this.clouds){
 this.clouds.forEach(c=>{
 c.x+=0.15;// Drift right slowly
 if(c.x>GW+c.r*2)c.x=-c.r*2;// Wrap around
@@ -1391,13 +1894,40 @@ this.ball.vx=dx/d*2;this.ball.vy=dy/d*2;
 this.particles.push(new Particle(this.ball.x,this.ball.y,'#C99700'));
 break;
 }}}
-// Collision with geese
-if(this.level===2&&this.geese){
-for(const g of this.geese){
-if(dist(this.ball.x,this.ball.y,g.x,g.y)<15){
+// Collision with bar patrons (Legends level)
+if(this.level===2&&this.barPatrons){
+for(const p of this.barPatrons){
+if(dist(this.ball.x,this.ball.y,p.x,p.y)<14){
 this.ball.vx*=-0.5;this.ball.vy*=-0.5;
-g.vx=rand(-2,2);g.vy=rand(-2,2);// Goose flies away
+p.vx=rand(-1,1);p.vy=rand(-0.8,0.8);
+this.particles.push(new Particle(p.x,p.y-10,'#C99700'));
 }}}
+// Collision with Legends pub tables (round)
+if(this.level===2&&this.legendsTables){
+for(const t of this.legendsTables){
+if(dist(this.ball.x,this.ball.y,t.x,t.y)<t.r+5){
+const dx=this.ball.x-t.x,dy=this.ball.y-t.y,d=Math.hypot(dx,dy)||1;
+this.ball.vx=dx/d*Math.abs(this.ball.vx)*0.7;
+this.ball.vy=dy/d*Math.abs(this.ball.vy)*0.7;
+}}}
+// Collision with pool table
+if(this.level===2&&this.poolTable){
+const pt=this.poolTable;
+if(this.ball.x>pt.x-pt.w/2-4&&this.ball.x<pt.x+pt.w/2+4&&this.ball.y>pt.y-pt.h/2-4&&this.ball.y<pt.y+pt.h/2+4){
+const dx=this.ball.x-pt.x,dy=this.ball.y-pt.y;
+if(Math.abs(dx)>Math.abs(dy))this.ball.vx*=-0.7;else this.ball.vy*=-0.7;
+}}
+// Collision with jukebox
+if(this.level===2&&this.jukebox){
+if(dist(this.ball.x,this.ball.y,this.jukebox.x,this.jukebox.y)<20){
+this.ball.vx*=-0.6;this.ball.vy*=-0.6;
+}}
+// Collision with bar
+if(this.level===2&&this.legendsBar){
+const b=this.legendsBar;
+if(this.ball.y<b.y+b.h/2+5&&this.ball.y>b.y-10&&this.ball.x>b.x-b.w/2&&this.ball.x<b.x+b.w/2){
+this.ball.vy*=-0.8;this.ball.y=b.y+b.h/2+6;
+}}
 // Collision with students
 if((this.level===3||this.level===4)&&this.students){
 for(const s of this.students){
@@ -1902,7 +2432,7 @@ Audio.win();
 nextLevel(){this.level++;document.getElementById('results-screen').classList.add('hidden');this.startLevel()}
 
 updateHUD(){
-document.getElementById('hud-hole').textContent="HOLE "+(this.holeIdx+1);
+document.getElementById('hud-hole').textContent="HOLE "+(this.level+1);
 document.getElementById('hud-yards').textContent=this.yards+" YDS";
 document.getElementById('hud-par').textContent="PAR "+this.par;
 let s=this.levelScore+(this.shots-this.par);
@@ -1926,7 +2456,7 @@ if(!this.tee||!this.hole)return;
 
 if(this.level===0)this.drawWarren(ctx);
 else if(this.level===1)this.drawStadium(ctx);
-else if(this.level===2)this.drawLakes(ctx);
+else if(this.level===2)this.drawLegends(ctx);
 else if(this.level===3)this.drawDome(ctx);
 else if(this.level===4)this.drawLibrary(ctx);
 else if(this.level===5)this.drawGrotto(ctx);
@@ -1975,20 +2505,21 @@ ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(this.ball.x,this.ball.y);ctx.lineTo(p
 this.particles.forEach(p=>p.draw(ctx));
 this.fireworks.forEach(f=>f.draw(ctx));
 
-// Tutorial hint on first hole
-if(this.level===0&&this.holeLocked&&this.state!=='intro'){
+// Tutorial hints on first hole
+if(this.level===0&&this.state!=='intro'){
 const pulse=0.7+Math.sin(this.tick*0.1)*0.3;
-// Dark overlay at top
-ctx.fillStyle="rgba(12,35,64,0.85)";
-ctx.fillRect(0,95,GW,55);
-// Tutorial text
+if(this.holeLocked){
+// Step 1: Hit the target first
+ctx.fillStyle="rgba(12,35,64,0.9)";
+ctx.fillRect(0,85,GW,75);
 ctx.fillStyle=`rgba(255,215,0,${pulse})`;
 ctx.font="bold 9px 'Press Start 2P'";
 ctx.textAlign="center";
-ctx.fillText("⬇ HIT THE TARGET FIRST! ⬇",GW/2,115);
+ctx.fillText("⬇ HIT THE TARGET FIRST! ⬇",GW/2,105);
 ctx.fillStyle="#fff";
-ctx.font="7px 'Press Start 2P'";
-ctx.fillText("Unlock the hole, then sink the putt",GW/2,135);
+ctx.font="6px 'Press Start 2P'";
+ctx.fillText("DRAG from the ball to aim",GW/2,125);
+ctx.fillText("Release to shoot!",GW/2,140);
 ctx.textAlign="left";
 // Arrow pointing to target
 if(this.target){
@@ -1997,6 +2528,39 @@ ctx.fillStyle=`rgba(255,215,0,${pulse})`;
 ctx.beginPath();
 ctx.moveTo(ax,ay);ctx.lineTo(ax-8,ay-15);ctx.lineTo(ax+8,ay-15);
 ctx.closePath();ctx.fill();
+}
+// Arrow from ball showing drag direction
+if(this.state==='aim'){
+ctx.strokeStyle=`rgba(255,215,0,${pulse})`;
+ctx.lineWidth=2;
+ctx.setLineDash([5,3]);
+ctx.beginPath();
+ctx.moveTo(this.tee.x,this.tee.y);
+ctx.lineTo(this.tee.x,this.tee.y+60);
+ctx.stroke();
+ctx.setLineDash([]);
+ctx.fillStyle=`rgba(255,215,0,${pulse})`;
+ctx.beginPath();
+ctx.moveTo(this.tee.x,this.tee.y+65);
+ctx.lineTo(this.tee.x-6,this.tee.y+55);
+ctx.lineTo(this.tee.x+6,this.tee.y+55);
+ctx.closePath();ctx.fill();
+ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText("DRAG HERE",this.tee.x,this.tee.y+80);
+ctx.textAlign="left";
+}
+}else if(this.shots<2){
+// Step 2: Now sink the putt
+ctx.fillStyle="rgba(12,35,64,0.85)";
+ctx.fillRect(0,90,GW,50);
+ctx.fillStyle="#4CAF50";
+ctx.font="bold 8px 'Press Start 2P'";
+ctx.textAlign="center";
+ctx.fillText("✓ TARGET HIT!",GW/2,110);
+ctx.fillStyle="#fff";
+ctx.font="6px 'Press Start 2P'";
+ctx.fillText("Now sink the ball in the hole!",GW/2,128);
+ctx.textAlign="left";
 }
 }
 }
@@ -2178,12 +2742,6 @@ ctx.shadowBlur=0;
 ctx.restore();
 }
 
-// Yardage markers
-this.yardageMarkers?.forEach(m=>{
-ctx.fillStyle="#FFFFFF";ctx.fillRect(m.x-2,m.y-15,4,18);
-ctx.fillStyle="#0C2340";ctx.font="bold 5px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText(m.dist+"",m.x,m.y-18);ctx.textAlign="left";
-});
 
 // Squirrels
 this.squirrels?.forEach(s=>{
@@ -2534,129 +3092,251 @@ ctx.fillStyle="#0C2340";
 ctx.fillRect(x-6,y-3*d,12,8);
 }
 
-// DRAW: Lakes - Figure 8 with two lakes
-drawLakes(ctx){
-// Sky gradient
-const sky=ctx.createLinearGradient(0,0,0,140);
-sky.addColorStop(0,"#64B5F6");sky.addColorStop(1,"#90CAF9");
-ctx.fillStyle=sky;ctx.fillRect(0,0,GW,140);
+// DRAW: Legends Restaurant & Bar - Fun pub atmosphere
+drawLegends(ctx){
+// Dark cozy pub walls
+ctx.fillStyle="#1a1208";ctx.fillRect(0,0,GW,GH);
+// Wood paneling on upper walls
+const woodGrad=ctx.createLinearGradient(0,0,0,200);
+woodGrad.addColorStop(0,"#2d1f10");woodGrad.addColorStop(1,"#1a1208");
+ctx.fillStyle=woodGrad;ctx.fillRect(0,0,GW,200);
+// Brick accent at top
+ctx.fillStyle="#5c3d2e";
+for(let i=0;i<GW;i+=18){ctx.fillRect(i,0,16,12);}
+for(let i=9;i<GW;i+=18){ctx.fillRect(i,12,16,12);}
 
-// Clouds
-this.clouds?.forEach(c=>{
-ctx.fillStyle="rgba(255,255,255,0.8)";
-ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,Math.PI*2);ctx.fill();
-ctx.beginPath();ctx.arc(c.x+c.r*0.5,c.y-c.r*0.2,c.r*0.6,0,Math.PI*2);ctx.fill();
+// Hardwood floor
+ctx.fillStyle="#3d2814";ctx.fillRect(0,200,GW,GH-200);
+for(let y=200;y<GH;y+=20){
+for(let x=0;x<GW;x+=50){
+ctx.fillStyle=(y/20+x/50)%2===0?"#4a3520":"#3d2814";
+ctx.fillRect(x+(y%40===0?25:0),y,48,18);
+}}
+
+// Neon signs with glow
+this.neonSigns?.forEach(ns=>{
+const glow=0.6+Math.sin(this.tick*0.08)*0.4;
+ctx.fillStyle=`rgba(${ns.color==="#00BFFF"?"0,191,255":"255,215,0"},${glow*0.4})`;
+ctx.beginPath();ctx.arc(ns.x,ns.y,25,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=ns.color;ctx.font="bold 8px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText(ns.text,ns.x,ns.y+3);ctx.textAlign="left";
 });
 
-// Distant dome
-ctx.fillStyle="#C99700";ctx.beginPath();ctx.arc(310,110,18,Math.PI,0);ctx.fill();
-ctx.fillStyle="#F5F5DC";ctx.fillRect(295,110,30,25);
+// Bar at top
+if(this.legendsBar){
+const b=this.legendsBar;
+// Bar back wall with bottles
+ctx.fillStyle="#0d0906";ctx.fillRect(b.x-b.w/2,b.y-b.h,b.w,b.h);
+// Shelves with bottles
+for(let shelf=0;shelf<2;shelf++){
+ctx.fillStyle="#2d1f10";ctx.fillRect(b.x-b.w/2+5,b.y-b.h+10+shelf*20,b.w-10,3);
+for(let i=0;i<14;i++){
+const bx=b.x-b.w/2+15+i*20;
+ctx.fillStyle=["#1E90FF","#228B22","#DAA520","#8B0000","#9400D3","#FF6347","#00CED1"][i%7];
+ctx.fillRect(bx,b.y-b.h+12+shelf*20-15,6,15);
+ctx.fillStyle="#333";ctx.fillRect(bx+1,b.y-b.h+12+shelf*20-18,4,4);
+}}
+// Bar counter
+ctx.fillStyle="#1a0f08";ctx.fillRect(b.x-b.w/2,b.y,b.w,b.h/2);
+ctx.fillStyle="#2d1f10";ctx.fillRect(b.x-b.w/2,b.y-5,b.w,8);
+// Bar top shine
+ctx.fillStyle="rgba(255,200,100,0.15)";ctx.fillRect(b.x-b.w/2+5,b.y-3,b.w-10,4);
+// Tap handles
+for(let i=0;i<5;i++){
+ctx.fillStyle=["#C99700","#0C2340","#00843D","#8B0000","#C99700"][i];
+ctx.fillRect(b.x-80+i*40,b.y-b.h+5,8,25);
+ctx.fillStyle="#333";ctx.beginPath();ctx.arc(b.x-76+i*40,b.y-b.h+3,5,0,Math.PI*2);ctx.fill();
+}
+// Bartender
+if(this.bartender){
+const bt=this.bartender;
+ctx.fillStyle="#fff";ctx.fillRect(bt.x-6,bt.y-5,12,18);
+ctx.fillStyle="#DEB887";ctx.beginPath();ctx.arc(bt.x,bt.y-12,7,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#000";ctx.beginPath();ctx.arc(bt.x,bt.y-14,6,Math.PI,0);ctx.fill();
+// Shaking cocktail animation
+const shake=Math.sin(this.tick*0.3)*3;
+ctx.fillStyle="#C0C0C0";ctx.fillRect(bt.x+10+shake,bt.y-8,6,12);
+}}
 
-// Ground
-ctx.fillStyle="#4CAF50";ctx.fillRect(0,130,GW,GH-130);
+// Bar stools with patrons
+this.barStools?.forEach(s=>{
+ctx.fillStyle="#1a0f08";
+ctx.beginPath();ctx.arc(s.x,s.y,10,0,Math.PI*2);ctx.fill();
+ctx.fillRect(s.x-2,s.y+10,4,12);
+if(s.occupied){
+ctx.fillStyle="#0C2340";ctx.fillRect(s.x-6,s.y-15,12,18);
+ctx.fillStyle="#DEB887";ctx.beginPath();ctx.arc(s.x,s.y-22,7,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#DAA520";ctx.fillRect(s.x+8,s.y-10,6,10);
+ctx.fillStyle="#fff";ctx.fillRect(s.x+8,s.y-10,6,3);
+}});
 
-// Figure-8 path around both lakes
-ctx.strokeStyle="#C9B896";ctx.lineWidth=32;ctx.lineCap="round";ctx.lineJoin="round";
-if(this.figurePath&&this.figurePath.length>0){
-ctx.beginPath();
-ctx.moveTo(this.figurePath[0].x,this.figurePath[0].y);
-for(let i=1;i<this.figurePath.length;i++){
-ctx.lineTo(this.figurePath[i].x,this.figurePath[i].y);
-}
-ctx.closePath();
-ctx.stroke();
-}
-
-// Lake 1 (upper - St. Mary's)
-if(this.lake1){
-ctx.fillStyle="#0277BD";
-ctx.beginPath();ctx.ellipse(this.lake1.x,this.lake1.y,this.lake1.rx,this.lake1.ry,0,0,Math.PI*2);ctx.fill();
-// Waves
-ctx.strokeStyle="rgba(255,255,255,0.3)";ctx.lineWidth=2;
-for(let i=0;i<3;i++){
-const offset=Math.sin(this.tick*0.04+i)*5;
-ctx.beginPath();
-ctx.ellipse(this.lake1.x,this.lake1.y+offset,this.lake1.rx*0.6-i*15,this.lake1.ry*0.5-i*10,0,0,Math.PI*2);
-ctx.stroke();
-}
-// Label
-ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="6px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText("ST MARY'S",this.lake1.x,this.lake1.y+this.lake1.ry-10);ctx.textAlign="left";
-}
-
-// Lake 2 (lower - St. Joseph's)
-if(this.lake2){
-ctx.fillStyle="#0277BD";
-ctx.beginPath();ctx.ellipse(this.lake2.x,this.lake2.y,this.lake2.rx,this.lake2.ry,0,0,Math.PI*2);ctx.fill();
-// Waves
-ctx.strokeStyle="rgba(255,255,255,0.3)";ctx.lineWidth=2;
-for(let i=0;i<3;i++){
-const offset=Math.sin(this.tick*0.035+i+1)*5;
-ctx.beginPath();
-ctx.ellipse(this.lake2.x,this.lake2.y+offset,this.lake2.rx*0.6-i*15,this.lake2.ry*0.5-i*10,0,0,Math.PI*2);
-ctx.stroke();
-}
-// Label
-ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="6px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText("ST JOSEPH'S",this.lake2.x,this.lake2.y+this.lake2.ry-10);ctx.textAlign="left";
-}
-
-// Trees (behind floating greens)
-this.trees?.forEach(t=>{
-if(t.type==='willow'){
-ctx.fillStyle="#5D4037";ctx.fillRect(t.x-4,t.y,8,25);
-ctx.strokeStyle="#7CB342";ctx.lineWidth=2;
-for(let i=0;i<10;i++){
-ctx.beginPath();ctx.moveTo(t.x,t.y);
-ctx.quadraticCurveTo(t.x-35+i*7,t.y+35+Math.sin(this.tick*0.025+i)*4,t.x-30+i*6,t.y+55);
-ctx.stroke();
-}
-}else{
-ctx.fillStyle="rgba(0,0,0,0.2)";ctx.beginPath();ctx.ellipse(t.x+3,t.y+4,8,3,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#3E2723";ctx.fillRect(t.x-2,t.y-8,4,12);
-ctx.fillStyle="#1B5E20";ctx.beginPath();ctx.moveTo(t.x-10,t.y-8);ctx.lineTo(t.x+10,t.y-8);ctx.lineTo(t.x,t.y-28);ctx.fill();
-}
+// TV screens showing the game with little players
+this.legendsTVs?.forEach(tv=>{
+ctx.fillStyle="#111";ctx.fillRect(tv.x-tv.w/2-3,tv.y-tv.h/2-3,tv.w+6,tv.h+6);
+const flicker=0.8+Math.sin(this.tick*0.2)*0.15;
+ctx.fillStyle=`rgba(80,180,80,${flicker})`;ctx.fillRect(tv.x-tv.w/2,tv.y-tv.h/2,tv.w,tv.h);
+// Football field
+ctx.fillStyle="#2E7D32";ctx.fillRect(tv.x-tv.w/2+2,tv.y-tv.h/2+2,tv.w-4,tv.h-4);
+ctx.strokeStyle="#fff";ctx.lineWidth=0.5;
+for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(tv.x-tv.w/2+2+i*(tv.w-4)/5,tv.y-tv.h/2+2);ctx.lineTo(tv.x-tv.w/2+2+i*(tv.w-4)/5,tv.y+tv.h/2-2);ctx.stroke();}
+// Little football players on the field
+const playerMove=Math.sin(this.tick*0.1)*3;
+// Blue team (offense)
+ctx.fillStyle="#0C2340";
+ctx.fillRect(tv.x-8+playerMove,tv.y-3,3,5);
+ctx.fillRect(tv.x-4+playerMove,tv.y+2,3,5);
+ctx.fillRect(tv.x+playerMove,tv.y-5,3,5);
+ctx.fillRect(tv.x+4+playerMove,tv.y+4,3,5);
+// Gold team (ND!)
+ctx.fillStyle="#C99700";
+ctx.fillRect(tv.x+10-playerMove,tv.y-2,3,5);
+ctx.fillRect(tv.x+14-playerMove,tv.y+3,3,5);
+ctx.fillRect(tv.x+8-playerMove,tv.y+6,3,5);
+// Ball
+ctx.fillStyle="#8B4513";
+ctx.beginPath();ctx.ellipse(tv.x+2+playerMove*0.5,tv.y,2,1,0,0,Math.PI*2);ctx.fill();
 });
 
-// Floating greens on lakes
-this.floatingGreens?.forEach((fg,i)=>{
-// Floating platform shadow
-ctx.fillStyle="rgba(0,0,0,0.3)";
-ctx.beginPath();ctx.ellipse(fg.x+3,fg.y+fg.r+5,fg.r+5,8,0,0,Math.PI*2);ctx.fill();
-// Platform edge
-ctx.fillStyle="#5D4037";
-ctx.beginPath();ctx.arc(fg.x,fg.y,fg.r+4,0,Math.PI*2);ctx.fill();
-// Green surface
-ctx.fillStyle="#81C784";
-ctx.beginPath();ctx.arc(fg.x,fg.y,fg.r,0,Math.PI*2);ctx.fill();
+// STRING LIGHTS across ceiling - party atmosphere!
+this.stringLights?.forEach(row=>{
+ctx.strokeStyle="#333";ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(0,row.y);
+row.lights.forEach(l=>{ctx.lineTo(l.x,row.y+Math.sin(l.x*0.03)*4);});
+ctx.lineTo(GW,row.y);ctx.stroke();
+row.lights.forEach(l=>{
+l.phase+=0.06;
+const glow=0.5+Math.sin(l.phase)*0.5;
+const colors=["#FFD700","#FF6B6B","#4ECDC4","#45B7D1","#96CEB4","#FFEAA7","#DDA0DD"];
+const color=colors[Math.floor(l.x/26)%colors.length];
+ctx.fillStyle=`rgba(255,255,200,${glow*0.4})`;
+ctx.beginPath();ctx.arc(l.x,row.y+Math.sin(l.x*0.03)*4,10,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=color;
+ctx.beginPath();ctx.arc(l.x,row.y+Math.sin(l.x*0.03)*4+5,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=`rgba(255,255,255,${glow})`;
+ctx.beginPath();ctx.arc(l.x,row.y+Math.sin(l.x*0.03)*4+4,2,0,Math.PI*2);ctx.fill();
+});
 });
 
-// Geese
-this.geese?.forEach(g=>{
-ctx.fillStyle="#444";
-ctx.beginPath();ctx.ellipse(g.x,g.y,9,5,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#fff";
-ctx.beginPath();ctx.ellipse(g.x+5,g.y-2,4,3,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#F57C00";
-ctx.beginPath();ctx.moveTo(g.x+9,g.y-2);ctx.lineTo(g.x+14,g.y-1);ctx.lineTo(g.x+9,g.y+1);ctx.fill();
+// Pool table
+if(this.poolTable){
+const pt=this.poolTable;
+ctx.fillStyle="rgba(0,0,0,0.3)";ctx.fillRect(pt.x-pt.w/2+3,pt.y+pt.h/2+3,pt.w,8);
+ctx.fillStyle="#1B5E20";ctx.fillRect(pt.x-pt.w/2,pt.y-pt.h/2,pt.w,pt.h);
+ctx.strokeStyle="#5D4037";ctx.lineWidth=5;ctx.strokeRect(pt.x-pt.w/2,pt.y-pt.h/2,pt.w,pt.h);
+ctx.fillStyle="#000";
+[[pt.x-pt.w/2,pt.y-pt.h/2],[pt.x+pt.w/2,pt.y-pt.h/2],[pt.x-pt.w/2,pt.y+pt.h/2],[pt.x+pt.w/2,pt.y+pt.h/2],[pt.x,pt.y-pt.h/2],[pt.x,pt.y+pt.h/2]].forEach(p=>{
+ctx.beginPath();ctx.arc(p[0],p[1],4,0,Math.PI*2);ctx.fill();
+});
+ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(pt.x-15,pt.y,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#FFD700";ctx.beginPath();ctx.arc(pt.x+10,pt.y-8,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#E53935";ctx.beginPath();ctx.arc(pt.x+5,pt.y+5,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#000";ctx.beginPath();ctx.arc(pt.x-5,pt.y+10,4,0,Math.PI*2);ctx.fill();
+// Cue stick
+ctx.strokeStyle="#8B4513";ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(pt.x-pt.w/2-20,pt.y+pt.h/2+10);ctx.lineTo(pt.x-15,pt.y);ctx.stroke();
+}
+
+// Jukebox with music notes
+if(this.jukebox){
+const jb=this.jukebox;
+ctx.fillStyle="#C99700";ctx.fillRect(jb.x-15,jb.y-25,30,50);
+ctx.fillStyle="#0C2340";ctx.fillRect(jb.x-12,jb.y-20,24,25);
+const pulse=0.5+Math.sin(this.tick*0.15)*0.5;
+ctx.fillStyle=`rgba(255,100,100,${pulse})`;ctx.fillRect(jb.x-10,jb.y-18,20,10);
+ctx.fillStyle=`rgba(100,255,100,${1-pulse})`;ctx.fillRect(jb.x-10,jb.y-8,20,10);
+ctx.fillStyle="#333";ctx.fillRect(jb.x-8,jb.y+8,16,12);
+}
+// Floating music notes
+this.musicNotes?.forEach(mn=>{
+mn.y-=0.4;mn.x+=Math.sin(this.tick*0.08+mn.phase)*0.6;
+if(mn.y<180){mn.y=360;mn.x=50+rand(-10,10);}
+const fade=Math.min(1,(mn.y-180)/80);
+ctx.fillStyle=`rgba(201,151,0,${fade})`;ctx.font="14px Arial";ctx.fillText(mn.note,mn.x,mn.y);
 });
 
-// Flag on current hole's floating green (no separate green drawn)
+// Dartboard
+if(this.dartboard){
+const db=this.dartboard;
+ctx.fillStyle="#000";ctx.beginPath();ctx.arc(db.x,db.y,18,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#E53935";ctx.beginPath();ctx.arc(db.x,db.y,15,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(db.x,db.y,10,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#1B5E20";ctx.beginPath();ctx.arc(db.x,db.y,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#E53935";ctx.beginPath();ctx.arc(db.x,db.y,2,0,Math.PI*2);ctx.fill();
+}
+
+// Round pub tables
+this.legendsTables?.forEach(t=>{
+ctx.fillStyle="rgba(0,0,0,0.25)";
+ctx.beginPath();ctx.ellipse(t.x+2,t.y+t.r+3,t.r,6,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#1a0f08";ctx.fillRect(t.x-3,t.y+5,6,t.r);
+ctx.fillStyle="#2d1f10";ctx.beginPath();ctx.arc(t.x,t.y,t.r,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#3d2814";ctx.beginPath();ctx.arc(t.x,t.y-2,t.r-2,0,Math.PI*2);ctx.fill();
+// Drinks on table
+ctx.fillStyle="#DAA520";ctx.fillRect(t.x-8,t.y-5,6,10);ctx.fillStyle="#fff";ctx.fillRect(t.x-8,t.y-5,6,3);
+ctx.fillStyle="#DAA520";ctx.fillRect(t.x+2,t.y-4,6,10);ctx.fillStyle="#fff";ctx.fillRect(t.x+2,t.y-4,6,3);
+});
+
+// ND Memorabilia on walls
+this.memorabilia?.forEach(m=>{
+if(m.type==='helmet'){
+ctx.fillStyle="#C99700";ctx.beginPath();ctx.arc(m.x,m.y,14,Math.PI,0);ctx.fill();
+ctx.fillStyle="#0C2340";ctx.fillRect(m.x-12,m.y-2,24,10);
+ctx.fillStyle="#C99700";ctx.font="6px 'Press Start 2P'";ctx.fillText("ND",m.x-6,m.y+6);
+}else if(m.type==='jersey'){
+ctx.fillStyle="#0C2340";ctx.fillRect(m.x-12,m.y-15,24,32);
+ctx.fillStyle="#C99700";ctx.font="10px 'Press Start 2P'";ctx.textAlign="center";ctx.fillText("3",m.x,m.y+8);ctx.textAlign="left";
+}else if(m.type==='pennant'){
+ctx.fillStyle="#0C2340";ctx.beginPath();
+ctx.moveTo(m.x,m.y-15);ctx.lineTo(m.x+25,m.y);ctx.lineTo(m.x,m.y+15);ctx.closePath();ctx.fill();
+ctx.fillStyle="#C99700";ctx.font="6px 'Press Start 2P'";ctx.fillText("ND",m.x+5,m.y+3);
+}});
+
+// People walking around with beers
+this.barPatrons?.forEach(p=>{
+p.phase+=0.04;
+const sway=Math.sin(p.phase)*1.2;
+p.x+=p.vx+sway*0.15;p.y+=p.vy;
+if(p.x<50||p.x>GW-50)p.vx*=-1;
+if(p.y<230||p.y>GH-50)p.vy*=-1;
+p.x=Math.max(50,Math.min(GW-50,p.x));
+p.y=Math.max(230,Math.min(GH-50,p.y));
+// Shadow
+ctx.fillStyle="rgba(0,0,0,0.2)";ctx.beginPath();ctx.ellipse(p.x,p.y+18,9,4,0,0,Math.PI*2);ctx.fill();
+// Legs
+ctx.fillStyle="#1a1a2e";ctx.fillRect(p.x-4,p.y+6,3,12);ctx.fillRect(p.x+1,p.y+6,3,12);
+// Body
+ctx.fillStyle=p.color;ctx.fillRect(p.x-7,p.y-8,14,16);
+// Arms
+ctx.fillStyle="#DEB887";ctx.fillRect(p.x-11,p.y-5,5,4);
+const armUp=Math.sin(p.phase*1.5)*2;
+ctx.fillRect(p.x+6,p.y-6+armUp,5,4);
+// Beer!
+ctx.fillStyle="#DAA520";ctx.fillRect(p.x+9,p.y-16+armUp,7,12);
+ctx.fillStyle="#fff";ctx.fillRect(p.x+9,p.y-16+armUp,7,4);
+// Head
+ctx.fillStyle="#DEB887";ctx.beginPath();ctx.arc(p.x,p.y-14,8,0,Math.PI*2);ctx.fill();
+// Happy face
+ctx.fillStyle="#000";
+ctx.beginPath();ctx.arc(p.x-2,p.y-15,1.5,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(p.x+2,p.y-15,1.5,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle="#000";ctx.lineWidth=1;
+ctx.beginPath();ctx.arc(p.x,p.y-12,3,0.2*Math.PI,0.8*Math.PI);ctx.stroke();
+});
+
 this.drawHole(ctx);this.drawTarget(ctx);
 
-// Tee with pulsing glow indicator
+// LEGENDS sign at top
+ctx.fillStyle="rgba(12,35,64,0.95)";ctx.fillRect(GW/2-75,25,150,28);
+ctx.strokeStyle="#C99700";ctx.lineWidth=3;ctx.strokeRect(GW/2-75,25,150,28);
+const signGlow=0.7+Math.sin(this.tick*0.1)*0.3;
+ctx.fillStyle=`rgba(201,151,0,${signGlow})`;ctx.font="12px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText("LEGENDS",GW/2,45);ctx.textAlign="left";
+
+// Tee box (on the floor)
 const teeGlow=0.4+Math.sin(this.tick*0.1)*0.3;
-ctx.fillStyle=`rgba(255,215,0,${teeGlow})`;
-ctx.beginPath();ctx.arc(this.tee.x,this.tee.y,22,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=`rgba(255,255,255,${teeGlow+0.2})`;
-ctx.beginPath();ctx.arc(this.tee.x,this.tee.y,12,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#5D4037";ctx.fillRect(this.tee.x-12,this.tee.y-6,24,12);
-ctx.fillStyle="#C99700";
-ctx.beginPath();ctx.arc(this.tee.x-8,this.tee.y,2,0,Math.PI*2);ctx.fill();
-ctx.beginPath();ctx.arc(this.tee.x+8,this.tee.y,2,0,Math.PI*2);ctx.fill();
-// TEE label
-ctx.fillStyle="#0C2340";ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText("TEE",this.tee.x,this.tee.y+22);ctx.textAlign="left";
+ctx.fillStyle=`rgba(255,215,0,${teeGlow})`;ctx.beginPath();ctx.arc(this.tee.x,this.tee.y,22,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#5D4037";ctx.beginPath();ctx.arc(this.tee.x,this.tee.y,15,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#C99700";ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";ctx.fillText("TEE",this.tee.x,this.tee.y+28);ctx.textAlign="left";
 }
 
 // DRAW: Golden Dome
@@ -3513,17 +4193,35 @@ ctx.fillStyle="#C99700";ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";c
 
 // DRAW: Game Day Tailgate
 drawTailgate(ctx){
-// Sky
+// Sunset sky for game day atmosphere
 const sky=ctx.createLinearGradient(0,0,0,120);
-sky.addColorStop(0,"#4A90D9");sky.addColorStop(1,"#87CEEB");
+sky.addColorStop(0,"#1a1a2e");sky.addColorStop(0.3,"#c94b4b");sky.addColorStop(0.6,"#f09819");sky.addColorStop(1,"#ffcf48");
 ctx.fillStyle=sky;ctx.fillRect(0,0,GW,120);
-// Stadium in distance
-ctx.fillStyle="#555";ctx.fillRect(GW/2-80,60,160,60);
-ctx.fillStyle="#0C2340";ctx.fillRect(GW/2-70,70,140,40);
-ctx.fillStyle="#C99700";ctx.font="6px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText("ND STADIUM",GW/2,95);ctx.textAlign="left";
+// Sun setting
+ctx.fillStyle="rgba(255,200,100,0.8)";ctx.beginPath();ctx.arc(50,100,25,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="rgba(255,220,150,0.4)";ctx.beginPath();ctx.arc(50,100,35,0,Math.PI*2);ctx.fill();
+// Stadium in distance with detail
+ctx.fillStyle="#333";ctx.fillRect(GW/2-85,55,170,70);
+ctx.fillStyle="#0C2340";ctx.fillRect(GW/2-75,65,150,50);
+// Stadium upper deck
+ctx.fillStyle="#444";ctx.fillRect(GW/2-80,50,160,15);
+// Stadium lights (4 towers)
+for(let i=0;i<4;i++){
+const lx=GW/2-70+i*47;
+ctx.fillStyle="#666";ctx.fillRect(lx,20,6,40);
+ctx.fillStyle="#333";ctx.fillRect(lx-4,15,14,8);
+const glow=0.6+Math.sin(this.tick*0.1+i)*0.3;
+ctx.fillStyle=`rgba(255,255,200,${glow})`;ctx.beginPath();ctx.arc(lx+3,18,8,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=`rgba(255,255,150,${glow*0.5})`;ctx.beginPath();ctx.arc(lx+3,18,15,0,Math.PI*2);ctx.fill();
+}
+// Bleacher detail
+for(let r=0;r<4;r++){ctx.fillStyle=r%2===0?"#0a1d35":"#0C2340";ctx.fillRect(GW/2-70,68+r*10,140,8);}
+// NOTRE DAME text on stadium
+ctx.fillStyle="#C99700";ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText("NOTRE DAME",GW/2,80);
+ctx.font="4px 'Press Start 2P'";ctx.fillText("STADIUM",GW/2,88);ctx.textAlign="left";
 // Touchdown Jesus in background (Hesburgh Library)
-ctx.fillStyle="#8B7355";ctx.fillRect(GW-70,40,50,80);
+ctx.fillStyle="#5a4a3a";ctx.fillRect(GW-70,40,50,80);
 ctx.fillStyle="#C99700";ctx.fillRect(GW-65,50,40,50);
 ctx.fillStyle="#FFD700";ctx.font="4px 'Press Start 2P'";ctx.fillText("TD",GW-52,75);ctx.fillText("JESUS",GW-58,82);
 // Parking lot ground
@@ -3612,24 +4310,49 @@ ctx.fillStyle="#00843D";ctx.beginPath();ctx.moveTo(t.x,t.y-t.h);ctx.lineTo(t.x-t
 ctx.fillStyle="#006633";ctx.fillRect(t.x-t.w/2+5,t.y-5,t.w-10,5);
 ctx.fillStyle="#C99700";ctx.font="4px 'Press Start 2P'";ctx.textAlign="center";ctx.fillText("ND",t.x,t.y-t.h/2);ctx.textAlign="left";
 });
-// Grills with grill masters
+// Grills with grill masters and food
 this.grills?.forEach(g=>{
 ctx.fillStyle="#333";ctx.beginPath();ctx.arc(g.x,g.y,g.r,0,Math.PI*2);ctx.fill();
+// Grill grate
+ctx.strokeStyle="#555";ctx.lineWidth=1;
+for(let i=-8;i<=8;i+=4){ctx.beginPath();ctx.moveTo(g.x-10,g.y+i);ctx.lineTo(g.x+10,g.y+i);ctx.stroke();}
 const glow=0.5+Math.sin(this.tick*0.15)*0.3;
-ctx.fillStyle=`rgba(255,100,0,${glow})`;ctx.beginPath();ctx.arc(g.x,g.y,g.r-3,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=`rgba(255,200,0,${glow})`;ctx.beginPath();ctx.arc(g.x,g.y-2,4,0,Math.PI*2);ctx.fill();
-// Smoke particles
-for(let s=0;s<5;s++){
-ctx.fillStyle=`rgba(200,200,200,${0.4-s*0.08})`;
-ctx.beginPath();ctx.arc(g.x+Math.sin(this.tick*0.05+s*2)*8,g.y-25-s*12,3+s*2,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=`rgba(255,100,0,${glow})`;ctx.beginPath();ctx.arc(g.x,g.y,g.r-5,0,Math.PI*2);ctx.fill();
+// Hot dogs on grill
+ctx.fillStyle="#cd6133";
+ctx.beginPath();ctx.ellipse(g.x-6,g.y-3,6,2,0.2,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(g.x+2,g.y-1,6,2,-0.1,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(g.x-2,g.y+4,6,2,0.3,0,Math.PI*2);ctx.fill();
+// Burgers on grill
+ctx.fillStyle="#8B4513";
+ctx.beginPath();ctx.arc(g.x+7,g.y+2,4,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(g.x-8,g.y+5,4,0,Math.PI*2);ctx.fill();
+// Grill marks on burgers
+ctx.strokeStyle="#654321";ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(g.x+5,g.y+1);ctx.lineTo(g.x+9,g.y+3);ctx.stroke();
+ctx.beginPath();ctx.moveTo(g.x-10,g.y+4);ctx.lineTo(g.x-6,g.y+6);ctx.stroke();
+// Sizzle effect
+if(Math.random()>0.7){
+ctx.fillStyle="rgba(255,255,200,0.8)";ctx.beginPath();ctx.arc(g.x+rand(-8,8),g.y+rand(-5,5),1,0,Math.PI*2);ctx.fill();
 }
-// Grill master
+// Smoke particles (more smoke)
+for(let s=0;s<7;s++){
+ctx.fillStyle=`rgba(200,200,200,${0.5-s*0.07})`;
+ctx.beginPath();ctx.arc(g.x+Math.sin(this.tick*0.05+s*2)*10,g.y-20-s*10,4+s*2,0,Math.PI*2);ctx.fill();
+}
+// Grill master with chef hat and apron
 if(g.hasMaster){
 const flip=Math.sin(this.tick*0.2)>0.5?3:-3;
+// Apron (white)
 ctx.fillStyle="#fff";ctx.fillRect(g.x+18,g.y-15,8,14);
+// Head
 ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(g.x+22,g.y-20,5,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(g.x+22,g.y-26,6,Math.PI,0);ctx.fill();
-ctx.fillStyle="#666";ctx.fillRect(g.x+10,g.y-8+flip,12,2);
+// Chef hat
+ctx.fillStyle="#fff";ctx.fillRect(g.x+17,g.y-30,10,8);
+ctx.beginPath();ctx.arc(g.x+22,g.y-30,5,Math.PI,0);ctx.fill();
+// Spatula flipping
+ctx.fillStyle="#666";ctx.fillRect(g.x+8+flip,g.y-10,14,2);
+ctx.fillStyle="#888";ctx.fillRect(g.x+6+flip,g.y-12,4,6);
 }});
 // Kids running
 this.kids?.forEach(k=>{
@@ -3661,13 +4384,27 @@ ctx.fillStyle="#00843D";ctx.fillRect(lep.x-7,lep.y-28+dance,14,8);
 ctx.fillStyle="#C99700";ctx.fillRect(lep.x-6,lep.y-21+dance,12,3);
 ctx.fillStyle="#FF8C00";ctx.fillRect(lep.x-4,lep.y-14+dance,2,5);ctx.fillRect(lep.x+2,lep.y-14+dance,2,5);
 }
-// Tailgaters
+// Tailgaters with foam fingers, face paint, and wave
 this.tailgaters?.forEach(tg=>{
 tg.x+=tg.vx;tg.y+=tg.vy;
 if(tg.x<50||tg.x>GW-50)tg.vx*=-1;if(tg.y<200||tg.y>GH-100)tg.vy*=-1;
+// The wave animation
+const waveOffset=Math.sin(this.tick*0.08+tg.wavePhase)*8;
+const isWaving=Math.sin(this.tick*0.05+tg.wavePhase)>0.7;
+const armY=isWaving?-25+waveOffset:-10;
 ctx.fillStyle=tg.hasBeercup?"#00843D":"#0C2340";ctx.fillRect(tg.x-4,tg.y-12,8,14);
 ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(tg.x,tg.y-16,5,0,Math.PI*2);ctx.fill();
-if(tg.hasBeercup){ctx.fillStyle="#C99700";ctx.fillRect(tg.x+5,tg.y-8,4,6);}
+// Face paint (gold shamrock on cheek)
+if(tg.hasFacePaint){ctx.fillStyle="#C99700";ctx.font="6px Arial";ctx.fillText("☘",tg.x+2,tg.y-14);}
+// Arm for wave or holding stuff
+if(isWaving){ctx.fillStyle="#FFCCBC";ctx.fillRect(tg.x+4,tg.y+armY,3,12);}
+// Foam finger
+if(tg.hasFoamFinger){
+const fingerY=isWaving?tg.y+armY-8:tg.y-22;
+ctx.fillStyle="#C99700";ctx.beginPath();ctx.moveTo(tg.x+6,fingerY);ctx.lineTo(tg.x+3,fingerY+12);ctx.lineTo(tg.x+9,fingerY+12);ctx.fill();
+ctx.fillStyle="#0C2340";ctx.font="3px Arial";ctx.fillText("#1",tg.x+4,fingerY+8);
+}
+if(tg.hasBeercup&&!tg.hasFoamFinger){ctx.fillStyle="#C99700";ctx.fillRect(tg.x+5,tg.y-8,4,6);}
 });
 // Music notes floating
 this.musicNotes?.forEach(mn=>{
@@ -3685,6 +4422,145 @@ ctx.fillStyle="#0C2340";ctx.font="6px 'Press Start 2P'";ctx.textAlign="center";c
 ctx.fillStyle="#8B4513";ctx.fillRect(-2,12,4,30);
 ctx.restore();
 });
+// RV/Camper with awning
+if(this.rv){
+const rv=this.rv;
+// RV body
+ctx.fillStyle="#f5f5f5";ctx.fillRect(rv.x-rv.w/2,rv.y-rv.h/2,rv.w,rv.h);
+ctx.fillStyle="#0C2340";ctx.fillRect(rv.x-rv.w/2,rv.y-rv.h/2,rv.w,8);
+// Windows
+ctx.fillStyle="#87CEEB";ctx.fillRect(rv.x-rv.w/2+5,rv.y-rv.h/2+12,12,10);
+ctx.fillRect(rv.x-rv.w/2+22,rv.y-rv.h/2+12,12,10);
+ctx.fillRect(rv.x+rv.w/2-18,rv.y-rv.h/2+12,12,10);
+// Wheels
+ctx.fillStyle="#333";ctx.beginPath();ctx.arc(rv.x-rv.w/2+12,rv.y+rv.h/2,6,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(rv.x+rv.w/2-12,rv.y+rv.h/2,6,0,Math.PI*2);ctx.fill();
+// ND stripe
+ctx.fillStyle="#C99700";ctx.fillRect(rv.x-rv.w/2,rv.y,rv.w,4);
+// Awning
+ctx.fillStyle="rgba(0,132,61,0.8)";ctx.beginPath();
+ctx.moveTo(rv.x+rv.w/2,rv.y-rv.h/2+8);ctx.lineTo(rv.x+rv.w/2+35,rv.y);ctx.lineTo(rv.x+rv.w/2+35,rv.y+rv.h-10);ctx.lineTo(rv.x+rv.w/2,rv.y+rv.h/2);ctx.fill();
+ctx.strokeStyle="#00843D";ctx.lineWidth=1;ctx.stroke();
+// Awning poles
+ctx.fillStyle="#888";ctx.fillRect(rv.x+rv.w/2+33,rv.y,2,rv.h);
+}
+// Portable speaker/boombox
+if(this.speaker){
+const sp=this.speaker;
+ctx.fillStyle="#222";ctx.fillRect(sp.x-12,sp.y-8,24,16);
+ctx.fillStyle="#333";ctx.beginPath();ctx.arc(sp.x-5,sp.y,5,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(sp.x+5,sp.y,5,0,Math.PI*2);ctx.fill();
+// Speaker cones pulsing
+const pulse=0.5+Math.sin(this.tick*0.3)*0.3;
+ctx.fillStyle=`rgba(100,100,100,${pulse})`;ctx.beginPath();ctx.arc(sp.x-5,sp.y,3,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(sp.x+5,sp.y,3,0,Math.PI*2);ctx.fill();
+// LED lights
+ctx.fillStyle=Math.sin(this.tick*0.2)>0?"#0f0":"#f00";ctx.fillRect(sp.x-2,sp.y-6,4,2);
+}
+// Cheerleaders
+this.cheerleaders?.forEach(ch=>{
+ch.phase+=0.15;
+const jump=Math.abs(Math.sin(ch.phase))*8;
+const armAngle=Math.sin(ch.phase)*0.5;
+// Body (gold uniform)
+ctx.fillStyle="#C99700";ctx.fillRect(ch.x-4,ch.y-12-jump,8,12);
+// Head
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(ch.x,ch.y-16-jump,5,0,Math.PI*2);ctx.fill();
+// Hair (ponytail)
+ctx.fillStyle="#4a3728";ctx.beginPath();ctx.arc(ch.x,ch.y-18-jump,4,Math.PI,0);ctx.fill();
+ctx.fillRect(ch.x+2,ch.y-20-jump,2,8);
+// Pom poms
+ctx.fillStyle="#00843D";
+ctx.beginPath();ctx.arc(ch.x-8+Math.sin(ch.phase)*4,ch.y-18-jump,4,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(ch.x+8-Math.sin(ch.phase)*4,ch.y-18-jump,4,0,Math.PI*2);ctx.fill();
+// Skirt
+ctx.fillStyle="#0C2340";ctx.beginPath();ctx.moveTo(ch.x-6,ch.y-jump);ctx.lineTo(ch.x+6,ch.y-jump);ctx.lineTo(ch.x+4,ch.y+5-jump);ctx.lineTo(ch.x-4,ch.y+5-jump);ctx.fill();
+// Legs
+ctx.fillStyle="#FFCCBC";ctx.fillRect(ch.x-3,ch.y+5-jump,2,6);ctx.fillRect(ch.x+1,ch.y+5-jump,2,6);
+});
+// Football tossers
+if(this.footballTossers){
+const ft=this.footballTossers;
+ft.phase+=0.03;
+// Thrower
+const throwAnim=Math.sin(ft.phase*2);
+ctx.fillStyle="#0C2340";ctx.fillRect(ft.thrower.x-4,ft.thrower.y-12,8,14);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(ft.thrower.x,ft.thrower.y-16,5,0,Math.PI*2);ctx.fill();
+// Throwing arm
+ctx.fillStyle="#FFCCBC";ctx.fillRect(ft.thrower.x-8+throwAnim*3,ft.thrower.y-14,6,3);
+// Catcher
+ctx.fillStyle="#00843D";ctx.fillRect(ft.catcher.x-4,ft.catcher.y-12,8,14);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(ft.catcher.x,ft.catcher.y-16,5,0,Math.PI*2);ctx.fill();
+// Catching arms up
+ctx.fillStyle="#FFCCBC";ctx.fillRect(ft.catcher.x-6,ft.catcher.y-20,3,8);ctx.fillRect(ft.catcher.x+3,ft.catcher.y-20,3,8);
+// Football arc
+const ballProgress=(ft.phase%1);
+const arcX=ft.thrower.x+(ft.catcher.x-ft.thrower.x)*ballProgress;
+const arcY=ft.thrower.y-16+(ft.catcher.y-ft.thrower.y)*ballProgress-Math.sin(ballProgress*Math.PI)*40;
+ctx.fillStyle="#8B4513";ctx.save();ctx.translate(arcX,arcY);ctx.rotate(ballProgress*Math.PI*2);
+ctx.beginPath();ctx.ellipse(0,0,6,3,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle="#fff";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-2,-2);ctx.lineTo(2,2);ctx.stroke();ctx.restore();
+}
+// Dog on leash
+if(this.dog){
+const dg=this.dog;
+dg.tailWag+=0.3;
+// Owner
+ctx.fillStyle="#0C2340";ctx.fillRect(dg.ownerX-4,dg.ownerY-12,8,14);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(dg.ownerX,dg.ownerY-16,5,0,Math.PI*2);ctx.fill();
+// Leash
+ctx.strokeStyle="#8B4513";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(dg.ownerX+4,dg.ownerY-5);ctx.quadraticCurveTo((dg.ownerX+dg.x)/2,dg.ownerY+10,dg.x-5,dg.y);ctx.stroke();
+// Dog body (golden retriever)
+ctx.fillStyle="#D4A574";ctx.beginPath();ctx.ellipse(dg.x,dg.y,10,6,0,0,Math.PI*2);ctx.fill();
+// Dog head
+ctx.beginPath();ctx.arc(dg.x+8,dg.y-2,5,0,Math.PI*2);ctx.fill();
+// Ears
+ctx.fillStyle="#C49464";ctx.beginPath();ctx.ellipse(dg.x+6,dg.y-5,3,4,0.3,0,Math.PI*2);ctx.fill();
+// Tail wagging
+const tailAngle=Math.sin(dg.tailWag)*0.5;
+ctx.fillStyle="#D4A574";ctx.save();ctx.translate(dg.x-10,dg.y);ctx.rotate(tailAngle);ctx.fillRect(-8,-2,8,3);ctx.restore();
+// Eyes and nose
+ctx.fillStyle="#333";ctx.beginPath();ctx.arc(dg.x+10,dg.y-3,1,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(dg.x+12,dg.y,2,0,Math.PI*2);ctx.fill();
+// ND bandana
+ctx.fillStyle="#0C2340";ctx.beginPath();ctx.moveTo(dg.x+3,dg.y-4);ctx.lineTo(dg.x+6,dg.y+3);ctx.lineTo(dg.x,dg.y+2);ctx.fill();
+}
+// Portable toilets
+this.portaPotties?.forEach(pp=>{
+ctx.fillStyle="#1e88e5";ctx.fillRect(pp.x-8,pp.y-20,16,25);
+ctx.fillStyle="#1565c0";ctx.fillRect(pp.x-8,pp.y-20,16,3);
+ctx.fillStyle="#0d47a1";ctx.fillRect(pp.x+4,pp.y-12,3,8);
+// Vent on top
+ctx.fillStyle="#333";ctx.fillRect(pp.x-2,pp.y-23,4,3);
+});
+// People waiting in line for toilets
+this.pottyLine?.forEach((p,i)=>{
+const shift=Math.sin(this.tick*0.1+i)*1;
+ctx.fillStyle="#00843D";ctx.fillRect(p.x-3+shift,p.y-10,6,12);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p.x+shift,p.y-14,4,0,Math.PI*2);ctx.fill();
+});
+// Beverage pong table
+if(this.pongTable){
+const pt=this.pongTable;
+// Table
+ctx.fillStyle="#8B4513";ctx.fillRect(pt.x-25,pt.y-8,50,16);
+ctx.fillStyle="#654321";ctx.fillRect(pt.x-23,pt.y-6,46,12);
+// Cups in triangle formation
+pt.cups.forEach(([cx,cy])=>{
+ctx.fillStyle="#ff4444";ctx.beginPath();ctx.arc(pt.x-15+cx,pt.y-2+cy*0.3-4,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#cc0000";ctx.beginPath();ctx.arc(pt.x-15+cx,pt.y-2+cy*0.3-4,2,0,Math.PI*2);ctx.fill();
+});
+// Players on each side
+ctx.fillStyle="#0C2340";ctx.fillRect(pt.x-35,pt.y-12,8,14);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(pt.x-31,pt.y-16,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#00843D";ctx.fillRect(pt.x+27,pt.y-12,8,14);
+ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(pt.x+31,pt.y-16,5,0,Math.PI*2);ctx.fill();
+// Ball being thrown
+const ballPhase=(this.tick*0.05)%1;
+const ballArcX=pt.x-30+(60*ballPhase);
+const ballArcY=pt.y-15-Math.sin(ballPhase*Math.PI)*20;
+ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(ballArcX,ballArcY,3,0,Math.PI*2);ctx.fill();
+}
 // GO IRISH banner
 ctx.fillStyle="#0C2340";ctx.fillRect(GW/2-60,140,120,25);
 ctx.strokeStyle="#C99700";ctx.lineWidth=2;ctx.strokeRect(GW/2-60,140,120,25);
@@ -4055,12 +4931,12 @@ ctx.strokeStyle="#333";ctx.lineWidth=2;
 ctx.beginPath();ctx.moveTo(GW-35,55);ctx.lineTo(GW-35+Math.cos(time-Math.PI/2)*12,55+Math.sin(time-Math.PI/2)*12);ctx.stroke();
 ctx.lineWidth=1;
 ctx.beginPath();ctx.moveTo(GW-35,55);ctx.lineTo(GW-35+Math.cos(time*12-Math.PI/2)*15,55+Math.sin(time*12-Math.PI/2)*15);ctx.stroke();
-// Motivational business quote board - moved below windows
-ctx.fillStyle="#0C2340";ctx.fillRect(15,120,100,40);
-ctx.strokeStyle="#C99700";ctx.lineWidth=2;ctx.strokeRect(15,120,100,40);
-ctx.fillStyle="#C99700";ctx.font="4px 'Press Start 2P'";ctx.textAlign="center";
-ctx.fillText("ASK MORE OF",65,135);
-ctx.fillText("BUSINESS",65,148);ctx.textAlign="left";
+// Motivational business quote board - larger and readable
+ctx.fillStyle="#0C2340";ctx.fillRect(10,115,130,55);
+ctx.strokeStyle="#C99700";ctx.lineWidth=3;ctx.strokeRect(10,115,130,55);
+ctx.fillStyle="#C99700";ctx.font="9px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText("ASK MORE",75,138);
+ctx.fillText("OF BUSINESS",75,155);ctx.textAlign="left";
 // Projector screen (pulled down)
 ctx.fillStyle="#fff";ctx.fillRect(GW/2-60,115,120,50);
 ctx.strokeStyle="#888";ctx.lineWidth=1;ctx.strokeRect(GW/2-60,115,120,50);
@@ -4974,6 +5850,34 @@ ctx.beginPath();ctx.arc(x,y-3,7,0,Math.PI*2);ctx.fill();
 ctx.beginPath();ctx.arc(x,y-12,5,0,Math.PI*2);ctx.fill();
 ctx.fillStyle="#FFA500";ctx.beginPath();ctx.moveTo(x+5,y-12);ctx.lineTo(x+10,y-11);ctx.lineTo(x+5,y-10);ctx.fill();
 ctx.fillStyle="#111";ctx.beginPath();ctx.arc(x-2,y-14,1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x+2,y-14,1,0,Math.PI*2);ctx.fill();
+}else if(t==='beermug'){
+// Beer mug target for Legends
+ctx.fillStyle="#DAA520";ctx.fillRect(x-8,y-8,16,20);
+// Handle
+ctx.strokeStyle="#DAA520";ctx.lineWidth=3;
+ctx.beginPath();ctx.arc(x+12,y,6,Math.PI*1.5,Math.PI*0.5);ctx.stroke();
+// Foam on top
+ctx.fillStyle="#fff";ctx.fillRect(x-8,y-12,16,6);
+ctx.beginPath();ctx.arc(x-4,y-12,4,Math.PI,0);ctx.fill();
+ctx.beginPath();ctx.arc(x+4,y-12,4,Math.PI,0);ctx.fill();
+// Bubbles
+ctx.fillStyle="rgba(255,255,255,0.6)";
+const bub=Math.sin(this.tick*0.15)*2;
+ctx.beginPath();ctx.arc(x-3,y-2+bub,2,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(x+2,y+3-bub,1.5,0,Math.PI*2);ctx.fill();
+}else if(t==='yardmarker'){
+// 150 yard marker flag
+ctx.fillStyle="#C99700";ctx.fillRect(x-2,y-30,4,35);// Pole
+// Flag
+ctx.fillStyle="#fff";
+ctx.beginPath();ctx.moveTo(x+2,y-30);ctx.lineTo(x+25,y-22);ctx.lineTo(x+2,y-14);ctx.closePath();ctx.fill();
+ctx.strokeStyle="#C99700";ctx.lineWidth=1;ctx.stroke();
+// 150 on flag
+ctx.fillStyle="#0C2340";ctx.font="bold 6px 'Press Start 2P'";ctx.textAlign="center";
+ctx.fillText("150",x+13,y-20);ctx.textAlign="left";
+// Base marker
+ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x,y+5,6,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#C99700";ctx.beginPath();ctx.arc(x,y+5,4,0,Math.PI*2);ctx.fill();
 }else{
 // Default target marker (flag)
 ctx.fillRect(x-1,y-20,2,20);
@@ -4983,6 +5887,34 @@ ctx.fillStyle="#00843D";ctx.beginPath();ctx.moveTo(x,y-20);ctx.lineTo(x+12,y-15)
 ctx.fillStyle="#fff";ctx.font="5px 'Press Start 2P'";ctx.textAlign="center";
 ctx.fillText(this.target.label,x,y+28);
 ctx.textAlign="left";
+// Soft floating arrow above target
+const bob=Math.sin(this.tick*0.1)*4;// Gentle bobbing motion
+const arrowY=y-45+bob;
+const arrowOpacity=0.6+Math.sin(this.tick*0.08)*0.3;// Soft pulse
+// Glow effect
+ctx.fillStyle=`rgba(255,215,0,${arrowOpacity*0.3})`;
+ctx.beginPath();
+ctx.moveTo(x,arrowY+18);
+ctx.lineTo(x-14,arrowY-2);
+ctx.lineTo(x+14,arrowY-2);
+ctx.closePath();
+ctx.fill();
+// Main triangle arrow pointing down
+ctx.fillStyle=`rgba(255,215,0,${arrowOpacity})`;
+ctx.beginPath();
+ctx.moveTo(x,arrowY+12);// Tip pointing down at target
+ctx.lineTo(x-10,arrowY-4);
+ctx.lineTo(x+10,arrowY-4);
+ctx.closePath();
+ctx.fill();
+// Subtle inner highlight
+ctx.fillStyle=`rgba(255,255,255,${arrowOpacity*0.4})`;
+ctx.beginPath();
+ctx.moveTo(x,arrowY+6);
+ctx.lineTo(x-5,arrowY-1);
+ctx.lineTo(x+5,arrowY-1);
+ctx.closePath();
+ctx.fill();
 }
 
 loop(){
