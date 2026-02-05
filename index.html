@@ -5918,6 +5918,36 @@ ctx.fillText("ROCKNE GATE",gateX,gateY-gateH+12);
 // ===== ESPN COLLEGE GAMEDAY SET (medium size) =====
 const espnX=GW/2,espnY=300;
 
+// Dynamic lighting above the Big Game Crew
+const rigY=espnY-80;
+// 5 animated stage lights
+const lcR=[255,50,255,0,255];
+const lcG=[30,80,215,255,50];
+const lcB=[30,255,0,100,255];
+for(let li=0;li<5;li++){
+const lx=espnX-88+li*44;
+const pulse=0.5+Math.sin(this.tick*0.08+li*0.9)*0.3;
+const sway=Math.sin(this.tick*0.03+li*1.2)*10;
+const beamAngle=Math.sin(this.tick*0.025+li*1.5)*0.2;
+// Light housing
+ctx.fillStyle="#333";ctx.fillRect(lx-3,rigY+3,6,6);
+ctx.fillStyle="#222";ctx.beginPath();ctx.arc(lx,rigY+11,4,0,Math.PI*2);ctx.fill();
+// Lens glow
+ctx.globalAlpha=pulse;
+ctx.fillStyle=`rgb(${lcR[li]},${lcG[li]},${lcB[li]})`;
+ctx.beginPath();ctx.arc(lx,rigY+11,3,0,Math.PI*2);ctx.fill();
+ctx.globalAlpha=1;
+// Light beam cone
+ctx.save();
+ctx.translate(lx,rigY+13);
+ctx.rotate(beamAngle);
+ctx.fillStyle=`rgba(${lcR[li]},${lcG[li]},${lcB[li]},${(0.1+pulse*0.06).toFixed(2)})`;
+ctx.beginPath();
+ctx.moveTo(-2,0);ctx.lineTo(-16+sway,50);ctx.lineTo(16+sway,50);ctx.lineTo(2,0);
+ctx.closePath();ctx.fill();
+ctx.restore();
+}
+
 // Stage platform (medium)
 ctx.fillStyle="#2a2a2a";ctx.fillRect(espnX-135,espnY,270,78);
 ctx.fillStyle="#1a1a1a";ctx.fillRect(espnX-130,espnY+5,260,68);
@@ -6319,33 +6349,19 @@ ctx.globalAlpha=0.4+Math.sin(this.tick*0.05+i)*0.3;
 ctx.fillRect(sx,sy,2,2);
 }ctx.globalAlpha=1;
 
-// Jumbotron in the night sky (larger with clock)
-const jbX=GW/2-75,jbY=8,jbW=150,jbH=80;
+// Jumbotron in the night sky (bigger screen)
+const jbX=GW/2-90,jbY=8,jbW=180,jbH=80;
 // Outer frame
 ctx.fillStyle="#1a1a1a";ctx.fillRect(jbX-4,jbY-4,jbW+8,jbH+8);
 ctx.fillStyle="#333";ctx.fillRect(jbX-2,jbY-2,jbW+4,jbH+4);
 // Screen background with glow
-const screenGlow=ctx.createRadialGradient(jbX+jbW/2,jbY+jbH/2,0,jbX+jbW/2,jbY+jbH/2,90);
+const screenGlow=ctx.createRadialGradient(jbX+jbW/2,jbY+jbH/2,0,jbX+jbW/2,jbY+jbH/2,100);
 screenGlow.addColorStop(0,"rgba(0,100,255,0.3)");screenGlow.addColorStop(1,"rgba(0,0,0,0)");
 ctx.fillStyle=screenGlow;ctx.fillRect(jbX-40,jbY-20,jbW+80,jbH+40);
 ctx.fillStyle="#000";ctx.fillRect(jbX,jbY,jbW,jbH);
 // Screen scanlines effect
 ctx.fillStyle="rgba(255,255,255,0.02)";
 for(let sl=0;sl<jbH;sl+=2)ctx.fillRect(jbX,jbY+sl,jbW,1);
-
-// Game clock and quarter at top (easy to read)
-ctx.fillStyle="#111";ctx.fillRect(jbX+2,jbY+2,jbW-4,20);
-const mins=this.gameClock?this.gameClock.minutes:2;
-const secs=this.gameClock?this.gameClock.seconds:47;
-const qtr=this.gameClock?this.gameClock.quarter:4;
-const timeStr=mins+":"+(secs<10?"0":"")+secs;
-// Clock time in red LED style
-ctx.fillStyle="#ff0000";ctx.font="bold 14px Arial";ctx.textAlign="center";
-ctx.fillText(timeStr,jbX+45,jbY+16);
-// Quarter display
-const qtrNames=["1st","2nd","3rd","4th"];
-ctx.fillStyle="#FFD700";ctx.font="bold 11px Arial";
-ctx.fillText(qtrNames[qtr-1]+" Qtr",jbX+jbW-35,jbY+16);
 
 // Check if game won or touchdown celebration
 const ndScore=this.footballScore?this.footballScore.nd:0;
@@ -6354,12 +6370,12 @@ const isScoring=this.playPhase==='scoring';
 const gameWon=this.footballGameWon;
 if(gameWon){
 // IRISH WIN! celebration - green background with gold text
-ctx.fillStyle="#00843D";ctx.fillRect(jbX+2,jbY+22,jbW-4,jbH-26);
+ctx.fillStyle="#00843D";ctx.fillRect(jbX+2,jbY+4,jbW-4,jbH-8);
 // Pulsing green glow
 const winPulse=0.5+Math.sin(this.tick*0.15)*0.5;
 ctx.shadowColor="#00FF00";ctx.shadowBlur=20*winPulse;
 // Big shamrock in center
-const shamX=jbX+jbW/2,shamY=jbY+38;
+const shamX=jbX+jbW/2,shamY=jbY+28;
 ctx.fillStyle=`rgba(0,255,0,${0.7+winPulse*0.3})`;
 for(var leaf=0;leaf<3;leaf++){
 var angle=leaf*Math.PI*2/3-Math.PI/2;
@@ -6371,23 +6387,23 @@ ctx.fillRect(shamX-3,shamY+10,6,12);
 ctx.shadowBlur=0;
 // IRISH WIN! text
 ctx.shadowColor="#FFD700";ctx.shadowBlur=15;
-ctx.fillStyle="#FFD700";ctx.font="bold 14px Arial";ctx.textAlign="center";
-ctx.fillText("IRISH WIN!",jbX+jbW/2,jbY+68);
-ctx.fillStyle="#fff";ctx.font="bold 10px Arial";
-ctx.fillText("42-0",jbX+jbW/2,jbY+80);
+ctx.fillStyle="#FFD700";ctx.font="bold 16px Arial";ctx.textAlign="center";
+ctx.fillText("IRISH WIN!",jbX+jbW/2,jbY+60);
+ctx.fillStyle="#fff";ctx.font="bold 12px Arial";
+ctx.fillText("42-0",jbX+jbW/2,jbY+76);
 ctx.shadowBlur=0;
 // Green and gold confetti raining
 for(var ci=0;ci<12;ci++){
 ctx.fillStyle=["#00FF00","#FFD700","#00843D","#fff"][ci%4];
-var cx=jbX+5+ci*12+Math.sin(this.tick*0.1+ci)*4;
-var cy=jbY+22+(this.tick*3+ci*20)%(jbH-26);
+var cx=jbX+5+ci*14+Math.sin(this.tick*0.1+ci)*4;
+var cy=jbY+4+(this.tick*3+ci*20)%(jbH-8);
 ctx.fillRect(cx,cy,3,5);
 }
 }else if(isScoring){
 // TOUCHDOWN IRISH celebration screen
-ctx.fillStyle="#00843D";ctx.fillRect(jbX+2,jbY+22,jbW-4,jbH-26);
+ctx.fillStyle="#00843D";ctx.fillRect(jbX+2,jbY+4,jbW-4,jbH-8);
 // Neon shamrock animation
-const shamX=jbX+jbW/2,shamY=jbY+35;
+const shamX=jbX+jbW/2,shamY=jbY+25;
 const neonPulse=0.6+Math.sin(this.tick*0.2)*0.4;
 ctx.shadowColor="#00FF00";ctx.shadowBlur=15*neonPulse;
 ctx.fillStyle=`rgba(0,255,0,${neonPulse})`;
@@ -6402,32 +6418,33 @@ ctx.fillRect(shamX-2,shamY+8,4,10);
 ctx.shadowBlur=0;
 // TOUCHDOWN IRISH text with glow
 ctx.shadowColor="#FFD700";ctx.shadowBlur=10;
-ctx.fillStyle="#FFD700";ctx.font="bold 10px Arial";ctx.textAlign="center";
-ctx.fillText("TOUCHDOWN",jbX+jbW/2,jbY+58);
-ctx.fillStyle="#fff";ctx.font="bold 12px Arial";
-ctx.fillText("IRISH!",jbX+jbW/2,jbY+72);
+ctx.fillStyle="#FFD700";ctx.font="bold 12px Arial";ctx.textAlign="center";
+ctx.fillText("TOUCHDOWN",jbX+jbW/2,jbY+52);
+ctx.fillStyle="#fff";ctx.font="bold 14px Arial";
+ctx.fillText("IRISH!",jbX+jbW/2,jbY+70);
 ctx.shadowBlur=0;
 // Confetti on jumbotron
 for(var ci=0;ci<8;ci++){
 ctx.fillStyle=["#FFD700","#fff","#00FF00","#C99700"][ci%4];
-var cx=jbX+10+ci*18+Math.sin(this.tick*0.15+ci)*5;
-var cy=jbY+25+(this.tick*2+ci*15)%50;
+var cx=jbX+10+ci*20+Math.sin(this.tick*0.15+ci)*5;
+var cy=jbY+8+(this.tick*2+ci*15)%65;
 ctx.fillRect(cx,cy,4,4);
 }
 }else{
-// Normal scoreboard
+// Normal scoreboard - full screen
+ctx.textAlign="center";
 // ND side (gold/blue)
-ctx.fillStyle="#0C2340";ctx.fillRect(jbX+2,jbY+22,jbW/2-4,jbH-26);
-ctx.fillStyle="#C99700";ctx.font="bold 12px 'Press Start 2P'";
-ctx.fillText("ND",jbX+jbW/4,jbY+40);
-ctx.fillStyle="#FFD700";ctx.font="bold 20px 'Press Start 2P'";
-ctx.fillText(ndScore.toString(),jbX+jbW/4,jbY+65);
+ctx.fillStyle="#0C2340";ctx.fillRect(jbX+2,jbY+4,jbW/2-4,jbH-8);
+ctx.fillStyle="#C99700";ctx.font="bold 14px 'Press Start 2P'";
+ctx.fillText("ND",jbX+jbW/4,jbY+32);
+ctx.fillStyle="#FFD700";ctx.font="bold 24px 'Press Start 2P'";
+ctx.fillText(ndScore.toString(),jbX+jbW/4,jbY+60);
 // USC side (cardinal/gold)
-ctx.fillStyle="#990000";ctx.fillRect(jbX+jbW/2+2,jbY+22,jbW/2-4,jbH-26);
-ctx.fillStyle="#FFC72C";ctx.font="bold 12px 'Press Start 2P'";
-ctx.fillText("USC",jbX+3*jbW/4,jbY+40);
-ctx.fillStyle="#fff";ctx.font="bold 20px 'Press Start 2P'";
-ctx.fillText(uscScore.toString(),jbX+3*jbW/4,jbY+65);
+ctx.fillStyle="#990000";ctx.fillRect(jbX+jbW/2+2,jbY+4,jbW/2-4,jbH-8);
+ctx.fillStyle="#FFC72C";ctx.font="bold 14px 'Press Start 2P'";
+ctx.fillText("USC",jbX+3*jbW/4,jbY+32);
+ctx.fillStyle="#fff";ctx.font="bold 24px 'Press Start 2P'";
+ctx.fillText(uscScore.toString(),jbX+3*jbW/4,jbY+60);
 }
 ctx.textAlign="left";
 // LED flicker effect
