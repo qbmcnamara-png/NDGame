@@ -10759,6 +10759,8 @@ ctx.fillStyle="#C99700";ctx.font="bold 7px 'Press Start 2P'";ctx.textAlign="cent
 
 // DRAW: Compton Ice Arena
 drawIceArena(ctx){
+// Guard: don't run if level objects haven't been generated yet
+if(!this.scoreboard||!this.hockeyGoals||!this.gamePuck)return;
 // Arena interior - darker for atmosphere
 const arenaGrad=ctx.createLinearGradient(0,0,0,180);
 arenaGrad.addColorStop(0,"#0a0a15");arenaGrad.addColorStop(1,"#1a1a2e");
@@ -11296,6 +11298,8 @@ ctx.fillStyle="#C99700";ctx.font="bold 7px 'Press Start 2P'";ctx.textAlign="cent
 
 // DRAW: Joyce Center (Basketball)
 drawJoyceCenter(ctx){
+// Guard: don't run if level objects haven't been generated yet
+if(!this.jumbotron||!this.basketballPlayers)return;
 // Arena interior with tiered seating
 const arenaGrad=ctx.createLinearGradient(0,0,0,200);
 arenaGrad.addColorStop(0,"#1a1a25");arenaGrad.addColorStop(1,"#2a2a3a");
@@ -11870,6 +11874,8 @@ ctx.fillStyle="#C99700";ctx.font="bold 7px 'Press Start 2P'";ctx.textAlign="cent
 
 // DRAW: Jordan Hall of Science
 drawScienceHall(ctx){
+// Guard: don't run if level objects haven't been generated yet
+if(!this.periodicTable)return;
 // Lab interior - ceiling area
 const wall=ctx.createLinearGradient(0,0,0,100);
 wall.addColorStop(0,"#D0D8E0");wall.addColorStop(1,"#E8E8E8");
@@ -14094,10 +14100,12 @@ ctx.fill();
 }
 
 loop(){
+try{
 this.update();
 if(this.state!=='menu'&&this.state!=='victory')this.draw();
 this.drawTitleSparkles();
 this.drawVictoryEffects();
+}catch(e){console.error('Game loop error:',e);}
 requestAnimationFrame(()=>this.loop());
 }
 
