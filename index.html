@@ -1167,7 +1167,7 @@ const targetHints=[
 "Light a candle to unlock the hole!",
 "Hit the cornhole board to unlock!",
 "Hit the music sheet to unlock the hole!",
-"Ring the church bell to unlock!",
+"Bless with holy water to unlock!",
 "Strike the drum to unlock the hole!",
 "Hit the stock ticker to unlock!",
 "Hit the hockey stick! Watch the game - can the Irish score?",
@@ -1198,8 +1198,8 @@ const x=W/2,y=55;
 ctx.fillStyle='rgba(255,215,0,0.5)';ctx.beginPath();ctx.arc(x,y,48,0,Math.PI*2);ctx.fill();
 ctx.fillStyle='rgba(0,132,61,0.6)';ctx.beginPath();ctx.arc(x,y,36,0,Math.PI*2);ctx.fill();
 // Target types by level
-const types=['scorecard','microphone','freeman','beermug','shamrock','pool','candle','cornhole','musicsheet','bell','drum','ticker','hockeystick','scoreboard','beaker','shoppingbag','snowman','diploma'];
-const labels=['SCORECARD','TV MICROPHONE','COACH FREEMAN','BEER MUG','SHAMROCK','REFLECTING POOL','CANDLE','CORNHOLE','MUSIC SHEET','CHURCH BELL','DRUM','STOCK TICKER','HOCKEY STICK','SCOREBOARD','BEAKER','SHOPPING BAG','SNOWMAN','DIPLOMA'];
+const types=['scorecard','microphone','freeman','beermug','shamrock','pool','candle','cornhole','musicsheet','holywater','drum','ticker','hockeystick','scoreboard','beaker','shoppingbag','snowman','diploma'];
+const labels=['SCORECARD','TV MICROPHONE','COACH FREEMAN','BEER MUG','SHAMROCK','REFLECTING POOL','CANDLE','CORNHOLE','MUSIC SHEET','HOLY WATER','DRUM','STOCK TICKER','HOCKEY STICK','SCOREBOARD','BEAKER','SHOPPING BAG','SNOWMAN','DIPLOMA'];
 const t=types[level]||'snowman';
 ctx.fillStyle='#C99700';
 if(t==='scorecard'){
@@ -1240,9 +1240,13 @@ ctx.fillStyle='#DAA520';ctx.fillRect(x-12,y-12,24,30);
 ctx.strokeStyle='#DAA520';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x+18,y,9,Math.PI*1.5,Math.PI*0.5);ctx.stroke();
 ctx.fillStyle='#fff';ctx.fillRect(x-12,y-18,24,9);
 ctx.beginPath();ctx.arc(x-6,y-18,6,Math.PI,0);ctx.fill();ctx.beginPath();ctx.arc(x+6,y-18,6,Math.PI,0);ctx.fill();
-}else if(t==='bell'){
-ctx.beginPath();ctx.arc(x,y-8,15,Math.PI,0);ctx.lineTo(x+18,y+12);ctx.lineTo(x-18,y+12);ctx.fill();
-ctx.beginPath();ctx.arc(x,y+15,5,0,Math.PI*2);ctx.fill();
+}else if(t==='holywater'){
+// Holy water font (baptismal font)
+ctx.fillStyle="#8B8682";ctx.fillRect(x-10,y+10,20,12);ctx.fillRect(x-8,y+3,16,8);
+ctx.fillStyle="#9E9A96";ctx.fillRect(x-5,y-10,10,14);
+ctx.fillStyle="#8B8682";ctx.beginPath();ctx.moveTo(x-18,y-10);ctx.quadraticCurveTo(x-20,y-24,x,y-26);ctx.quadraticCurveTo(x+20,y-24,x+18,y-10);ctx.lineTo(x-18,y-10);ctx.fill();
+ctx.fillStyle="rgba(135,206,250,0.8)";ctx.beginPath();ctx.ellipse(x,y-18,14,6,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="rgba(200,230,255,0.5)";ctx.beginPath();ctx.ellipse(x-4,y-19,3,2,0,0,Math.PI*2);ctx.fill();
 }else if(t==='pool'){
 ctx.fillStyle='#4169E1';ctx.fillRect(x-27,y-15,54,36);
 ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillRect(x-21,y-9,42,24);
@@ -3539,9 +3543,9 @@ this.tables=[];this.cars=[];this.grills=[];this.pews=[];this.bandMembers=null;
 genScienceHall(){
 // Tee in middle-left, right under the periodic table
 const configs=[
-{tee:{x:80,y:330},hole:{x:250,y:600}},// Hole to right of Tesla coil
-{tee:{x:80,y:330},hole:{x:250,y:600}},
-{tee:{x:80,y:330},hole:{x:250,y:600}}
+{tee:{x:80,y:330},hole:{x:180,y:560}},// Hole to top-left of Tesla coil
+{tee:{x:80,y:330},hole:{x:180,y:560}},
+{tee:{x:80,y:330},hole:{x:180,y:560}}
 ];
 const cfg=configs[this.holeIdx%3];
 this.tee=cfg.tee;this.hole=cfg.hole;
@@ -6768,11 +6772,11 @@ ctx.fillStyle="#3d2817";ctx.fillRect(cb.x-42,cb.y-28,84,56);
 // Chalkboard surface
 ctx.fillStyle="#2a3a2a";ctx.fillRect(cb.x-38,cb.y-24,76,48);
 // Chalk text
-ctx.fillStyle="rgba(255,255,255,0.85)";ctx.font="bold 8px 'Comic Sans MS',cursive";ctx.textAlign="center";
+ctx.fillStyle="rgba(255,255,255,0.85)";ctx.font="bold 8px Arial";ctx.textAlign="center";
 ctx.fillText("TODAY'S SPECIAL",cb.x,cb.y-12);
-ctx.fillStyle="#FFD700";ctx.font="bold 10px 'Comic Sans MS',cursive";
+ctx.fillStyle="#FFD700";ctx.font="bold 11px Arial";
 ctx.fillText("IRISH NACHOS",cb.x,cb.y+2);
-ctx.fillStyle="rgba(255,255,255,0.85)";ctx.font="9px 'Comic Sans MS',cursive";
+ctx.fillStyle="rgba(255,255,255,0.85)";ctx.font="bold 9px Arial";
 ctx.fillText("$8",cb.x,cb.y+14);
 ctx.textAlign="left";
 }
@@ -11372,12 +11376,6 @@ ctx.fillStyle="#FFD700";ctx.font="bold 6px Arial";ctx.textAlign="center";
 ctx.fillText(signTexts[i]||sign.text,sign.x,sign.y+4);ctx.textAlign="left";
 });
 
-// "GO IRISH" banner - BIG
-ctx.fillStyle="rgba(0,132,61,0.9)";ctx.fillRect(GW/2-50,95,100,18);
-ctx.strokeStyle="#C99700";ctx.lineWidth=2;ctx.strokeRect(GW/2-50,95,100,18);
-const beatPulse=0.8+Math.sin(this.tick*0.1)*0.2;
-ctx.fillStyle=`rgba(255,215,0,${beatPulse})`;ctx.font="bold 10px Arial";ctx.textAlign="center";
-ctx.fillText("GO IRISH!",GW/2,108);ctx.textAlign="left";
 
 // Stadium wave effect - bigger and more exciting
 const wavePos=(this.tick*3)%GW;
@@ -11386,23 +11384,8 @@ ctx.beginPath();ctx.arc(wavePos,160,35,0,Math.PI*2);ctx.fill();
 ctx.fillStyle="rgba(201,151,0,0.25)";
 ctx.beginPath();ctx.arc((wavePos+50)%GW,160,30,0,Math.PI*2);ctx.fill();
 
-// LED RIBBON BOARDS around court - scrolling messages
-ctx.fillStyle="#111";ctx.fillRect(30,175,GW-60,8);// Top ribbon
-ctx.fillStyle="#111";ctx.fillRect(30,GH-85,GW-60,8);// Bottom ribbon
-// Scrolling LED text
-const scrollX=(this.tick*2)%400;
-ctx.save();ctx.beginPath();ctx.rect(30,175,GW-60,8);ctx.clip();
-ctx.fillStyle="#00ff00";ctx.font="bold 6px Arial";
-for(let t=0;t<3;t++){
-ctx.fillText("★ GO IRISH ★ FIGHTING IRISH ★ ND #1 ★",35-scrollX+t*200,181);
-}
-ctx.restore();
-ctx.save();ctx.beginPath();ctx.rect(30,GH-85,GW-60,8);ctx.clip();
-ctx.fillStyle="#ffff00";ctx.font="bold 6px Arial";
-for(let t=0;t<3;t++){
-ctx.fillText("🏀 FIGHTING IRISH 🏀 #1 IN THE NATION 🏀",35-scrollX+t*250,GH-80);
-}
-ctx.restore();
+// Scrolling ticker offset (used by jumbotron ticker below)
+const scrollX=(this.tick*2)%600;
 
 // Spotlight beams from ceiling
 for(let s=0;s<3;s++){
@@ -11418,9 +11401,9 @@ ctx.restore();
 // === JUMBOTRON SCOREBOARD - CENTERED AT TOP ===
 const jb=this.jumbotron;
 const jbX=GW/2-100,jbY=8;// Centered at top
-// Jumbotron frame
-ctx.fillStyle="#1a1a1a";ctx.fillRect(jbX,jbY,200,55);
-ctx.strokeStyle="#444";ctx.lineWidth=4;ctx.strokeRect(jbX,jbY,200,55);
+// Jumbotron frame (includes ticker strip at bottom)
+ctx.fillStyle="#1a1a1a";ctx.fillRect(jbX,jbY,200,73);
+ctx.strokeStyle="#444";ctx.lineWidth=4;ctx.strokeRect(jbX,jbY,200,73);
 // LED screen effect
 const screenGrad=ctx.createLinearGradient(jbX,jbY,jbX,jbY+55);
 screenGrad.addColorStop(0,"#0a0a15");screenGrad.addColorStop(0.5,"#0f0f20");screenGrad.addColorStop(1,"#0a0a15");
@@ -11460,6 +11443,16 @@ ctx.shadowColor="#00ffff";ctx.shadowBlur=10;
 ctx.strokeStyle="#00ffff";ctx.lineWidth=1;ctx.strokeRect(jbX+4,jbY+4,192,47);
 ctx.shadowBlur=0;
 ctx.textAlign="left";
+// === SCROLLING TICKER - attached to bottom of jumbotron ===
+const tkY=jbY+55,tkH=18;
+ctx.fillStyle="#0a0a12";ctx.fillRect(jbX,tkY,200,tkH);
+ctx.strokeStyle="#C99700";ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(jbX,tkY+tkH);ctx.lineTo(jbX+200,tkY+tkH);ctx.stroke();
+ctx.save();ctx.beginPath();ctx.rect(jbX+2,tkY+1,196,tkH-2);ctx.clip();
+ctx.fillStyle="#00ff00";ctx.font="bold 11px Arial";
+const tkMsg="★ GO IRISH ★ FIGHTING IRISH ★ BEAT USC ★ #1 IN THE NATION ★ ";
+for(let t=0;t<4;t++){ctx.fillText(tkMsg,jbX+4-scrollX+t*300,tkY+13);}
+ctx.restore();
 // === IRISH WIN MESSAGE! ===
 if(jb.irishWin){
 jb.winTimer=(jb.winTimer||0)+1;
