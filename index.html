@@ -1897,8 +1897,8 @@ this.target=targetConfigs[this.level];
 this.target.hit=false;
 const d=dist(this.tee.x,this.tee.y,this.hole.x,this.hole.y);
 this.yards=Math.floor(d*YARDS_PX);
-// Level 1 (GameDay), Level 2 (Stadium), and Level 13 (Joyce Center) are always par 5, others based on yardage
-this.par=(this.level===1||this.level===2||this.level===13)?5:(this.yards>350?5:(this.yards>200?4:3));
+// Level 1 (GameDay), Level 2 (Stadium), Level 12 (Ice Arena), and Level 13 (Joyce Center) are always par 5; Level 15 (Hammes Bookstore) is always par 4; others based on yardage
+this.par=(this.level===1||this.level===2||this.level===12||this.level===13)?5:(this.level===15?4:(this.yards>350?5:4));
 }
 
 // LEVEL 0: Warren Golf Course - Championship Links Style
