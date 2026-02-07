@@ -2883,6 +2883,7 @@ genTailgate(){
 // The scene: Late afternoon, golden hour light,
 // the parking lot buzzes with pre-game energy.
 // ============================================
+let _pi=0;const pSkin=()=>(_pi++%7===3)?"#8D5524":"#FFCCBC";
 
 // Tee moved up slightly, hole top left of leprechaun
 this.tee={x:GW/2,y:555};
@@ -2898,7 +2899,8 @@ for(let i=0;i<3;i++){
 this.cheerleaders.push({
 x:80+i*20,y:250,
 phase:i*Math.PI/3,
-pompomColor:i%2===0?'#00843D':'#FFD700'
+pompomColor:i%2===0?'#00843D':'#FFD700',
+skinTone:pSkin()
 });
 }
 
@@ -2945,19 +2947,19 @@ this.beerPong={x:160,y:450,w:60,h:25};
 
 // --- GUYS PLAYING CATCH (football toss) - in front of tee area, lower middle ---
 this.catchPlayers=[
-{x:GW/2-60,y:GH-160,phase:0,hasBall:true},
-{x:GW/2+60,y:GH-180,phase:Math.PI,hasBall:false}
+{x:GW/2-60,y:GH-160,phase:0,hasBall:true,skinTone:pSkin()},
+{x:GW/2+60,y:GH-180,phase:Math.PI,hasBall:false,skinTone:pSkin()}
 ];
 this.flyingFootball={active:false,x:0,y:0,vx:0,vy:0};
 
 // --- TAILGATE PARTY GROUPS ---
 this.partyGroups=[
 // Guys with signs
-{x:100,y:450,type:'sign',text:'GO IRISH!'},
+{x:100,y:450,type:'sign',text:'GO IRISH!',skinTone:pSkin()},
 // Group chatting in circle
-{x:200,y:510,type:'chatcircle'},
+{x:200,y:510,type:'chatcircle',skinTones:[pSkin(),pSkin(),pSkin(),pSkin()]},
 // People taking selfie
-{x:340,y:420,type:'selfie'}
+{x:340,y:420,type:'selfie',skinTones:[pSkin(),pSkin(),pSkin()]}
 ];
 
 // --- PEOPLE WALKING AROUND WITH BEERS ---
@@ -2968,7 +2970,8 @@ x:rand(80,GW-80),y:rand(350,550),
 vx:rand(-0.3,0.3),vy:rand(-0.2,0.2),
 color:['#0C2340','#C99700','#00843D','#fff','#8B0000'][Math.floor(rand(0,5))],
 walkPhase:rand(0,Math.PI*2),
-chatting:rand(0,1)>0.5
+chatting:rand(0,1)>0.5,
+skinTone:pSkin()
 });
 }
 
@@ -2976,8 +2979,8 @@ chatting:rand(0,1)>0.5
 this.beerPongGame={x:300,y:500,w:80,h:30};
 // One player on each side
 this.beerPongGame.players=[
-{x:300-50,y:500,team:0,throwing:true,phase:0},
-{x:300+50,y:500,team:1,throwing:false,phase:Math.PI}
+{x:300-50,y:500,team:0,throwing:true,phase:0,skinTone:pSkin()},
+{x:300+50,y:500,team:1,throwing:false,phase:Math.PI,skinTone:pSkin()}
 ];
 
 // --- BIG TV SETUP (showing football game!) ---
@@ -2990,7 +2993,8 @@ this.tvWatchers.push({
 x:70+i*12,y:360+Math.floor(i/4)*15,
 color:['#0C2340','#C99700','#00843D','#fff','#0C2340','#00843D','#C99700','#fff'][i],
 excited:rand(0,1)>0.5,
-phase:rand(0,Math.PI*2)
+phase:rand(0,Math.PI*2),
+skinTone:pSkin()
 });
 }
 
@@ -3006,27 +3010,27 @@ this.coolers=[
 // Additional people (non-TV watchers)
 this.extraPeople=[];
 for(let i=0;i<3;i++){
-this.tvWatchers.push({x:135+i*15,y:310,color:['#0C2340','#C99700','#00843D'][i]});
+this.tvWatchers.push({x:135+i*15,y:310,color:['#0C2340','#C99700','#00843D'][i],skinTone:pSkin()});
 }
 
 // People near truck (sitting on tailgate)
 this.truckPeople=[
-{x:40,y:365,sitting:true,color:'#C99700'},
-{x:55,y:365,sitting:true,color:'#0C2340'},
-{x:75,y:400,standing:true,color:'#00843D'}
+{x:40,y:365,sitting:true,color:'#C99700',skinTone:pSkin()},
+{x:55,y:365,sitting:true,color:'#0C2340',skinTone:pSkin()},
+{x:75,y:400,standing:true,color:'#00843D',skinTone:pSkin()}
 ];
 
 // People near grill/food
-this.grillMaster={x:GW-35,y:360,hasApron:true,facingLeft:true};
+this.grillMaster={x:GW-35,y:360,hasApron:true,facingLeft:true,skinTone:pSkin()};
 this.foodPeople=[
-{x:GW-100,y:430,color:'#fff'},
-{x:GW-45,y:435,color:'#C99700'}
+{x:GW-100,y:430,color:'#fff',skinTone:pSkin()},
+{x:GW-45,y:435,color:'#C99700',skinTone:pSkin()}
 ];
 
 // --- KIDS PLAYING ---
 this.kids={
-runner1:{x:GW/2+60,y:480,vx:0.8,color:'#FF6B6B'},
-runner2:{x:GW/2+90,y:490,vx:0.6,color:'#4FC3F7'},
+runner1:{x:GW/2+60,y:480,vx:0.8,color:'#FF6B6B',skinTone:pSkin()},
+runner2:{x:GW/2+90,y:490,vx:0.6,color:'#4FC3F7',skinTone:pSkin()},
 chasingPhase:0
 };
 
@@ -3821,6 +3825,7 @@ this.trees=[];this.rocks=[];this.candles=[];this.fairway=null;
 
 // LEVEL 18: Graduation Day - Commencement Ceremony (index 17, FINAL LEVEL!)
 genGraduation(){
+let _pi=0;const pSkin=()=>(_pi++%7===3)?"#8D5524":"#FFCCBC";
 // Hole on LEFT of stage (near front of extended stage), diploma target on RIGHT
 const configs=[
 {tee:{x:GW/2,y:550},hole:{x:60,y:280}},
@@ -3853,11 +3858,12 @@ const cx=row.xStart+s*row.xSpace;
 if(dist(cx,row.y,this.hole.x,this.hole.y)>holeClear){
 this.gradChairs.push({
 x:cx,y:row.y,row:ri,
-hasGrad:true,// Every seat has a graduate
-gownColor:rand(0,1)>0.5?'#0C2340':'#00843D',// Navy or green gown
+hasGrad:true,
+gownColor:rand(0,1)>0.5?'#0C2340':'#00843D',
 capTossed:false,
 celebrating:rand(0,1)>0.7,
-armUp:rand(0,1)>0.6
+armUp:rand(0,1)>0.6,
+skinTone:pSkin()
 });
 }}});
 
@@ -3881,13 +3887,14 @@ this.faculty.push({
 x:45+i*100,y:80,
 robeColor:deanInfo[i].robeColor,
 school:deanInfo[i].school,
-hasHood:true,isDean:true
+hasHood:true,isDean:true,
+skinTone:pSkin()
 });
 }
 // Front row (y:190) - 3 deans, spread out with room for labels
-this.faculty.push({x:55,y:190,robeColor:deanInfo[4].robeColor,school:deanInfo[4].school,hasHood:true,isDean:true});
-this.faculty.push({x:GW/2,y:190,robeColor:deanInfo[5].robeColor,school:deanInfo[5].school,hasHood:true,isDean:true});
-this.faculty.push({x:GW-55,y:190,robeColor:deanInfo[6].robeColor,school:deanInfo[6].school,hasHood:true,isDean:true});
+this.faculty.push({x:55,y:190,robeColor:deanInfo[4].robeColor,school:deanInfo[4].school,hasHood:true,isDean:true,skinTone:pSkin()});
+this.faculty.push({x:GW/2,y:190,robeColor:deanInfo[5].robeColor,school:deanInfo[5].school,hasHood:true,isDean:true,skinTone:pSkin()});
+this.faculty.push({x:GW-55,y:190,robeColor:deanInfo[6].robeColor,school:deanInfo[6].school,hasHood:true,isDean:true,skinTone:pSkin()});
 
 // Speaker at podium - Rev. Robert A. Dowd, C.S.C. (moved down on bigger stage)
 this.speaker={x:GW/2,y:270,speaking:true,name:'Rev. Robert A. Dowd, C.S.C.',title:'University President'};
@@ -3899,7 +3906,8 @@ this.families.push({
 x:rand(30,GW-30),y:rand(660,710),
 hasCamera:rand(0,1)>0.5,
 waving:rand(0,1)>0.6,
-shirtColor:['#fff','#0C2340','#00843D','#C99700','#888'][Math.floor(rand(0,5))]
+shirtColor:['#fff','#0C2340','#00843D','#C99700','#888'][Math.floor(rand(0,5))],
+skinTone:pSkin()
 });
 }
 
@@ -9235,23 +9243,23 @@ const armAngle=Math.sin(ch.phase)*0.6;
 ctx.fillStyle="#FFD700";ctx.fillRect(ch.x-4,ch.y-16-jump,8,10);// Top
 ctx.fillStyle="#00843D";ctx.fillRect(ch.x-5,ch.y-6-jump,10,8);// Skirt
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(ch.x,ch.y-20-jump,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=ch.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(ch.x,ch.y-20-jump,5,0,Math.PI*2);ctx.fill();
 // Ponytail
 ctx.fillStyle="#8B4513";ctx.beginPath();ctx.arc(ch.x+4,ch.y-22-jump,3,0,Math.PI*2);ctx.fill();
 // Arms with pompoms
 ctx.save();ctx.translate(ch.x-4,ch.y-14-jump);ctx.rotate(-armAngle-0.5);
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-10,-8);ctx.stroke();
+ctx.strokeStyle=ch.skinTone||"#FFCCBC";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-10,-8);ctx.stroke();
 // Pompom
 ctx.fillStyle=ch.pompomColor;
 for(let p=0;p<6;p++){ctx.beginPath();ctx.arc(-10+Math.cos(p)*4,-8+Math.sin(p)*4,3,0,Math.PI*2);ctx.fill();}
 ctx.restore();
 ctx.save();ctx.translate(ch.x+4,ch.y-14-jump);ctx.rotate(armAngle+0.5);
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(10,-8);ctx.stroke();
+ctx.strokeStyle=ch.skinTone||"#FFCCBC";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(10,-8);ctx.stroke();
 ctx.fillStyle=ch.pompomColor;
 for(let p=0;p<6;p++){ctx.beginPath();ctx.arc(10+Math.cos(p)*4,-8+Math.sin(p)*4,3,0,Math.PI*2);ctx.fill();}
 ctx.restore();
 // Legs
-ctx.fillStyle="#FFCCBC";
+ctx.fillStyle=ch.skinTone||"#FFCCBC";
 ctx.fillRect(ch.x-4,ch.y+2-jump,3,8);ctx.fillRect(ch.x+1,ch.y+2-jump,3,8);
 });
 
@@ -9358,12 +9366,12 @@ ctx.restore();
 this.truckPeople?.forEach(p=>{
 if(p.sitting){
 ctx.fillStyle=p.color;ctx.fillRect(p.x-4,p.y-10,8,12);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-14,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-14,5,0,Math.PI*2);ctx.fill();
 // Legs dangling
 ctx.fillStyle="#444";ctx.fillRect(p.x-4,p.y+2,4,8);ctx.fillRect(p.x,p.y+2,4,8);
 }else{
 ctx.fillStyle=p.color;ctx.fillRect(p.x-4,p.y-16,8,18);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20,5,0,Math.PI*2);ctx.fill();
 }
 });
 
@@ -9418,7 +9426,7 @@ const bobble=Math.sin(this.tick*0.1)*1;
 ctx.fillStyle="#fff";ctx.fillRect(gm.x-5,gm.y-16+bobble,10,20);
 ctx.fillStyle="#C99700";ctx.fillRect(gm.x-4,gm.y-10+bobble,8,14);// Apron
 // Head (slightly turned left)
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(gm.x-2,gm.y-20+bobble,6,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=gm.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(gm.x-2,gm.y-20+bobble,6,0,Math.PI*2);ctx.fill();
 // Chef hat
 ctx.fillStyle="#fff";ctx.fillRect(gm.x-8,gm.y-32+bobble,12,10);
 ctx.beginPath();ctx.arc(gm.x-2,gm.y-32+bobble,6,Math.PI,0);ctx.fill();
@@ -9427,11 +9435,11 @@ ctx.fillStyle="#333";ctx.beginPath();ctx.arc(gm.x-5,gm.y-21+bobble,1,0,Math.PI*2
 // Arm with tongs reaching toward grill (to the LEFT)
 const tongAngle=Math.sin(this.tick*0.15)*0.2;
 ctx.save();ctx.translate(gm.x-5,gm.y-10+bobble);ctx.rotate(-0.3+tongAngle);
-ctx.fillStyle="#FFCCBC";ctx.fillRect(-25,-2,20,4);// Arm
+ctx.fillStyle=gm.skinTone||"#FFCCBC";ctx.fillRect(-25,-2,20,4);// Arm
 ctx.fillStyle="#666";ctx.fillRect(-30,0,12,2);ctx.fillRect(-30,3,12,2);// Tongs
 ctx.restore();
 // Other arm at side
-ctx.fillStyle="#FFCCBC";ctx.fillRect(gm.x+3,gm.y-8+bobble,4,10);
+ctx.fillStyle=gm.skinTone||"#FFCCBC";ctx.fillRect(gm.x+3,gm.y-8+bobble,4,10);
 // Legs
 ctx.fillStyle="#2a2a5a";ctx.fillRect(gm.x-4,gm.y+4+bobble,4,12);ctx.fillRect(gm.x+1,gm.y+4+bobble,4,12);
 }
@@ -9461,7 +9469,7 @@ ctx.fillRect(ft.x+18,ft.y-8,5,8);
 this.foodPeople?.forEach(p=>{
 const bob=Math.sin(this.tick*0.12+p.x)*1;
 ctx.fillStyle=p.color;ctx.fillRect(p.x-4,p.y-16+bob,8,18);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20+bob,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20+bob,5,0,Math.PI*2);ctx.fill();
 });
 
 // === COOLERS ===
@@ -9532,13 +9540,13 @@ const jump=excited?Math.abs(Math.sin(p.phase*2))*4:0;
 // Body
 ctx.fillStyle=p.color;ctx.fillRect(p.x-4,p.y-16-jump,8,18);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20-jump,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(p.x,p.y-20-jump,5,0,Math.PI*2);ctx.fill();
 // Beer in hand
 ctx.fillStyle="#ff4444";ctx.fillRect(p.x+5,p.y-10-jump,4,6);
 // Excited reactions
 if(excited){
 // Arms up moment
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;
+ctx.strokeStyle=p.skinTone||"#FFCCBC";ctx.lineWidth=2;
 ctx.beginPath();ctx.moveTo(p.x-4,p.y-14-jump);ctx.lineTo(p.x-8,p.y-24-jump);ctx.stroke();
 ctx.beginPath();ctx.moveTo(p.x+4,p.y-14-jump);ctx.lineTo(p.x+8,p.y-24-jump);ctx.stroke();
 }
@@ -9584,11 +9592,11 @@ const bob=Math.abs(wave)*2;
 ctx.fillStyle=i===0?"#0C2340":"#00843D";
 ctx.fillRect(cp.x-5,cp.y-18+bob,10,20);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(cp.x,cp.y-22+bob,6,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=cp.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(cp.x,cp.y-22+bob,6,0,Math.PI*2);ctx.fill();
 // Arms (throwing motion)
 const armAngle=wave*0.5;
 ctx.save();ctx.translate(cp.x+5,cp.y-12+bob);ctx.rotate(armAngle-0.3);
-ctx.fillStyle="#FFCCBC";ctx.fillRect(0,-2,12,4);
+ctx.fillStyle=cp.skinTone||"#FFCCBC";ctx.fillRect(0,-2,12,4);
 ctx.restore();
 });
 // Football in the air
@@ -9610,7 +9618,7 @@ this.partyGroups?.forEach(pg=>{
 if(pg.type==='sign'){
 // Person with sign
 ctx.fillStyle="#0C2340";ctx.fillRect(pg.x-4,pg.y-16,8,18);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(pg.x,pg.y-20,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=pg.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(pg.x,pg.y-20,5,0,Math.PI*2);ctx.fill();
 // Sign above head
 const signWave=Math.sin(this.tick*0.08)*0.1;
 ctx.save();ctx.translate(pg.x,pg.y-35);ctx.rotate(signWave);
@@ -9628,7 +9636,7 @@ const bob=Math.sin(this.tick*0.08+i)*1;
 // Body
 ctx.fillStyle=colors[i];ctx.fillRect(pg.x+pos.dx-4,pg.y+pos.dy-14+bob,8,16);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(pg.x+pos.dx,pg.y+pos.dy-18+bob,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=(pg.skinTones&&pg.skinTones[i])||"#FFCCBC";ctx.beginPath();ctx.arc(pg.x+pos.dx,pg.y+pos.dy-18+bob,5,0,Math.PI*2);ctx.fill();
 // Solo cup in hand
 ctx.fillStyle="#ff4444";ctx.fillRect(pg.x+pos.dx+5,pg.y+pos.dy-8+bob,4,6);
 });
@@ -9643,9 +9651,11 @@ ctx.fillStyle="#333";ctx.font="5px Arial";ctx.fillText("Ha!",pg.x+positions[1].d
 ctx.fillStyle="#0C2340";ctx.fillRect(pg.x-15,pg.y-14,8,16);
 ctx.fillStyle="#00843D";ctx.fillRect(pg.x-5,pg.y-16,8,18);
 ctx.fillStyle="#C99700";ctx.fillRect(pg.x+7,pg.y-14,8,16);
-ctx.fillStyle="#FFCCBC";
+ctx.fillStyle=(pg.skinTones&&pg.skinTones[0])||"#FFCCBC";
 ctx.beginPath();ctx.arc(pg.x-11,pg.y-18,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=(pg.skinTones&&pg.skinTones[1])||"#FFCCBC";
 ctx.beginPath();ctx.arc(pg.x-1,pg.y-20,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=(pg.skinTones&&pg.skinTones[2])||"#FFCCBC";
 ctx.beginPath();ctx.arc(pg.x+11,pg.y-18,4,0,Math.PI*2);ctx.fill();
 // Phone held up
 ctx.fillStyle="#333";ctx.fillRect(pg.x-4,pg.y-38,8,14);
@@ -9665,9 +9675,9 @@ const bob=Math.abs(Math.sin(bw.walkPhase))*2;
 // Body
 ctx.fillStyle=bw.color;ctx.fillRect(bw.x-4,bw.y-16+bob,8,18);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(bw.x,bw.y-20+bob,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=bw.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(bw.x,bw.y-20+bob,5,0,Math.PI*2);ctx.fill();
 // Arm holding beer (to the side)
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;
+ctx.strokeStyle=bw.skinTone||"#FFCCBC";ctx.lineWidth=2;
 ctx.beginPath();ctx.moveTo(bw.x+4,bw.y-12+bob);ctx.lineTo(bw.x+12,bw.y-8+bob);ctx.stroke();
 // Beer cup in hand (yellow beer in clear cup)
 ctx.fillStyle="rgba(255,255,255,0.4)";// Clear cup
@@ -9710,20 +9720,22 @@ ctx.fillStyle="rgba(200,180,50,0.5)";ctx.beginPath();ctx.arc(c[0],c[1],3,0,Math.
 const throwPhase=Math.sin(this.tick*0.08);
 // Player 1 (left side)
 const p1x=bpg.x-bpg.w/2-25,p1y=bpg.y;
+const p1skin=bpg.players?.[0]?.skinTone||"#FFCCBC";
 ctx.fillStyle="#00843D";ctx.fillRect(p1x-4,p1y-14,8,16);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p1x,p1y-18,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p1skin;ctx.beginPath();ctx.arc(p1x,p1y-18,5,0,Math.PI*2);ctx.fill();
 // Throwing arm
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;
+ctx.strokeStyle=p1skin;ctx.lineWidth=2;
 const armAngle1=throwPhase*0.4;
 ctx.save();ctx.translate(p1x+4,p1y-10);ctx.rotate(armAngle1);
 ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(12,0);ctx.stroke();
 ctx.restore();
 // Player 2 (right side)
 const p2x=bpg.x+bpg.w/2+25,p2y=bpg.y;
+const p2skin=bpg.players?.[1]?.skinTone||"#FFCCBC";
 ctx.fillStyle="#0C2340";ctx.fillRect(p2x-4,p2y-14,8,16);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(p2x,p2y-18,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=p2skin;ctx.beginPath();ctx.arc(p2x,p2y-18,5,0,Math.PI*2);ctx.fill();
 // Arm
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;
+ctx.strokeStyle=p2skin;ctx.lineWidth=2;
 ctx.save();ctx.translate(p2x-4,p2y-10);ctx.rotate(-armAngle1);
 ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-12,0);ctx.stroke();
 ctx.restore();
@@ -9743,13 +9755,13 @@ kids.runner1.x+=kids.runner1.vx;
 if(kids.runner1.x>GW-60||kids.runner1.x<60)kids.runner1.vx*=-1;
 const bounce1=Math.abs(Math.sin(this.tick*0.3))*4;
 ctx.fillStyle=kids.runner1.color;ctx.fillRect(kids.runner1.x-3,kids.runner1.y-10-bounce1,6,12);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(kids.runner1.x,kids.runner1.y-13-bounce1,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=kids.runner1.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(kids.runner1.x,kids.runner1.y-13-bounce1,4,0,Math.PI*2);ctx.fill();
 // Runner 2 (chasing)
 kids.runner2.x+=kids.runner2.vx;
 if(kids.runner2.x>GW-50||kids.runner2.x<70)kids.runner2.vx*=-1;
 const bounce2=Math.abs(Math.sin(this.tick*0.3+1))*4;
 ctx.fillStyle=kids.runner2.color;ctx.fillRect(kids.runner2.x-3,kids.runner2.y-10-bounce2,6,12);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(kids.runner2.x,kids.runner2.y-13-bounce2,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=kids.runner2.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(kids.runner2.x,kids.runner2.y-13-bounce2,4,0,Math.PI*2);ctx.fill();
 }
 
 // === SPILLED SOLO CUP (foreground detail) ===
@@ -13672,7 +13684,7 @@ ctx.fillStyle=f.robeColor;ctx.fillRect(f.x-14,f.y-5,28,40);
 // Golden hood/sash for deans
 if(f.hasHood){ctx.fillStyle="#C99700";ctx.fillRect(f.x-12,f.y-2,24,16);}
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(f.x,f.y-20,12,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=f.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(f.x,f.y-20,12,0,Math.PI*2);ctx.fill();
 // Hair/balding
 ctx.fillStyle="#888";ctx.beginPath();ctx.arc(f.x,f.y-25,8,Math.PI,0);ctx.fill();
 // Mortarboard with gold trim
@@ -13742,7 +13754,7 @@ ctx.fillRect(chair.x-7,chair.y-15+bob,14,20);
 // Shoulders
 ctx.fillRect(chair.x-10,chair.y-12+bob,20,6);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(chair.x,chair.y-22+bob,7,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=chair.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(chair.x,chair.y-22+bob,7,0,Math.PI*2);ctx.fill();
 // Hair
 ctx.fillStyle="#4a3728";ctx.beginPath();ctx.arc(chair.x,chair.y-26+bob,5,Math.PI,0);ctx.fill();
 // Mortarboard
@@ -13759,7 +13771,7 @@ ctx.fillStyle=chair.gownColor;
 ctx.save();ctx.translate(chair.x+10,chair.y-10+bob);ctx.rotate(-0.8+Math.sin(this.tick*0.1)*0.2);
 ctx.fillRect(0,-3,15,6);ctx.restore();
 // Hand
-ctx.fillStyle="#FFCCBC";
+ctx.fillStyle=chair.skinTone||"#FFCCBC";
 ctx.beginPath();ctx.arc(chair.x+22,chair.y-20+bob+Math.sin(this.tick*0.1)*3,4,0,Math.PI*2);ctx.fill();
 }
 }
@@ -13792,7 +13804,7 @@ const wave=fam.waving?Math.sin(this.tick*0.15+i)*0.4:0;
 // Body
 ctx.fillStyle=fam.shirtColor;ctx.fillRect(fam.x-6,fam.y-15,12,18);
 // Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(fam.x,fam.y-22,7,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=fam.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(fam.x,fam.y-22,7,0,Math.PI*2);ctx.fill();
 // Hair
 ctx.fillStyle="#4a3728";ctx.beginPath();ctx.arc(fam.x,fam.y-26,5,Math.PI,0);ctx.fill();
 // Camera or waving arm
@@ -13803,7 +13815,7 @@ ctx.fillStyle="#88f";ctx.beginPath();ctx.arc(fam.x+13,fam.y-15,3,0,Math.PI*2);ct
 if(fam.waving){
 ctx.save();ctx.translate(fam.x-8,fam.y-12);ctx.rotate(-1+wave);
 ctx.fillStyle=fam.shirtColor;ctx.fillRect(0,-3,12,5);
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(12,0,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=fam.skinTone||"#FFCCBC";ctx.beginPath();ctx.arc(12,0,4,0,Math.PI*2);ctx.fill();
 ctx.restore();
 }
 });
