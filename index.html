@@ -1084,7 +1084,6 @@ this.celebrationFx=[];
 this.lastCelebration=-1;
 this.shakeX=0;this.shakeY=0;
 this.flashAlpha=0;
-this.ballIndicator={active:false,timer:0};// Shows arrow pointing to ball after shot
 this.players=[];// Football players
 this.playTimer=0;
 this.playPhase='huddle';
@@ -4115,7 +4114,6 @@ window.addEventListener('touchend',end,{passive:false});
 hit(dir,pwr){
 document.getElementById('dist-box').style.display='none';
 document.getElementById('putt-alert').style.display='none';
-this.ballIndicator.active=false;// Hide ball finder on new shot
 this.ball.prevX=this.ball.x;this.ball.prevY=this.ball.y;
 this.shots++;this.state='shoot';
 // Practice mode - arcade physics (less powerful but fun)
@@ -4858,7 +4856,6 @@ const d=dist(this.ball.x,this.ball.y,this.hole.x,this.hole.y);
 if(d<HOLE_R&&!this.holeLocked){this.holeComplete()}
 else{
 this.state='aim';
-this.ballIndicator={active:true,timer:120};// Show ball finder for ~2 seconds
 const t=this.getTerrain(this.ball.x,this.ball.y);
 if(t==='green'){this.isPutt=true;document.getElementById('putt-alert').style.display='block'}
 else{this.isPutt=false;const yd=Math.floor(d*YARDS_PX);document.getElementById('dist-box').textContent=yd+" YDS TO PIN";document.getElementById('dist-box').style.display='block';setTimeout(()=>{document.getElementById('dist-box').style.display='none'},1000)}
@@ -4878,7 +4875,7 @@ setTimeout(()=>{
 document.getElementById('msg-box').style.display='none';
 this.ball.x=this.ball.prevX;this.ball.y=this.ball.prevY;
 this.ball.vx=0;this.ball.vy=0;this.ball.z=0;
-this.state='aim';this.ballIndicator={active:true,timer:120};this.updateClub();
+this.state='aim';this.updateClub();
 },1800);
 }
 
@@ -5154,46 +5151,6 @@ ctx.beginPath();ctx.moveTo(this.ball.x-4,ballY);ctx.lineTo(this.ball.x+4,ballY);
 // Gold ring around ball
 ctx.strokeStyle=`rgba(255,215,0,${ballGlow*0.8})`;ctx.lineWidth=1.5;
 ctx.beginPath();ctx.arc(this.ball.x,ballY,5,0,Math.PI*2);ctx.stroke();
-// === BALL LOCATION INDICATOR - arrow + "YOUR BALL" after each shot ===
-if(this.ballIndicator&&this.ballIndicator.active&&this.state==='aim'){
-this.ballIndicator.timer--;
-if(this.ballIndicator.timer<=0){this.ballIndicator.active=false;}
-else{
-const fade=Math.min(this.ballIndicator.timer/20,1);
-const bob=Math.sin(this.tick*0.15)*6;
-const pulse=0.7+Math.sin(this.tick*0.2)*0.3;
-ctx.save();
-ctx.globalAlpha=fade*pulse;
-// Downward arrow pointing at ball
-ctx.fillStyle='#FFD700';
-ctx.beginPath();
-ctx.moveTo(this.ball.x,ballY-16+bob);
-ctx.lineTo(this.ball.x-10,ballY-30+bob);
-ctx.lineTo(this.ball.x+10,ballY-30+bob);
-ctx.closePath();ctx.fill();
-// Arrow shaft
-ctx.fillRect(this.ball.x-4,ballY-48+bob,8,20);
-// Arrow outline for contrast
-ctx.strokeStyle='rgba(0,0,0,0.6)';ctx.lineWidth=2;
-ctx.beginPath();
-ctx.moveTo(this.ball.x,ballY-16+bob);
-ctx.lineTo(this.ball.x-10,ballY-30+bob);
-ctx.lineTo(this.ball.x-4,ballY-30+bob);
-ctx.lineTo(this.ball.x-4,ballY-48+bob);
-ctx.lineTo(this.ball.x+4,ballY-48+bob);
-ctx.lineTo(this.ball.x+4,ballY-30+bob);
-ctx.lineTo(this.ball.x+10,ballY-30+bob);
-ctx.closePath();ctx.stroke();
-// "YOUR BALL" label with dark outline for readability
-ctx.globalAlpha=fade;
-ctx.font='bold 8px "Press Start 2P"';ctx.textAlign='center';
-ctx.strokeStyle='rgba(0,0,0,0.9)';ctx.lineWidth=4;
-ctx.strokeText('YOUR BALL',this.ball.x,ballY-54+bob);
-ctx.fillStyle='#FFD700';
-ctx.fillText('YOUR BALL',this.ball.x,ballY-54+bob);
-ctx.textAlign='left';
-ctx.restore();
-}}
 }
 
 // Aim line
