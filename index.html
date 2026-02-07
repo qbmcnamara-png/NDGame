@@ -14487,8 +14487,7 @@ const frame=document.getElementById('game-frame');
 const fw=394,fh=724;// frame total size including border
 const vw=window.innerWidth,vh=window.innerHeight;
 const s=Math.min(vw/fw,vh/fh);
-if(s>0.95){frame.style.transform='scale('+s+')'}
-else{frame.style.transform=''}
+frame.style.transform='scale('+Math.min(s,1)+')'
 }
 scaleGame();
 window.addEventListener('resize',scaleGame);
