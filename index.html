@@ -2010,9 +2010,6 @@ this.clouds=[{x:60,y:35,r:30,layer:0},{x:150,y:50,r:25,layer:1},{x:250,y:30,r:35
 // Birds - FIXED positions
 this.birds=[{x:80,y:100,phase:0},{x:150,y:120,phase:1},{x:220,y:90,phase:2},{x:290,y:110,phase:3},{x:100,y:140,phase:4},{x:260,y:130,phase:5}];
 
-// === ND GOLFER - swing only when ball not in flight (positioned for longer shot)
-this.ndGolfer={x:GW/2,y:600,swingState:'ready',swingAngle:0,ballInFlight:false,ballX:0,ballY:0,ballProgress:0,waitTimer:0};
-
 // === NO ROPES ===
 this.galleryRopes=[];
 
@@ -5781,122 +5778,6 @@ ctx.fillText(line,bubbleX,bubbleY-bubbleH/2+16+li*14);
 ctx.textAlign="left";
 });
 
-// === ND GOLFER - swings only when ball not in flight ===
-if(this.ndGolfer){
-const g=this.ndGolfer;
-// State machine: ready -> backswing -> downswing -> follow -> waiting
-if(!g.ballInFlight){
-// Only swing when ball is not flying
-if(g.swingState==='ready'){
-g.swingAngle=-1.3;// Backswing position
-g.swingState='backswing';
-g.waitTimer=0;
-}else if(g.swingState==='backswing'){
-g.waitTimer++;
-if(g.waitTimer>40){// Pause at top
-g.swingState='downswing';
-}
-}else if(g.swingState==='downswing'){
-g.swingAngle+=0.15;
-if(g.swingAngle>=0.2){// Impact!
-g.ballInFlight=true;
-g.ballProgress=0;
-g.ballX=g.x;
-g.ballY=g.y-5;
-g.swingState='follow';
-}
-}else if(g.swingState==='follow'){
-g.swingAngle+=0.08;
-if(g.swingAngle>=1.5){
-g.swingState='waiting';
-g.waitTimer=0;
-}
-}
-}else{
-// Ball in flight - hold follow through
-g.swingAngle=1.5;
-}
-// Legs (black pants)
-ctx.fillStyle="#111";
-ctx.fillRect(g.x-4,g.y+2,3,10);
-ctx.fillRect(g.x+1,g.y+2,3,10);
-// Body (green shirt)
-ctx.fillStyle="#00843D";
-ctx.fillRect(g.x-5,g.y-8,10,11);
-// Arms swinging club
-ctx.save();
-ctx.translate(g.x,g.y-5);
-ctx.rotate(g.swingAngle);
-ctx.strokeStyle="#FFCCBC";ctx.lineWidth=2;
-ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,12);ctx.stroke();
-// Golf club
-ctx.strokeStyle="#666";ctx.lineWidth=1.5;
-ctx.beginPath();ctx.moveTo(0,10);ctx.lineTo(0,22);ctx.stroke();
-ctx.fillStyle="#888";ctx.fillRect(-2,20,4,4);
-ctx.restore();
-// Head
-ctx.fillStyle="#FFCCBC";ctx.beginPath();ctx.arc(g.x,g.y-12,5,0,Math.PI*2);ctx.fill();
-// Black hat
-ctx.fillStyle="#111";
-ctx.fillRect(g.x-6,g.y-18,12,3);
-ctx.fillRect(g.x-4,g.y-22,8,5);
-// ND on shirt
-ctx.fillStyle="#C99700";ctx.font="bold 5px Arial";ctx.textAlign="center";
-ctx.fillText("ND",g.x,g.y-2);
-ctx.textAlign="left";
-// Ball flying SLOWLY towards LEFT of the hole
-if(g.ballInFlight){
-g.ballProgress+=0.006;// Slower movement
-const targetX=this.hole.x-25;// Land LEFT of hole
-const targetY=this.hole.y+5;
-// Arc trajectory
-const t=g.ballProgress;
-const arcHeight=90;
-g.ballX=g.x+(targetX-g.x)*t;
-g.ballY=g.y-5+(targetY-g.y-5)*t-arcHeight*Math.sin(t*Math.PI);
-// Draw ball
-ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(g.ballX,g.ballY,3,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle="#ccc";ctx.lineWidth=0.5;ctx.stroke();
-// Ball lands - go to celebrating state
-if(g.ballProgress>=1){
-g.ballInFlight=false;
-g.ballProgress=0;
-g.swingState='celebrating';
-g.waitTimer=0;
-}
-}
-// Celebrating state - show speech bubble then reset
-if(g.swingState==='celebrating'){
-g.waitTimer++;
-// Draw speech bubble above golfer
-const bubbleX=g.x-45;
-const bubbleY=g.y-55;
-const bubbleW=80;
-const bubbleH=38;
-ctx.fillStyle="white";ctx.strokeStyle="#333";ctx.lineWidth=1;
-ctx.beginPath();ctx.roundRect(bubbleX-bubbleW/2,bubbleY-bubbleH/2,bubbleW,bubbleH,6);ctx.fill();ctx.stroke();
-// Tail pointing to golfer
-ctx.fillStyle="white";
-ctx.beginPath();
-ctx.moveTo(g.x-10,bubbleY+bubbleH/2-2);
-ctx.lineTo(g.x-5,g.y-22);
-ctx.lineTo(g.x-20,bubbleY+bubbleH/2-2);
-ctx.fill();
-ctx.strokeStyle="#333";ctx.lineWidth=1;
-ctx.beginPath();ctx.moveTo(g.x-10,bubbleY+bubbleH/2-2);ctx.lineTo(g.x-5,g.y-22);ctx.stroke();
-ctx.beginPath();ctx.moveTo(g.x-20,bubbleY+bubbleH/2-2);ctx.lineTo(g.x-5,g.y-22);ctx.stroke();
-// Text
-ctx.fillStyle="#0C2340";ctx.font="bold 10px Arial";ctx.textAlign="center";
-ctx.fillText("Another",bubbleX,bubbleY-6);
-ctx.fillText("Birdie Look!",bubbleX,bubbleY+8);
-ctx.textAlign="left";
-// After showing bubble, reset to swing again
-if(g.waitTimer>120){
-g.swingState='ready';
-g.waitTimer=0;
-}
-}
-}
 
 // Morning mist effect (subtle)
 ctx.fillStyle="rgba(255,255,255,0.03)";
